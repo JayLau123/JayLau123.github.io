@@ -1,3 +1,5 @@
+import { SiteFooter, SiteHeader } from "./components/site-shell";
+
 const scholarUrl =
   "https://scholar.google.com/citations?hl=en&user=f2qAmGIAAAAJ&scilu=&scisig=AKLELW8AAAAAamA-UixXKb5bXOUC94G6p-iPr2U&gmla=AO4B3jsDrYJAtgxAtTYhd2ZKamz0I8z-iOgFEDGwYQA2Hd8fVtVCZCItY274crw7cpnxSuM2f_5KHe05OqBEPBTeLHRRflV94_vj-bc&sciund=1239809507754054681";
 
@@ -130,6 +132,8 @@ function ProfileIcon({ icon }: { icon: (typeof profileLinks)[number]["icon"] }) 
 export default function Home() {
   return (
     <main>
+      <SiteHeader active="about" />
+
       <section className="hero" id="about" aria-labelledby="page-title">
         <div className="hero-copy">
           <p className="eyebrow">computational chemistry | ai for science</p>
@@ -202,6 +206,15 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section news-section" id="news">
+        <div className="section-heading">
+          <h2>Recent News</h2>
+        </div>
+        <div className="news-placeholder">
+          <p>News updates will be added soon.</p>
+        </div>
+      </section>
+
       <section
         className="section publication-section"
         id="publications"
@@ -230,8 +243,8 @@ export default function Home() {
         <div className="section-heading">
           <h2>Let us connect</h2>
           <p>
-            I am open to conversations about quantum chemistry, DFT, physically
-            grounded machine learning methods, and AI4S.
+            I am open to chat about quantum chemistry, DFT, and physically
+            grounded machine learning — or the art of photography.
           </p>
           <div
             className="icon-links contact-icon-links"
@@ -246,13 +259,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="site-footer">
-        <p>
-          &copy; 2026 Chuanyu Liu. Built with OpenAI Sites. Hosted on GitHub
-          Pages.
-          Schematic generated with GPT Image.
-        </p>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Chuanyu Liu",
   description:
-    "Academic website for Chuanyu Liu, a computational chemistry and AI for science researcher working on quantum chemistry, DFT, and physics-informed machine learning.",
+    "Academic website for Chuanyu Liu, a computational chemistry and AI for science researcher working on quantum chemistry, DFT, physics-informed machine learning, and photography.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Chuanyu Liu",
     description:
-      "Computational chemistry, AI for science, quantum chemistry, DFT, and physics-informed machine learning.",
+      "Computational chemistry, AI for science, quantum chemistry, DFT, physics-informed machine learning, and photography.",
     type: "website",
   },
 };

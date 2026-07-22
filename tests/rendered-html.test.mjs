@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
+    new Request(new URL(pathname, "http://localhost"), {
       headers: { accept: "text/html" },
     }),
     {
@@ -34,6 +34,10 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
   assert.match(html, /Research Interests/);
   assert.match(html, /research-schematic-v2\.png/);
+  assert.match(html, /<nav class="site-nav" aria-label="Primary navigation">/);
+  assert.match(html, /href="\/" aria-current="page"[\s\S]*About/);
+  assert.match(html, /href="\/blog\/"[\s\S]*Blog/);
+  assert.match(html, /href="\/gallery\/"[\s\S]*Gallery/);
   assert.match(
     html,
     /real-world conditions\.[\s\S]*research-schematic-v2\.png[\s\S]*My methodological focus/,
@@ -42,6 +46,8 @@ test("server-renders the academic homepage", async () => {
     html,
     /research-schematic-v1|research-schematic-v3|research-schematic-v4/,
   );
+  assert.match(html, /Recent News/);
+  assert.match(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
   assert.match(html, /profile\.jpg/);
   assert.match(html, /mailto:jayjob2023@gmail\.com/);
@@ -53,6 +59,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);
   assert.match(html, /Schematic generated with GPT Image/);
+  assert.match(html, /art of photography/);
   assert.doesNotMatch(html, /Research Path/);
   assert.doesNotMatch(html, /Public papers/);
   assert.doesNotMatch(html, /Research focus/);
@@ -61,17 +68,40 @@ test("server-renders the academic homepage", async () => {
     html,
     /<strong>bridging<\/strong>|<strong>computational<\/strong>|<strong>accelerating<\/strong>/,
   );
-  assert.doesNotMatch(html, /<nav\b|site-header/);
+});
+
+test("server-renders the blog and gallery pages", async () => {
+  const blogResponse = await render("/blog");
+  assert.equal(blogResponse.status, 200);
+  const blogHtml = await blogResponse.text();
+  assert.match(blogHtml, /<title>Chuanyu Liu<\/title>/i);
+  assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);
+  assert.match(blogHtml, /Posts will be added soon\./);
+  assert.match(blogHtml, /href="\/blog\/" aria-current="page"[\s\S]*Blog/);
+
+  const galleryResponse = await render("/gallery");
+  assert.equal(galleryResponse.status, 200);
+  const galleryHtml = await galleryResponse.text();
+  assert.match(galleryHtml, /<h1 id="gallery-title">Gallery<\/h1>/);
+  assert.match(galleryHtml, /solo travel and snapping photos/);
+  assert.match(galleryHtml, /Photos will be added soon\./);
+  assert.match(
+    galleryHtml,
+    /href="\/gallery\/" aria-current="page"[\s\S]*Gallery/,
+  );
 });
 
 test("keeps private and excluded content out of the site source", async () => {
-  const [page, layout, packageJson] = await Promise.all([
+  const [page, blog, gallery, shell, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/blog/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/gallery/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/site-shell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  const combined = `${page}\n${layout}\n${packageJson}`;
+  const combined = `${page}\n${blog}\n${gallery}\n${shell}\n${layout}\n${packageJson}`;
   const privateDocumentPattern = new RegExp(
     String.raw`\b${"C"}${"V"}\b|curriculum vitae|download`,
     "i",

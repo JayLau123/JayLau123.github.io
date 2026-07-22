@@ -7,6 +7,12 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const distClient = path.join(root, "dist", "client");
 const distServerEntry = path.join(root, "dist", "server", "index.js");
 const pagesDir = path.join(root, "docs");
+const siteOrigin = "https://jaylau123.github.io";
+const routes = [
+  { pathname: "/", output: "index.html" },
+  { pathname: "/blog", output: "blog/index.html" },
+  { pathname: "/gallery", output: "gallery/index.html" },
+];
 
 if (!existsSync(distServerEntry) || !existsSync(distClient)) {
   throw new Error("Run `pnpm run build` before exporting GitHub Pages files.");
@@ -16,29 +22,37 @@ const workerUrl = new URL("../dist/server/index.js", import.meta.url);
 workerUrl.searchParams.set("pages-export", `${process.pid}-${Date.now()}`);
 const { default: worker } = await import(workerUrl.href);
 
-const response = await worker.fetch(
-  new Request("https://jaylau123.github.io/", {
-    headers: { accept: "text/html" },
-  }),
-  {
-    ASSETS: {
-      fetch: async () => new Response("Not found", { status: 404 }),
-    },
-  },
-  {
-    waitUntil() {},
-    passThroughOnException() {},
-  },
-);
-
-if (!response.ok) {
-  throw new Error(`Static render failed with status ${response.status}.`);
-}
-
 await rm(pagesDir, { recursive: true, force: true });
 await mkdir(pagesDir, { recursive: true });
 await cp(distClient, pagesDir, { recursive: true });
-await writeFile(path.join(pagesDir, "index.html"), await response.text());
+
+for (const route of routes) {
+  const response = await worker.fetch(
+    new Request(new URL(route.pathname, siteOrigin), {
+      headers: { accept: "text/html" },
+    }),
+    {
+      ASSETS: {
+        fetch: async () => new Response("Not found", { status: 404 }),
+      },
+    },
+    {
+      waitUntil() {},
+      passThroughOnException() {},
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Static render for ${route.pathname} failed with status ${response.status}.`,
+    );
+  }
+
+  const outputPath = path.join(pagesDir, route.output);
+  await mkdir(path.dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, await response.text());
+}
+
 await writeFile(path.join(pagesDir, ".nojekyll"), "");
 await writeFile(
   path.join(pagesDir, "README.md"),
