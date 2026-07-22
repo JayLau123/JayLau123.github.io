@@ -248,7 +248,8 @@ export default function Home() {
 
       <footer className="site-footer">
         <p>
-          &copy; 2026 Chuanyu Liu. Built and hosted with OpenAI Sites.
+          &copy; 2026 Chuanyu Liu. Built with OpenAI Sites. Hosted on GitHub
+          Pages.
           Schematic generated with GPT Image.
         </p>
       </footer>
