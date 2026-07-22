@@ -178,16 +178,20 @@ export default function Home() {
             models frequently over-idealize structures by predicting perfectly
             ordered crystallographic sites, neglecting the thermodynamically
             driven disorder inherent in bulk and surface structures under
-            real-world conditions. My methodological focus lies in developing
-            physics-informed, data-driven machine learning methods to capture
-            the fundamental laws of materials thermodynamics and surface
-            kinetics from atomistic simulations and characterization data,{" "}
-            <strong>bridging</strong> material behavior from the single-atom
-            level up to experimental observables. My goal is to close the loop
-            between idealized <strong>computational</strong> design, the
-            experimental workbench, and practical applications in catalysts,
-            electrolytes, and energy storage materials,{" "}
-            <strong>accelerating</strong> innovation at the AI-energy nexus.
+            real-world conditions.
+          </p>
+          <p>
+            My methodological focus lies in developing physics-informed,
+            data-driven machine learning methods to capture the fundamental laws
+            of materials thermodynamics and surface kinetics from atomistic
+            simulations and characterization data, bridging material behavior
+            from the single-atom level up to experimental observables.
+          </p>
+          <p>
+            My goal is to close the loop between idealized computational design,
+            the experimental workbench, and practical applications in catalysts,
+            electrolytes, and energy storage materials, accelerating innovation
+            at the AI-energy nexus.
           </p>
         </div>
       </section>
@@ -218,12 +222,21 @@ export default function Home() {
 
       <section className="section contact-section" id="contact">
         <div className="section-heading">
-          <p className="eyebrow">Contact</p>
           <h2>Let us connect</h2>
           <p>
             I am open to conversations about quantum chemistry, DFT, physically
             grounded machine learning methods, and AI4S.
           </p>
+          <div
+            className="icon-links contact-icon-links"
+            aria-label="Contact links"
+          >
+            {profileLinks.map((link) => (
+              <a key={link.label} href={link.href} aria-label={link.label}>
+                <ProfileIcon icon={link.icon} />
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     </main>

@@ -43,6 +43,11 @@ test("server-renders the academic homepage", async () => {
   assert.doesNotMatch(html, /Research Path/);
   assert.doesNotMatch(html, /Public papers/);
   assert.doesNotMatch(html, /Research focus/);
+  assert.doesNotMatch(html, /class="eyebrow">Contact/);
+  assert.doesNotMatch(
+    html,
+    /<strong>bridging<\/strong>|<strong>computational<\/strong>|<strong>accelerating<\/strong>/,
+  );
   assert.doesNotMatch(html, /<nav\b|site-header/);
 });
 
