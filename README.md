@@ -1,13 +1,6 @@
-# Chuanyu Liu Academic Website
+# Personal Academic Website
 
 Single-page academic website for Chuanyu Liu.
-
-## Content Rules
-
-- Do not add a CV file or a CV link.
-- Do not host local paper PDFs.
-- Do not list GitHub repositories.
-- Keep publications linked to public Google Scholar or public article pages.
 
 ## Development
 
