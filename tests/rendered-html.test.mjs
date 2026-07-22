@@ -34,6 +34,10 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
   assert.match(html, /Research Interests/);
   assert.match(html, /research-schematic-v2\.png/);
+  assert.match(
+    html,
+    /real-world conditions\.[\s\S]*research-schematic-v2\.png[\s\S]*My methodological focus/,
+  );
   assert.doesNotMatch(
     html,
     /research-schematic-v1|research-schematic-v3|research-schematic-v4/,

@@ -173,12 +173,6 @@ export default function Home() {
       >
         <div className="section-heading">
           <h2 id="interests-title">Research Interests</h2>
-          <figure className="research-schematic">
-            <img
-              src="/research-schematic-v2.png"
-              alt="Schematic comparing AI-predicted ordered structures with experimentally synthesized disordered structures"
-            />
-          </figure>
           <p>
             Current AI-driven materials discovery often faces a bottleneck:
             models frequently over-idealize structures by predicting perfectly
@@ -186,6 +180,12 @@ export default function Home() {
             driven disorder inherent in bulk and surface structures under
             real-world conditions.
           </p>
+          <figure className="research-schematic">
+            <img
+              src="/research-schematic-v2.png"
+              alt="Schematic comparing AI-predicted ordered structures with experimentally synthesized disordered structures"
+            />
+          </figure>
           <p>
             My methodological focus lies in developing physics-informed,
             data-driven machine learning methods to capture the fundamental laws
