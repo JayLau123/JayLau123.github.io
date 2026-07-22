@@ -33,6 +33,9 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /computational chemistry \| ai for science/);
   assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
   assert.match(html, /Research Interests/);
+  assert.match(html, /research-left\.png/);
+  assert.match(html, /research-right\.png/);
+  assert.match(html, /Unknown relationship between AI model and experiment/);
   assert.match(html, /Publications/);
   assert.match(html, /profile\.jpg/);
   assert.match(html, /mailto:jayjob2023@gmail\.com/);
