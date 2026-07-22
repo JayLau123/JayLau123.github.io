@@ -173,34 +173,6 @@ export default function Home() {
       >
         <div className="section-heading">
           <h2 id="interests-title">Research Interests</h2>
-          <div className="research-visual" aria-label="Research interest visual">
-            <figure className="research-figure">
-              <img
-                src="/research-left.png"
-                alt="AI model over idealized materials structure"
-              />
-            </figure>
-            <div
-              className="research-arrow"
-              aria-label="Unknown relationship between AI model and experiment"
-            >
-              <span className="arrow-line" aria-hidden="true" />
-              <span className="arrow-head arrow-head-left" aria-hidden="true" />
-              <span
-                className="arrow-head arrow-head-right"
-                aria-hidden="true"
-              />
-              <span className="question-mark" aria-hidden="true">
-                ?
-              </span>
-            </div>
-            <figure className="research-figure">
-              <img
-                src="/research-right.png"
-                alt="Experimental materials structure"
-              />
-            </figure>
-          </div>
           <p>
             Current AI-driven materials discovery often faces a bottleneck:
             models frequently over-idealize structures by predicting perfectly
