@@ -195,6 +195,19 @@ strong {
   max-width: 860px;
 }
 
+.research-schematic {
+  margin: 8px 0 36px;
+}
+
+.research-schematic img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--background);
+  border: 1px solid rgba(217, 216, 205, 0.86);
+  border-radius: 8px;
+}
+
 .interest-section p {
   color: var(--muted);
   font-size: 1.06rem;
@@ -313,6 +326,16 @@ strong {
   .interest-section p,
   .contact-section p {
     font-size: 1rem;
+  }
+
+  .research-schematic {
+    margin: 6px calc(50% - 50vw) 28px;
+  }
+
+  .research-schematic img {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
   }
 
   .publication-item {
