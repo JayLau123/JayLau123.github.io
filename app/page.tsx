@@ -245,6 +245,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <footer className="site-footer">
+        <p>
+          &copy; 2026 Chuanyu Liu. Built and hosted with OpenAI Sites.
+          Schematic generated with GPT Image.
+        </p>
+      </footer>
     </main>
   );
 }
