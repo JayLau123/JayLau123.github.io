@@ -5,53 +5,22 @@ const profileLinks = [
   {
     label: "Email",
     href: "mailto:jayjob2023@gmail.com",
-    text: "jayjob2023@gmail.com",
-  },
-  {
-    label: "Google Scholar",
-    href: scholarUrl,
-    text: "Google Scholar",
+    icon: "email",
   },
   {
     label: "GitHub",
     href: "https://github.com/JayLau123",
-    text: "GitHub",
+    icon: "github",
+  },
+  {
+    label: "Google Scholar",
+    href: scholarUrl,
+    icon: "scholar",
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/chuanyu-l-a1a00b1a3/?skipRedirect=true",
-    text: "LinkedIn",
-  },
-] as const;
-
-const researchPath = [
-  {
-    period: "B.S.",
-    title: "Applied Physics, Chongqing University",
-    detail:
-      "Built an early research foundation in SERS, optoplasmonic films, and metamaterials, with public papers published in 2021.",
-  },
-  {
-    period: "M.S.",
-    title: "Computational Modeling of Materials, University of Chicago",
-    detail:
-      "Focused on computational chemistry and materials modeling. No paper was published from this stage.",
-  },
-  {
-    period: "RA-I",
-    title: "MIT Chemistry and Broad Institute",
-    detail:
-      "Worked with Sam Peng on lanthanide-doped upconversion nanoparticles, combining Judd-Ofelt analysis, ab initio calculations, and Monte Carlo-ODE energy-transfer modeling. Paper coming soon.",
-    href: "https://chemistry.mit.edu/profile/sam-peng/",
-    linkText: "Sam Peng",
-  },
-  {
-    period: "Ph.D.",
-    title: "University at Buffalo",
-    detail:
-      "Works with Jiayu Peng on AI for materials, physics-informed machine learning, graph neural networks, and catalyst and materials discovery.",
-    href: "https://ubwp.buffalo.edu/jiayu-peng-lab/research/",
-    linkText: "Jiayu Peng / Peng Lab",
+    icon: "linkedin",
   },
 ] as const;
 
@@ -126,88 +95,100 @@ const publications = [
   },
 ] as const;
 
+function ProfileIcon({ icon }: { icon: (typeof profileLinks)[number]["icon"] }) {
+  if (icon === "github") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.58.1.8-.25.8-.56v-2c-3.26.7-3.95-1.38-3.95-1.38-.53-1.36-1.3-1.72-1.3-1.72-1.07-.73.08-.72.08-.72 1.18.08 1.8 1.21 1.8 1.21 1.05 1.8 2.76 1.28 3.43.98.1-.76.41-1.28.75-1.57-2.6-.3-5.33-1.3-5.33-5.78 0-1.28.46-2.32 1.2-3.14-.12-.3-.52-1.5.12-3.1 0 0 .99-.32 3.22 1.2A11.1 11.1 0 0 1 12 5.93c1 0 1.98.13 2.91.4 2.23-1.52 3.22-1.2 3.22-1.2.64 1.6.24 2.8.12 3.1.75.82 1.2 1.86 1.2 3.14 0 4.5-2.74 5.48-5.35 5.77.42.36.8 1.08.8 2.18v3.23c0 .31.21.67.81.56A11.5 11.5 0 0 0 12 .5Z" />
+      </svg>
+    );
+  }
+
+  if (icon === "scholar") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 3 1.8 8.6 12 14.2 22.2 8.6 12 3Zm-6.4 8.7v4.1c1.8 2.1 4 3.2 6.4 3.2s4.6-1.1 6.4-3.2v-4.1L12 15.2l-6.4-3.5Z" />
+      </svg>
+    );
+  }
+
+  if (icon === "linkedin") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5 2.5 2.5 0 0 1 .02-5ZM3 21h4V9.75H3V21Zm6.2-11.25H13v1.54h.05c.53-1 1.84-2.05 3.78-2.05 4.05 0 4.8 2.66 4.8 6.12V21h-4v-5.02c0-1.2-.02-2.73-1.66-2.73-1.67 0-1.93 1.3-1.93 2.64V21h-4V9.75Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M3.5 5h17A1.5 1.5 0 0 1 22 6.5v11A1.5 1.5 0 0 1 20.5 19h-17A1.5 1.5 0 0 1 2 17.5v-11A1.5 1.5 0 0 1 3.5 5Zm.85 2 7.65 5.5L19.65 7H4.35Zm15.65 9.7V8.95l-7.42 5.34a1 1 0 0 1-1.16 0L4 8.95v7.75h16Z" />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="#about" aria-label="Chuanyu Liu home">
-          Chuanyu Liu
-        </a>
-        <nav aria-label="Primary navigation">
-          <a href="#about">about</a>
-          <a href="#research-path">research path</a>
-          <a href="#publications">publications</a>
-          <a href="#contact">contact</a>
-        </nav>
-      </header>
-
       <section className="hero" id="about" aria-labelledby="page-title">
         <div className="hero-copy">
-          <p className="eyebrow">Computational materials | AI for science</p>
+          <p className="eyebrow">computational chemistry | ai for science</p>
           <h1 id="page-title">Chuanyu Liu</h1>
-          <p className="lead">
-            I work at the intersection of computational materials, quantum
-            chemistry, and physics-informed machine learning.
-          </p>
           <p>
-            I am a Ph.D. student in Computational Materials at the University at
-            Buffalo, advised by{" "}
-            <a href="https://ubwp.buffalo.edu/jiayu-peng-lab/research/">
-              Dr. Jiayu Peng
+            <strong>Hi, I&apos;m Chuanyu Liu,</strong> a PhD student in
+            Computational Materials at SUNY, Buffalo, advised by{" "}
+            <a href="https://ubwp.buffalo.edu/jiayu-peng-lab/">
+              Prof. Jiayu Peng
             </a>
-            . My current interests center on AI for materials discovery, graph
-            neural networks, catalyst design, and machine learning models that
-            preserve physical structure.
+            . I obtained my Bachelor&apos;s in Applied Physics from Chongqing
+            University in 2021 and Masters in Molecular Engineering from the
+            University of Chicago in 2023. From 2023 to 2025, I was a full
+            Research Associate in the Department of Chemistry at MIT and Broad
+            Institute, working with{" "}
+            <a href="https://www.sampenglab.org/research">Prof. Sam Peng</a> on
+            the computational design of lanthanide-doped upconversion
+            nanoparticles (UCNPs) for molecular bioprobes.
           </p>
-          <ul className="contact-strip" aria-label="Profile links">
-            {profileLinks.map((link) => (
-              <li key={link.label}>
-                <span>{link.label}</span>
-                <a href={link.href}>{link.text}</a>
-              </li>
-            ))}
-          </ul>
         </div>
 
-        <aside className="portrait-panel" aria-label="Profile summary">
-          <img
-            src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=f2qAmGIAAAAJ&citpid=25"
-            alt="Chuanyu Liu profile"
-          />
-          <div>
-            <p className="panel-title">Research focus</p>
-            <p>
-              AI4Materials, ML interatomic potentials, graph neural networks,
-              quantum chemistry, and upconversion nanoparticle modeling.
-            </p>
+        <aside className="portrait-panel" aria-label="Profile links">
+          <img src="/profile.jpg" alt="Chuanyu Liu" />
+          <div className="portrait-meta">
+            <p className="panel-title">Chuanyu Liu</p>
+            <div className="icon-links" aria-label="Profile links">
+              {profileLinks.map((link) => (
+                <a key={link.label} href={link.href} aria-label={link.label}>
+                  <ProfileIcon icon={link.icon} />
+                </a>
+              ))}
+            </div>
           </div>
         </aside>
       </section>
 
       <section
-        className="section research-section"
-        id="research-path"
-        aria-labelledby="research-path-title"
+        className="section interest-section"
+        id="interests"
+        aria-labelledby="interests-title"
       >
         <div className="section-heading">
-          <p className="eyebrow">Training and research</p>
-          <h2 id="research-path-title">Research Path</h2>
-        </div>
-        <div className="timeline">
-          {researchPath.map((item) => (
-            <article className="timeline-item" key={item.period}>
-              <div className="timeline-period">{item.period}</div>
-              <div>
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
-                {"href" in item ? (
-                  <a className="text-link" href={item.href}>
-                    {item.linkText}
-                  </a>
-                ) : null}
-              </div>
-            </article>
-          ))}
+          <h2 id="interests-title">Research Interests</h2>
+          <p>
+            Current AI-driven materials discovery often faces a bottleneck:
+            models frequently over-idealize structures by predicting perfectly
+            ordered crystallographic sites, neglecting the thermodynamically
+            driven disorder inherent in bulk and surface structures under
+            real-world conditions. My methodological focus lies in developing
+            physics-informed, data-driven machine learning methods to capture
+            the fundamental laws of materials thermodynamics and surface
+            kinetics from atomistic simulations and characterization data,{" "}
+            <strong>bridging</strong> material behavior from the single-atom
+            level up to experimental observables. My goal is to close the loop
+            between idealized <strong>computational</strong> design, the
+            experimental workbench, and practical applications in catalysts,
+            electrolytes, and energy storage materials,{" "}
+            <strong>accelerating</strong> innovation at the AI-energy nexus.
+          </p>
         </div>
       </section>
 
@@ -217,12 +198,7 @@ export default function Home() {
         aria-labelledby="publications-title"
       >
         <div className="section-heading">
-          <p className="eyebrow">Public papers</p>
           <h2 id="publications-title">Publications</h2>
-          <p>
-            Listed from latest to oldest, with titles linked to public Google
-            Scholar entries.
-          </p>
         </div>
         <ol className="publication-list">
           {publications.map((paper) => (
@@ -245,17 +221,9 @@ export default function Home() {
           <p className="eyebrow">Contact</p>
           <h2>Let us connect</h2>
           <p>
-            I am open to conversations around computational materials,
-            AI4Science, catalyst discovery, and physically grounded machine
-            learning.
+            I am open to conversations about quantum chemistry, DFT, physically
+            grounded machine learning methods, and AI4S.
           </p>
-        </div>
-        <div className="contact-actions" aria-label="Contact links">
-          {profileLinks.map((link) => (
-            <a key={link.label} href={link.href}>
-              {link.text}
-            </a>
-          ))}
         </div>
       </section>
     </main>

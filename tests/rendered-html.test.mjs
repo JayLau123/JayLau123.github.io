@@ -30,13 +30,20 @@ test("server-renders the academic homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
-  assert.match(html, /Computational materials/);
-  assert.match(html, /Research Path/);
+  assert.match(html, /computational chemistry \| ai for science/);
+  assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
+  assert.match(html, /Research Interests/);
   assert.match(html, /Publications/);
-  assert.match(html, /jayjob2023@gmail\.com/);
-  assert.match(html, /Google Scholar/);
-  assert.match(html, /GitHub/);
-  assert.match(html, /LinkedIn/);
+  assert.match(html, /profile\.jpg/);
+  assert.match(html, /mailto:jayjob2023@gmail\.com/);
+  assert.match(html, /aria-label="Email"/);
+  assert.match(html, /aria-label="GitHub"/);
+  assert.match(html, /aria-label="Google Scholar"/);
+  assert.match(html, /aria-label="LinkedIn"/);
+  assert.doesNotMatch(html, /Research Path/);
+  assert.doesNotMatch(html, /Public papers/);
+  assert.doesNotMatch(html, /Research focus/);
+  assert.doesNotMatch(html, /<nav\b|site-header/);
 });
 
 test("keeps private and excluded content out of the site source", async () => {
