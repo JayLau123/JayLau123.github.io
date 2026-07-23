@@ -73,11 +73,6 @@ export const galleryYears = [
     "year": "2023",
     "photos": [
       {
-        "src": "/2023/2023_1.JPG",
-        "alt": "UChicago campus",
-        "caption": "Spring 2023. UChicago campus"
-      },
-      {
         "src": "/2023/2023_2.JPG",
         "alt": "Indiana Dunes National Park",
         "caption": "Summer 2023. Indiana Dunes National Park"

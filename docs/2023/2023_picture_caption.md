@@ -1,5 +1,3 @@
-2023_1: Spring 2023. UChicago campus
-
 2023_2: Summer 2023. Indiana Dunes National Park
 
 2023_3: Summer 2023. Yosemite National Park
@@ -13,4 +11,3 @@
 2023_7: Fall 2023. MIT campus
 
 2023_8: Fall 2023. Kayaking (Peng Lab 1.0)
-

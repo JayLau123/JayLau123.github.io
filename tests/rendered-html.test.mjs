@@ -57,7 +57,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /2026 Chuanyu Liu/);
   assert.match(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);
-  assert.doesNotMatch(html, /Schematic generated with GPT Image/);
+  assert.doesNotMatch(html, /GPT Image/);
   assert.match(html, /art of photography/);
   assert.doesNotMatch(html, /computational chemistry \| ai for science/);
   assert.doesNotMatch(html, /Research Path/);
@@ -89,8 +89,9 @@ test("server-renders the blog and gallery pages", async () => {
   assert.match(galleryHtml, /solo travel and snapping photos/);
   assert.match(
     galleryHtml,
-    /gallery-year-label[\s\S]*2026[\s\S]*2026\/2026_1\.JPG[\s\S]*Sunset in Chongqing[\s\S]*gallery-year-label[\s\S]*2025[\s\S]*2025\/2025_1\.JPG[\s\S]*Spring 2025\. Chongqing[\s\S]*gallery-year-label[\s\S]*2024[\s\S]*2024\/2024_1\.JPG[\s\S]*Winter 2024\. Rainy day in Kendall Square[\s\S]*gallery-year-label[\s\S]*2023[\s\S]*2023\/2023_1\.JPG[\s\S]*Spring 2023\. UChicago campus/,
+    /gallery-year-label[\s\S]*2026[\s\S]*2026\/2026_1\.JPG[\s\S]*Sunset in Chongqing[\s\S]*gallery-year-label[\s\S]*2025[\s\S]*2025\/2025_1\.JPG[\s\S]*Spring 2025\. Chongqing[\s\S]*gallery-year-label[\s\S]*2024[\s\S]*2024\/2024_1\.JPG[\s\S]*Winter 2024\. Rainy day in Kendall Square[\s\S]*gallery-year-label[\s\S]*2023[\s\S]*2023\/2023_2\.JPG[\s\S]*Summer 2023\. Indiana Dunes National Park/,
   );
+  assert.doesNotMatch(galleryHtml, /2023\/2023_1\.JPG|Spring 2023\. UChicago campus/);
   assert.match(galleryHtml, /Previous 2026 photo/);
   assert.match(galleryHtml, /Next 2026 photo/);
   assert.match(
