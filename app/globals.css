@@ -417,17 +417,26 @@ strong {
 
 .gallery-image-window {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   border-radius: 8px;
+  height: var(--gallery-frame-height, auto);
+  min-height: 220px;
+  transition: height 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .gallery-slide img {
   display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
   height: auto;
-  object-fit: cover;
-  animation: gallery-fade 180ms ease;
+  object-fit: contain;
+  border-radius: 8px;
+  animation: gallery-slide-in 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .gallery-slide figcaption {
@@ -436,7 +445,8 @@ strong {
   font-size: 0.94rem;
   line-height: 1.55;
   text-align: right;
-  animation: gallery-fade 180ms ease;
+  animation: gallery-caption-in 360ms ease;
+  will-change: opacity, transform;
 }
 
 .gallery-arrow {
@@ -485,13 +495,27 @@ strong {
   right: 16px;
 }
 
-@keyframes gallery-fade {
+@keyframes gallery-slide-in {
   from {
-    opacity: 0.72;
+    opacity: 0;
+    transform: translateY(10px) scale(0.992);
   }
 
   to {
     opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gallery-caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -557,10 +581,6 @@ strong {
 
   .gallery-year-list {
     gap: 36px;
-  }
-
-  .gallery-slide img {
-    aspect-ratio: 4 / 3;
   }
 
   .gallery-arrow {
