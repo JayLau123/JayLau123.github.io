@@ -12,11 +12,8 @@ export default function GalleryPage() {
         <p>
           Outside of my research, I find immense inspiration in solo travel and
           snapping photos along the way. I value the texture of every city I have
-          lived in and the brilliant individuals I have met. This gallery is
-          also a special tribute to the mentors who have profoundly shaped my
-          scientific journey. Working with such insightful minds has been one of
-          the best parts of my research career so far, and these photographs
-          capture the spirit of our time together.
+          lived in and the brilliant individuals I have met, and these photos
+          are my way of holding on to those moments.
         </p>
       </section>
 

@@ -444,7 +444,7 @@ strong {
   color: var(--muted);
   font-size: 0.94rem;
   line-height: 1.55;
-  text-align: right;
+  text-align: center;
   animation: gallery-caption-in 360ms ease;
   will-change: opacity, transform;
 }
