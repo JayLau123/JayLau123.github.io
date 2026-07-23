@@ -10,7 +10,7 @@ export default function GalleryPage() {
       <section className="page-hero gallery-hero" aria-labelledby="gallery-title">
         <h1 id="gallery-title">Gallery</h1>
         <p>
-          Outside of my research, I find immense inspiration in solo travel and
+          Outside of the research, I find immense inspiration in solo travel and
           snapping photos along the way. I value the texture of every city I have
           lived in and the brilliant individuals I have met, and these photos
           are my way of holding on to those moments.

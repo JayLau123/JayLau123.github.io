@@ -57,7 +57,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /2026 Chuanyu Liu/);
   assert.match(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);
-  assert.match(html, /Schematic generated with GPT Image/);
+  assert.doesNotMatch(html, /Schematic generated with GPT Image/);
   assert.match(html, /art of photography/);
   assert.doesNotMatch(html, /computational chemistry \| ai for science/);
   assert.doesNotMatch(html, /Research Path/);

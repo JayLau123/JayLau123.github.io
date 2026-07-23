@@ -54,7 +54,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <p>
         &copy; 2026 Chuanyu Liu. Built with OpenAI Sites. Hosted on GitHub
-        Pages. Schematic generated with GPT Image.
+        Pages.
       </p>
     </footer>
   );
