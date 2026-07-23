@@ -103,18 +103,19 @@ test("server-renders the blog and gallery pages", async () => {
 });
 
 test("keeps private and excluded content out of the site source", async () => {
-  const [page, blog, carousel, gallery, shell, layout, packageJson] =
+  const [page, blog, carousel, gallery, galleryData, shell, layout, packageJson] =
     await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/blog/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/gallery-year-carousel.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/gallery/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/gallery-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/components/site-shell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  const combined = `${page}\n${blog}\n${carousel}\n${gallery}\n${shell}\n${layout}\n${packageJson}`;
+  const combined = `${page}\n${blog}\n${carousel}\n${gallery}\n${galleryData}\n${shell}\n${layout}\n${packageJson}`;
   const privateDocumentPattern = new RegExp(
     String.raw`\b${"C"}${"V"}\b|curriculum vitae|download`,
     "i",
