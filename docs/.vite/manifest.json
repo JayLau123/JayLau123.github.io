@@ -1,6 +1,6 @@
 {
-  "_framework-XU8gKkFC.js": {
-    "file": "assets/framework-XU8gKkFC.js",
+  "_framework-CXnKph_e.js": {
+    "file": "assets/framework-CXnKph_e.js",
     "name": "framework",
     "imports": [
       "_rolldown-runtime-S-ySWqyJ.js"
@@ -10,27 +10,38 @@
     "file": "assets/rolldown-runtime-S-ySWqyJ.js",
     "name": "rolldown-runtime"
   },
+  "app/components/gallery-year-carousel.tsx": {
+    "file": "assets/gallery-year-carousel-Cm-_QrB4.js",
+    "name": "gallery-year-carousel",
+    "src": "app/components/gallery-year-carousel.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_framework-CXnKph_e.js"
+    ]
+  },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._411db1e72ff1d4e0dfb72e4a8d0c6b6d/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-BJNZ_zhe.js",
+    "file": "assets/layout-segment-context-DaGgUCDp.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._411db1e72ff1d4e0dfb72e4a8d0c6b6d/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime-S-ySWqyJ.js",
       "virtual:vinext-app-browser-entry",
-      "_framework-XU8gKkFC.js"
+      "_framework-CXnKph_e.js"
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-CpaAYl0X.js",
+    "file": "assets/index-DFsonXO-.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
     "imports": [
       "_rolldown-runtime-S-ySWqyJ.js",
-      "_framework-XU8gKkFC.js"
+      "_framework-CXnKph_e.js"
     ],
     "dynamicImports": [
+      "app/components/gallery-year-carousel.tsx",
       "virtual:vinext-app-browser-entry",
       "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._411db1e72ff1d4e0dfb72e4a8d0c6b6d/node_modules/vinext/dist/shims/layout-segment-context.js"
     ]

@@ -89,27 +89,32 @@ test("server-renders the blog and gallery pages", async () => {
   assert.match(galleryHtml, /solo travel and snapping photos/);
   assert.match(
     galleryHtml,
-    /gallery-2025\.jpg[\s\S]*Winter 2025\. Christmas holiday[\s\S]*gallery-2024\.jpg[\s\S]*Summer 2024\. Charles river[\s\S]*gallery-2023\.jpg[\s\S]*Fall 2023\. Kayaking/,
+    /gallery-year-label[\s\S]*2026[\s\S]*2026\/2026_1\.JPG[\s\S]*Sunset in Chongqing[\s\S]*gallery-year-label[\s\S]*2025[\s\S]*2025\/2025_1\.JPG[\s\S]*Spring 2025\. Chongqing[\s\S]*gallery-year-label[\s\S]*2024[\s\S]*2024\/2024_1\.JPG[\s\S]*Winter 2024\. Rainy day in Kendall Square[\s\S]*gallery-year-label[\s\S]*2023[\s\S]*2023\/2023_1\.JPG[\s\S]*Spring 2023\. UChicago campus/,
   );
+  assert.match(galleryHtml, /Previous 2026 photo/);
+  assert.match(galleryHtml, /Next 2026 photo/);
   assert.match(
     galleryHtml,
     /href="\/gallery\/" aria-current="page"[\s\S]*Gallery/,
   );
   assert.doesNotMatch(galleryHtml, /travel \| people \| mentorship/);
   assert.doesNotMatch(galleryHtml, /Photos will be added soon\./);
+  assert.doesNotMatch(galleryHtml, /gallery-2025\.jpg|gallery-2024\.jpg|gallery-2023\.jpg/);
 });
 
 test("keeps private and excluded content out of the site source", async () => {
-  const [page, blog, gallery, shell, layout, packageJson] = await Promise.all([
+  const [page, blog, carousel, gallery, shell, layout, packageJson] =
+    await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/blog/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/gallery-year-carousel.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/gallery/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/site-shell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  const combined = `${page}\n${blog}\n${gallery}\n${shell}\n${layout}\n${packageJson}`;
+  const combined = `${page}\n${blog}\n${carousel}\n${gallery}\n${shell}\n${layout}\n${packageJson}`;
   const privateDocumentPattern = new RegExp(
     String.raw`\b${"C"}${"V"}\b|curriculum vitae|download`,
     "i",
