@@ -6,11 +6,10 @@ export default function BlogPage() {
       <SiteHeader active="blog" />
 
       <section className="page-hero" aria-labelledby="blog-title">
-        <p className="eyebrow">notes | research logs</p>
         <h1 id="blog-title">Blog</h1>
         <p>
-          Short notes on computational chemistry, DFT, physically grounded
-          machine learning, and AI for science will live here.
+          A collection of research notes and unpolished thoughts. All views
+          expressed here are strictly my own.
         </p>
       </section>
 

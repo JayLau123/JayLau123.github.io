@@ -17,9 +17,16 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /2026 Chuanyu Liu/);
   assert.match(html, /Hosted on GitHub Pages/);
   assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);
+  assert.match(blogHtml, /research notes and unpolished thoughts/);
   assert.match(blogHtml, /Posts will be added soon\./);
   assert.match(galleryHtml, /<h1 id="gallery-title">Gallery<\/h1>/);
-  assert.match(galleryHtml, /Photos will be added soon\./);
+  assert.match(galleryHtml, /gallery-2025\.jpg/);
+  assert.match(galleryHtml, /gallery-2024\.jpg/);
+  assert.match(galleryHtml, /gallery-2023\.jpg/);
+  assert.match(galleryHtml, /Winter 2025\. Christmas holiday/);
+  assert.match(galleryHtml, /Summer 2024\. Charles river/);
+  assert.match(galleryHtml, /Fall 2023\. Kayaking/);
+  assert.doesNotMatch(galleryHtml, /Photos will be added soon\./);
   assert.doesNotMatch(html, /\bCV\b|curriculum vitae|download/i);
   assert.doesNotMatch(html, /Self_learning_DFT_Workbench|PerovskiteOrderingGCNNs|NOMAD/);
 });

@@ -1,12 +1,29 @@
 import { SiteFooter, SiteHeader } from "../components/site-shell";
 
+const photos = [
+  {
+    src: "/gallery-2025.jpg",
+    alt: "Group dinner during the 2025 Christmas holiday",
+    caption: "2025: Winter 2025. Christmas holiday",
+  },
+  {
+    src: "/gallery-2024.jpg",
+    alt: "Research group photo by the Charles River in summer 2024",
+    caption: "2024: Summer 2024. Charles river",
+  },
+  {
+    src: "/gallery-2023.jpg",
+    alt: "Kayaking on the Charles River in fall 2023",
+    caption: "2023: Fall 2023. Kayaking",
+  },
+] as const;
+
 export default function GalleryPage() {
   return (
     <main>
       <SiteHeader active="gallery" />
 
       <section className="page-hero gallery-hero" aria-labelledby="gallery-title">
-        <p className="eyebrow">travel | people | mentorship</p>
         <h1 id="gallery-title">Gallery</h1>
         <p>
           Outside of my research, I find immense inspiration in solo travel and
@@ -23,12 +40,14 @@ export default function GalleryPage() {
         <div className="section-heading">
           <h2 id="photos-title">Photos</h2>
         </div>
-        <div className="gallery-placeholder-grid" aria-label="Photo placeholders">
-          <div />
-          <div />
-          <div />
+        <div className="gallery-photo-list">
+          {photos.map((photo) => (
+            <figure className="gallery-photo" key={photo.src}>
+              <img src={photo.src} alt={photo.alt} />
+              <figcaption>{photo.caption}</figcaption>
+            </figure>
+          ))}
         </div>
-        <p className="gallery-note">Photos will be added soon.</p>
       </section>
 
       <SiteFooter />

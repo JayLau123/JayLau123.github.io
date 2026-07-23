@@ -30,7 +30,6 @@ test("server-renders the academic homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
-  assert.match(html, /computational chemistry \| ai for science/);
   assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
   assert.match(html, /Research Interests/);
   assert.match(html, /research-schematic-v2\.png/);
@@ -60,6 +59,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Hosted on GitHub Pages/);
   assert.match(html, /Schematic generated with GPT Image/);
   assert.match(html, /art of photography/);
+  assert.doesNotMatch(html, /computational chemistry \| ai for science/);
   assert.doesNotMatch(html, /Research Path/);
   assert.doesNotMatch(html, /Public papers/);
   assert.doesNotMatch(html, /Research focus/);
@@ -76,19 +76,27 @@ test("server-renders the blog and gallery pages", async () => {
   const blogHtml = await blogResponse.text();
   assert.match(blogHtml, /<title>Chuanyu Liu<\/title>/i);
   assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);
+  assert.match(blogHtml, /research notes and unpolished thoughts/);
+  assert.match(blogHtml, /strictly my own/);
   assert.match(blogHtml, /Posts will be added soon\./);
   assert.match(blogHtml, /href="\/blog\/" aria-current="page"[\s\S]*Blog/);
+  assert.doesNotMatch(blogHtml, /notes \| research logs/);
 
   const galleryResponse = await render("/gallery");
   assert.equal(galleryResponse.status, 200);
   const galleryHtml = await galleryResponse.text();
   assert.match(galleryHtml, /<h1 id="gallery-title">Gallery<\/h1>/);
   assert.match(galleryHtml, /solo travel and snapping photos/);
-  assert.match(galleryHtml, /Photos will be added soon\./);
+  assert.match(
+    galleryHtml,
+    /gallery-2025\.jpg[\s\S]*Winter 2025\. Christmas holiday[\s\S]*gallery-2024\.jpg[\s\S]*Summer 2024\. Charles river[\s\S]*gallery-2023\.jpg[\s\S]*Fall 2023\. Kayaking/,
+  );
   assert.match(
     galleryHtml,
     /href="\/gallery\/" aria-current="page"[\s\S]*Gallery/,
   );
+  assert.doesNotMatch(galleryHtml, /travel \| people \| mentorship/);
+  assert.doesNotMatch(galleryHtml, /Photos will be added soon\./);
 });
 
 test("keeps private and excluded content out of the site source", async () => {

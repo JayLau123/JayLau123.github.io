@@ -136,7 +136,6 @@ export default function Home() {
 
       <section className="hero" id="about" aria-labelledby="page-title">
         <div className="hero-copy">
-          <p className="eyebrow">computational chemistry | ai for science</p>
           <h1 id="page-title">Chuanyu Liu</h1>
           <p>
             <strong>Hi, I&apos;m Chuanyu Liu,</strong> a PhD student in
