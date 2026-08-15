@@ -3,10 +3,11 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("exports static GitHub Pages pages", async () => {
-  const [html, blogHtml, galleryHtml] = await Promise.all([
+  const [html, blogHtml, galleryHtml, galleryData] = await Promise.all([
     readFile(new URL("../docs/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/blog/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/gallery/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../app/gallery-data.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
@@ -48,6 +49,8 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(galleryHtml, /2023\/2023_2\.JPG/);
   assert.match(galleryHtml, /Sunset in Chongqing/);
   assert.match(galleryHtml, /Spring 2025\. Chongqing/);
+  assert.match(galleryData, /2026_2\.JPG[\s\S]*One Thousand and One Nights/);
+  assert.match(galleryData, /2025_3\.jpg[\s\S]*Christmas holiday \(Peng Lab 2\.0\)/);
   assert.match(galleryHtml, /Winter 2024\. Rainy day in Kendall Square/);
   assert.match(galleryHtml, /Summer 2023\. Indiana Dunes National Park/);
   assert.match(galleryHtml, /Previous 2026 photo/);

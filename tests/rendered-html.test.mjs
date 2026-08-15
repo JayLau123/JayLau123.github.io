@@ -113,6 +113,12 @@ test("server-renders the blog and gallery pages", async () => {
     galleryHtml,
     /gallery-year-label[\s\S]*2026[\s\S]*2026\/2026_1\.JPG[\s\S]*Sunset in Chongqing[\s\S]*gallery-year-label[\s\S]*2025[\s\S]*2025\/2025_1\.JPG[\s\S]*Spring 2025\. Chongqing[\s\S]*gallery-year-label[\s\S]*2024[\s\S]*2024\/2024_1\.JPG[\s\S]*Winter 2024\. Rainy day in Kendall Square[\s\S]*gallery-year-label[\s\S]*2023[\s\S]*2023\/2023_2\.JPG[\s\S]*Summer 2023\. Indiana Dunes National Park/,
   );
+  const galleryData = await readFile(
+    new URL("../app/gallery-data.ts", import.meta.url),
+    "utf8",
+  );
+  assert.match(galleryData, /2026_2\.JPG[\s\S]*One Thousand and One Nights/);
+  assert.match(galleryData, /2025_3\.jpg[\s\S]*Christmas holiday \(Peng Lab 2\.0\)/);
   assert.doesNotMatch(galleryHtml, /2023\/2023_1\.JPG|Spring 2023\. UChicago campus/);
   assert.match(galleryHtml, /Previous 2026 photo/);
   assert.match(galleryHtml, /Next 2026 photo/);
