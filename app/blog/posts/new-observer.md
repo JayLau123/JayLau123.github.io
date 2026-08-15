@@ -22,7 +22,7 @@ $$
 \hat{H} \psi = E \psi
 $$
 
-- $\hat{H}$: the Hamiltonian operator, representing the energy measurement.
+- $\hat{H}:$ the Hamiltonian operator, representing the energy measurement.
 - $\psi$: the intrinsic, uncollapsed state of the quantum system.
 - $E$: the energy eigenvalue yielded by the measurement.
 
@@ -34,7 +34,7 @@ $$
 \hat{H}_{\text{human}} \psi = L \psi
 $$
 
-- $\hat{H}_{\text{human}}$: the human observer acting as the measurement operator.
+- $\hat{H}_{\text{human}}:$ the human observer acting as the measurement operator.
 - $\psi$: the intrinsic, unobserved state of nature.
 - $L$: the resulting eigenvalue, collapsing into human constructs such as English, Chinese, or classical mathematical symbols.
 

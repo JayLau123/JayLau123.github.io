@@ -14,12 +14,17 @@ const markdownOptions = {
 const posts = [
   {
     slug: "from-observation-to-integration",
-    title: "From Observation to Integration: The Four Paradigms of Scientific Discovery",
+    title:
+      "From Observation to Integration: The Four Paradigms of Scientific Discovery",
+    date: "09/2025",
+    dateTime: "2025-09",
     body: firstPost,
   },
   {
     slug: "beyond-the-shadow-of-language",
     title: "Beyond the Shadow of Language: AI as the New Observer of Nature",
+    date: "05/2026",
+    dateTime: "2026-05",
     body: secondPost,
   },
 ] as const;
@@ -60,9 +65,14 @@ export default function BlogPage() {
                 {...markdownOptions}
                 components={{
                   h1: ({ children }) => (
-                    <h1>
-                      {index + 1}. {children}
-                    </h1>
+                    <>
+                      <h1>
+                        {index + 1}. {children}
+                      </h1>
+                      <p className="blog-post-date">
+                        <time dateTime={post.dateTime}>{post.date}</time>
+                      </p>
+                    </>
                   ),
                 }}
               >

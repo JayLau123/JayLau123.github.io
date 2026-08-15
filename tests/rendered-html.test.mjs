@@ -81,6 +81,8 @@ test("server-renders the blog and gallery pages", async () => {
   assert.doesNotMatch(blogHtml, /<h2 id="posts-title">Content<\/h2>/);
   assert.match(blogHtml, /1(?:<!-- -->)?\.\s*(?:<!-- -->)?From Observation to Integration: The Four Paradigms of Scientific Discovery/);
   assert.match(blogHtml, /2(?:<!-- -->)?\.\s*(?:<!-- -->)?Beyond the Shadow of Language: AI as the New Observer of Nature/);
+  assert.match(blogHtml, /<time dateTime="2025-09">09\/2025<\/time>/);
+  assert.match(blogHtml, /<time dateTime="2026-05">05\/2026<\/time>/);
   assert.match(blogHtml, /href="#from-observation-to-integration"/);
   assert.match(blogHtml, /href="#beyond-the-shadow-of-language"/);
   assert.match(blogHtml, /id="from-observation-to-integration"/);
@@ -92,6 +94,7 @@ test("server-renders the blog and gallery pages", async () => {
   assert.match(blogHtml, /class="katex-display"/);
   assert.match(blogHtml, /application\/x-tex/);
   assert.match(blogHtml, /<mi>H<\/mi>/);
+  assert.match(blogHtml, /<mo>:<\/mo>/);
   assert.match(blogHtml, /Uncovering the &quot;Alien&quot; Eigenvalue/);
   assert.match(blogHtml, /href="\/blog\/" aria-current="page"[\s\S]*Blog/);
   assert.doesNotMatch(blogHtml, /notes \| research logs/);
