@@ -47,12 +47,14 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(galleryHtml, /2025\/2025_1\.JPG/);
   assert.match(galleryHtml, /2024\/2024_1\.JPG/);
   assert.match(galleryHtml, /2023\/2023_2\.JPG/);
-  assert.match(galleryHtml, /Sunset in Chongqing/);
-  assert.match(galleryHtml, /Spring 2025\. Chongqing/);
+  assert.match(galleryHtml, /Sunset in winter\. Chongqing/);
+  assert.match(galleryHtml, /01\/2025\. Yangtze River\. Chongqing/);
   assert.match(galleryData, /2026_2\.JPG[\s\S]*One Thousand and One Nights/);
+  assert.match(galleryData, /2026_3\.JPG[\s\S]*Angeles Gate Park/);
+  assert.match(galleryData, /2026_4\.JPG[\s\S]*Sunset after rain/);
   assert.match(galleryData, /2025_3\.jpg[\s\S]*Christmas holiday \(Peng Lab 2\.0\)/);
-  assert.match(galleryHtml, /Winter 2024\. Rainy day in Kendall Square/);
-  assert.match(galleryHtml, /Summer 2023\. Indiana Dunes National Park/);
+  assert.match(galleryHtml, /01\/2024\. Rainy day in Kendall Square/);
+  assert.match(galleryHtml, /05\/2023\. Indiana Dunes National Park/);
   assert.match(galleryHtml, /Previous 2026 photo/);
   assert.match(galleryHtml, /Next 2026 photo/);
   assert.doesNotMatch(galleryHtml, /Photos will be added soon\./);
