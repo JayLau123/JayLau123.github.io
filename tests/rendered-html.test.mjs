@@ -81,11 +81,14 @@ test("server-renders the blog and gallery pages", async () => {
   assert.match(blogHtml, /From Observation to Integration: The Four Paradigms of Scientific Discovery/);
   assert.match(blogHtml, /Beyond the Shadow of Language: AI as the New Observer of Nature/);
   assert.match(blogHtml, /The Fourth Paradigm: AI for Science \(AI4S\)/);
-  assert.match(blogHtml, /H_hat psi = E psi/);
+  assert.match(blogHtml, /class="katex-display"/);
+  assert.match(blogHtml, /application\/x-tex/);
+  assert.match(blogHtml, /<mi>H<\/mi>/);
   assert.match(blogHtml, /Uncovering the &quot;Alien&quot; Eigenvalue/);
   assert.match(blogHtml, /href="\/blog\/" aria-current="page"[\s\S]*Blog/);
   assert.doesNotMatch(blogHtml, /notes \| research logs/);
   assert.doesNotMatch(blogHtml, /Posts will be added soon\./);
+  assert.doesNotMatch(blogHtml, /H_hat psi = E psi/);
 
   const galleryResponse = await render("/gallery");
   assert.equal(galleryResponse.status, 200);

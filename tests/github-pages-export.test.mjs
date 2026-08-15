@@ -21,8 +21,12 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(blogHtml, /From Observation to Integration: The Four Paradigms of Scientific Discovery/);
   assert.match(blogHtml, /Beyond the Shadow of Language: AI as the New Observer of Nature/);
   assert.match(blogHtml, /The Fourth Paradigm: AI for Science \(AI4S\)/);
+  assert.match(blogHtml, /class="katex-display"/);
+  assert.match(blogHtml, /application\/x-tex/);
+  assert.match(blogHtml, /<mi>H<\/mi>/);
   assert.match(blogHtml, /Uncovering the &quot;Alien&quot; Eigenvalue/);
   assert.doesNotMatch(blogHtml, /Posts will be added soon\./);
+  assert.doesNotMatch(blogHtml, /H_hat psi = E psi/);
   assert.match(galleryHtml, /<h1 id="gallery-title">Gallery<\/h1>/);
   assert.match(galleryHtml, /2026\/2026_1\.JPG/);
   assert.match(galleryHtml, /2025\/2025_1\.JPG/);
