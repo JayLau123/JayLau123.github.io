@@ -13,19 +13,19 @@ const markdownOptions = {
 
 const posts = [
   {
+    slug: "beyond-the-shadow-of-language",
+    title: "Beyond the Shadow of Language: AI as the New Observer of Nature",
+    date: "05/2026",
+    dateTime: "2026-05",
+    body: secondPost,
+  },
+  {
     slug: "from-observation-to-integration",
     title:
       "From Observation to Integration: The Four Paradigms of Scientific Discovery",
     date: "09/2025",
     dateTime: "2025-09",
     body: firstPost,
-  },
-  {
-    slug: "beyond-the-shadow-of-language",
-    title: "Beyond the Shadow of Language: AI as the New Observer of Nature",
-    date: "05/2026",
-    dateTime: "2026-05",
-    body: secondPost,
   },
 ] as const;
 
@@ -49,6 +49,12 @@ export default function BlogPage() {
               <li key={post.slug}>
                 <SmoothScrollLink href={`#${post.slug}`}>
                   <span>{index + 1}. {post.title}</span>
+                  <time
+                    className="blog-content-date"
+                    dateTime={post.dateTime}
+                  >
+                    {post.date}
+                  </time>
                   <span className="blog-content-arrow" aria-hidden="true">
                     &rarr;
                   </span>

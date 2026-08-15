@@ -19,10 +19,10 @@ To understand this paradigm shift, we can look through the lens of quantum mecha
 In traditional physics, measuring the energy of a quantum system is expressed as:
 
 $$
-\hat{H} \psi = E \psi
+\widehat{H} \psi = E \psi
 $$
 
-- $\hat{H}:$ the Hamiltonian operator, representing the energy measurement.
+- $\widehat{H}:$ the Hamiltonian operator, representing the energy measurement.
 - $\psi$: the intrinsic, uncollapsed state of the quantum system.
 - $E$: the energy eigenvalue yielded by the measurement.
 
@@ -31,10 +31,10 @@ $$
 If we view humanity as a collective operator measuring the wave function of nature, the resulting eigenvalue we obtain is what we call human language.
 
 $$
-\hat{H}_{\text{human}} \psi = L \psi
+\widehat{H}_{\text{human}} \psi = L \psi
 $$
 
-- $\hat{H}_{\text{human}}:$ the human observer acting as the measurement operator.
+- $\widehat{H}_{\text{human}}:$ the human observer acting as the measurement operator.
 - $\psi$: the intrinsic, unobserved state of nature.
 - $L$: the resulting eigenvalue, collapsing into human constructs such as English, Chinese, or classical mathematical symbols.
 

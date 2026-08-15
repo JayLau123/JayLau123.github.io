@@ -79,8 +79,10 @@ test("server-renders the blog and gallery pages", async () => {
   assert.match(blogHtml, /research notes and unpolished thoughts/);
   assert.match(blogHtml, /strictly my own/);
   assert.doesNotMatch(blogHtml, /<h2 id="posts-title">Content<\/h2>/);
-  assert.match(blogHtml, /1(?:<!-- -->)?\.\s*(?:<!-- -->)?From Observation to Integration: The Four Paradigms of Scientific Discovery/);
-  assert.match(blogHtml, /2(?:<!-- -->)?\.\s*(?:<!-- -->)?Beyond the Shadow of Language: AI as the New Observer of Nature/);
+  assert.match(blogHtml, /1(?:<!-- -->)?\.\s*(?:<!-- -->)?Beyond the Shadow of Language: AI as the New Observer of Nature/);
+  assert.match(blogHtml, /2(?:<!-- -->)?\.\s*(?:<!-- -->)?From Observation to Integration: The Four Paradigms of Scientific Discovery/);
+  assert.match(blogHtml, /class="blog-content-date" dateTime="2026-05">05\/2026/);
+  assert.match(blogHtml, /class="blog-content-date" dateTime="2025-09">09\/2025/);
   assert.match(blogHtml, /<time dateTime="2025-09">09\/2025<\/time>/);
   assert.match(blogHtml, /<time dateTime="2026-05">05\/2026<\/time>/);
   assert.match(blogHtml, /href="#from-observation-to-integration"/);
