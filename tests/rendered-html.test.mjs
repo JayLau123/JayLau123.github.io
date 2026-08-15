@@ -78,8 +78,15 @@ test("server-renders the blog and gallery pages", async () => {
   assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);
   assert.match(blogHtml, /research notes and unpolished thoughts/);
   assert.match(blogHtml, /strictly my own/);
+  assert.match(blogHtml, /<h2 id="posts-title">Content<\/h2>/);
   assert.match(blogHtml, /From Observation to Integration: The Four Paradigms of Scientific Discovery/);
   assert.match(blogHtml, /Beyond the Shadow of Language: AI as the New Observer of Nature/);
+  assert.match(blogHtml, /href="#from-observation-to-integration"/);
+  assert.match(blogHtml, /href="#beyond-the-shadow-of-language"/);
+  assert.match(blogHtml, /id="from-observation-to-integration"/);
+  assert.match(blogHtml, /id="beyond-the-shadow-of-language"/);
+  assert.match(blogHtml, /class="blog-page-number">1/);
+  assert.match(blogHtml, /class="blog-page-number">2/);
   assert.match(blogHtml, /The Fourth Paradigm: AI for Science \(AI4S\)/);
   assert.match(blogHtml, /class="katex-display"/);
   assert.match(blogHtml, /application\/x-tex/);
