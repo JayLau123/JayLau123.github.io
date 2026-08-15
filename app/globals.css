@@ -361,12 +361,6 @@ strong {
   transform: translateX(4px);
 }
 
-.blog-content-number {
-  color: var(--amber);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.1rem;
-}
-
 .blog-content-arrow {
   color: currentColor;
   opacity: 0;

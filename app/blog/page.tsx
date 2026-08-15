@@ -37,17 +37,13 @@ export default function BlogPage() {
         </p>
       </section>
 
-      <section className="section compact-section" aria-labelledby="posts-title">
-        <div className="section-heading">
-          <h2 id="posts-title">Content</h2>
-        </div>
+      <section className="section compact-section" aria-label="Blog posts">
         <nav className="blog-content" id="blog-content" aria-label="Blog contents">
           <ol className="blog-content-list">
             {posts.map((post, index) => (
               <li key={post.slug}>
                 <SmoothScrollLink href={`#${post.slug}`}>
-                  <span className="blog-content-number">{index + 1}.</span>
-                  <span>{post.title}</span>
+                  <span>{index + 1}. {post.title}</span>
                   <span className="blog-content-arrow" aria-hidden="true">
                     &rarr;
                   </span>
@@ -60,7 +56,18 @@ export default function BlogPage() {
         <div className="blog-list">
           {posts.map((post, index) => (
             <article className="blog-post" id={post.slug} key={post.slug}>
-              <ReactMarkdown {...markdownOptions}>{post.body}</ReactMarkdown>
+              <ReactMarkdown
+                {...markdownOptions}
+                components={{
+                  h1: ({ children }) => (
+                    <h1>
+                      {index + 1}. {children}
+                    </h1>
+                  ),
+                }}
+              >
+                {post.body}
+              </ReactMarkdown>
               <footer className="blog-post-footer">
                 <nav
                   className="blog-post-navigation"

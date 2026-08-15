@@ -18,9 +18,9 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /Hosted on GitHub Pages/);
   assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);
   assert.match(blogHtml, /research notes and unpolished thoughts/);
-  assert.match(blogHtml, /<h2 id="posts-title">Content<\/h2>/);
-  assert.match(blogHtml, /From Observation to Integration: The Four Paradigms of Scientific Discovery/);
-  assert.match(blogHtml, /Beyond the Shadow of Language: AI as the New Observer of Nature/);
+  assert.doesNotMatch(blogHtml, /<h2 id="posts-title">Content<\/h2>/);
+  assert.match(blogHtml, /1(?:<!-- -->)?\.\s*(?:<!-- -->)?From Observation to Integration: The Four Paradigms of Scientific Discovery/);
+  assert.match(blogHtml, /2(?:<!-- -->)?\.\s*(?:<!-- -->)?Beyond the Shadow of Language: AI as the New Observer of Nature/);
   assert.match(blogHtml, /href="#from-observation-to-integration"/);
   assert.match(blogHtml, /href="#beyond-the-shadow-of-language"/);
   assert.match(blogHtml, /id="from-observation-to-integration"/);
@@ -34,6 +34,7 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(blogHtml, /Uncovering the &quot;Alien&quot; Eigenvalue/);
   assert.doesNotMatch(blogHtml, /Posts will be added soon\./);
   assert.doesNotMatch(blogHtml, /H_hat psi = E psi/);
+  assert.doesNotMatch(blogHtml, /<strong>/);
   assert.match(galleryHtml, /<h1 id="gallery-title">Gallery<\/h1>/);
   assert.match(galleryHtml, /2026\/2026_1\.JPG/);
   assert.match(galleryHtml, /2025\/2025_1\.JPG/);
