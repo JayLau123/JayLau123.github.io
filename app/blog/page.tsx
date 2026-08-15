@@ -1,6 +1,7 @@
 import rehypeKatex from "rehype-katex";
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
+import { SmoothScrollLink } from "../components/smooth-scroll-link";
 import { SiteFooter, SiteHeader } from "../components/site-shell";
 import firstPost from "./posts/four-paradigms.md?raw";
 import secondPost from "./posts/new-observer.md?raw";
@@ -44,13 +45,13 @@ export default function BlogPage() {
           <ol className="blog-content-list">
             {posts.map((post, index) => (
               <li key={post.slug}>
-                <a href={`#${post.slug}`}>
+                <SmoothScrollLink href={`#${post.slug}`}>
                   <span className="blog-content-number">{index + 1}.</span>
                   <span>{post.title}</span>
                   <span className="blog-content-arrow" aria-hidden="true">
                     &rarr;
                   </span>
-                </a>
+                </SmoothScrollLink>
               </li>
             ))}
           </ol>
@@ -66,7 +67,9 @@ export default function BlogPage() {
                   aria-label={`Post ${index + 1} navigation`}
                 >
                   {index > 0 ? (
-                    <a href={`#${posts[index - 1].slug}`}>Previous</a>
+                    <SmoothScrollLink href={`#${posts[index - 1].slug}`}>
+                      Previous
+                    </SmoothScrollLink>
                   ) : (
                     <span aria-hidden="true" />
                   )}
@@ -74,14 +77,19 @@ export default function BlogPage() {
                     {index + 1} / {posts.length}
                   </span>
                   {index < posts.length - 1 ? (
-                    <a href={`#${posts[index + 1].slug}`}>Next</a>
+                    <SmoothScrollLink href={`#${posts[index + 1].slug}`}>
+                      Next
+                    </SmoothScrollLink>
                   ) : (
                     <span aria-hidden="true" />
                   )}
                 </nav>
-                <a className="blog-back-to-content" href="#blog-content">
+                <SmoothScrollLink
+                  className="blog-back-to-content"
+                  href="#blog-content"
+                >
                   Back to content
-                </a>
+                </SmoothScrollLink>
               </footer>
             </article>
           ))}
