@@ -328,8 +328,8 @@ strong {
 
 .blog-content-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 20px;
+  grid-template-columns: 1fr;
+  gap: 4px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -781,9 +781,6 @@ strong {
     padding: 54px 0 42px;
   }
 
-  .blog-content-list {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 520px) {
