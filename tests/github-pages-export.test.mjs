@@ -27,6 +27,7 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(blogHtml, /id="beyond-the-shadow-of-language"/);
   assert.match(blogHtml, /class="blog-page-number">1/);
   assert.match(blogHtml, /class="blog-page-number">2/);
+  assert.doesNotMatch(blogHtml, />Next<\/a>/);
   assert.match(blogHtml, /The Fourth Paradigm: AI for Science \(AI4S\)/);
   assert.match(blogHtml, /class="katex-display"/);
   assert.match(blogHtml, /application\/x-tex/);

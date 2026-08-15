@@ -83,13 +83,7 @@ export default function BlogPage() {
                   <span className="blog-page-number">
                     {index + 1} / {posts.length}
                   </span>
-                  {index < posts.length - 1 ? (
-                    <SmoothScrollLink href={`#${posts[index + 1].slug}`}>
-                      Next
-                    </SmoothScrollLink>
-                  ) : (
-                    <span aria-hidden="true" />
-                  )}
+                  <span aria-hidden="true" />
                 </nav>
                 <SmoothScrollLink
                   className="blog-back-to-content"
