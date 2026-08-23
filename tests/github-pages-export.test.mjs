@@ -15,7 +15,7 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /Recent News/);
   assert.match(html, /research-schematic-v2\.png/);
   assert.match(html, /profile\.jpg/);
-  assert.match(html, /href="https:\/\/x\.com\/home" aria-label="X \(Twitter\)"/);
+  assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
   assert.match(html, /Hosted on GitHub Pages/);
   assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);

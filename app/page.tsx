@@ -26,7 +26,7 @@ const profileLinks = [
   },
   {
     label: "X (Twitter)",
-    href: "https://x.com/home",
+    href: "https://x.com/Chuanyuliu21",
     icon: "x",
   },
 ] as const;
