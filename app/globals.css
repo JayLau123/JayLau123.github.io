@@ -151,7 +151,7 @@ strong {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 1fr) 340px;
   gap: 54px;
   margin: 0;
   align-items: start;
@@ -178,7 +178,7 @@ strong {
 .portrait-panel {
   display: grid;
   gap: 16px;
-  padding: 16px;
+  padding: 20px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -780,7 +780,8 @@ strong {
   }
 
   .portrait-panel {
-    max-width: 340px;
+    width: 100%;
+    max-width: 380px;
   }
 
   .section {
