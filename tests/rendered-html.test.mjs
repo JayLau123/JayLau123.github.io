@@ -54,6 +54,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /aria-label="GitHub"/);
   assert.match(html, /aria-label="Google Scholar"/);
   assert.match(html, /aria-label="LinkedIn"/);
+  assert.match(html, /href="https:\/\/x\.com\/home" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
   assert.match(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);

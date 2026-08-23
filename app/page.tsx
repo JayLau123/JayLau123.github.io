@@ -24,6 +24,11 @@ const profileLinks = [
     href: "https://www.linkedin.com/in/chuanyu-l-a1a00b1a3/?skipRedirect=true",
     icon: "linkedin",
   },
+  {
+    label: "X (Twitter)",
+    href: "https://x.com/home",
+    icon: "x",
+  },
 ] as const;
 
 const publications = [
@@ -118,6 +123,14 @@ function ProfileIcon({ icon }: { icon: (typeof profileLinks)[number]["icon"] }) 
     return (
       <svg aria-hidden="true" viewBox="0 0 24 24">
         <path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5 2.5 2.5 0 0 1 .02-5ZM3 21h4V9.75H3V21Zm6.2-11.25H13v1.54h.05c.53-1 1.84-2.05 3.78-2.05 4.05 0 4.8 2.66 4.8 6.12V21h-4v-5.02c0-1.2-.02-2.73-1.66-2.73-1.67 0-1.93 1.3-1.93 2.64V21h-4V9.75Z" />
+      </svg>
+    );
+  }
+
+  if (icon === "x") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M18.24 2.25h3.31l-7.23 8.26 8.51 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" />
       </svg>
     );
   }
