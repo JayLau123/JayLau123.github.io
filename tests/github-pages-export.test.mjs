@@ -13,11 +13,10 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Research Interests/);
   assert.match(html, /Recent News/);
-  assert.match(
-    html,
-    /Ordered AI predictions and disordered experimental materials/,
-  );
-  assert.doesNotMatch(html, /research-schematic-v2\.png/);
+  assert.match(html, /research-schematic-v2\.png/);
+  assert.match(html, /class="geometry-coordinate"/);
+  assert.match(html, /class="geometry-parabola"/);
+  assert.doesNotMatch(html, /geometry-triangle/);
   assert.match(html, /profile\.jpg/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);

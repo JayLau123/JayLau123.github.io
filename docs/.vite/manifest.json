@@ -11,7 +11,7 @@
     "name": "rolldown-runtime"
   },
   "app/components/ambient-geometry.tsx": {
-    "file": "assets/ambient-geometry-pR3i5uKW.js",
+    "file": "assets/ambient-geometry-BeNtw6Bu.js",
     "name": "ambient-geometry",
     "src": "app/components/ambient-geometry.tsx",
     "isDynamicEntry": true,
@@ -49,7 +49,7 @@
     ]
   },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-C8HsTuj7.js",
+    "file": "assets/layout-segment-context-DPvV5J6Z.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -60,7 +60,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-qprCog5G.js",
+    "file": "assets/index-H7M0hTqY.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,

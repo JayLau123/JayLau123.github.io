@@ -32,9 +32,10 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
   assert.match(html, /Research Interests/);
+  assert.match(html, /research-schematic-v2\.png/);
   assert.match(
     html,
-    /Ordered AI predictions and disordered experimental materials/,
+    /Schematic comparing an ordered AI-predicted structure with a disordered experimentally synthesized structure/,
   );
   assert.match(html, /<nav class="site-nav" aria-label="Primary navigation">/);
   assert.match(html, /href="\/" aria-current="page"[\s\S]*About/);
@@ -42,14 +43,15 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /href="\/gallery\/"[\s\S]*Gallery/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
-  assert.match(html, /geometry-triangle geometry-triangle-one/);
+  assert.match(html, /class="geometry-coordinate"/);
+  assert.match(html, /class="geometry-parabola"/);
+  assert.doesNotMatch(html, /geometry-triangle/);
   assert.match(html, /Dark mode/);
   assert.match(html, /Light mode/);
   assert.match(
     html,
-    /real-world conditions\.[\s\S]*research-schematic-title[\s\S]*My methodological focus/,
+    /real-world conditions\.[\s\S]*research-schematic-v2\.png[\s\S]*My methodological focus/,
   );
-  assert.doesNotMatch(html, /research-schematic-v2\.png/);
   assert.doesNotMatch(
     html,
     /research-schematic-v1|research-schematic-v3|research-schematic-v4/,

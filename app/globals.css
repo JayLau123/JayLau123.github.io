@@ -21,15 +21,10 @@
   --footer: #7a817a;
   --link-underline: rgba(26, 28, 26, 0.22);
   --header-background: rgba(247, 245, 239, 0.9);
+  --publication-hover: #fbfaf7;
+  --publication-hover-shadow: 0 14px 34px rgba(34, 39, 34, 0.08);
   --geometry-line: rgba(49, 93, 80, 0.12);
   --geometry-dot: rgba(36, 93, 168, 0.15);
-  --schematic-blue: #3f769f;
-  --schematic-blue-fill: rgba(63, 118, 159, 0.13);
-  --schematic-amber: #a47644;
-  --schematic-amber-fill: rgba(164, 118, 68, 0.13);
-  --schematic-bond: rgba(75, 83, 77, 0.54);
-  --schematic-node: #f7f5ef;
-  --schematic-arrow: #315d50;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -55,15 +50,10 @@ html[data-theme="dark"] {
   --footer: #929791;
   --link-underline: rgba(240, 239, 233, 0.25);
   --header-background: rgba(23, 25, 24, 0.9);
+  --publication-hover: #262926;
+  --publication-hover-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
   --geometry-line: rgba(141, 179, 163, 0.11);
   --geometry-dot: rgba(146, 185, 236, 0.14);
-  --schematic-blue: #8ab5d4;
-  --schematic-blue-fill: rgba(138, 181, 212, 0.14);
-  --schematic-amber: #d1a878;
-  --schematic-amber-fill: rgba(209, 168, 120, 0.14);
-  --schematic-bond: rgba(211, 216, 209, 0.48);
-  --schematic-node: #171918;
-  --schematic-arrow: #8db3a3;
 }
 
 @theme inline {
@@ -118,27 +108,29 @@ main {
 
 .geometry-ring,
 .geometry-dot-grid,
-.geometry-triangle {
+.geometry-coordinate,
+.geometry-parabola {
   position: absolute;
   will-change: transform;
 }
 
 .geometry-ring {
-  top: 33vh;
-  right: -320px;
-  width: 520px;
-  height: 520px;
+  top: 22vh;
+  right: -430px;
+  width: 760px;
+  height: 760px;
   border: 1px solid var(--geometry-line);
   border-radius: 50%;
   transform: translate3d(var(--ring-x, 0), var(--ring-y, 0), 0)
-    rotate(var(--ring-rotation, 0deg)) scale(var(--ring-scale, 1));
+    scale(var(--ring-scale, 1));
+  transform-origin: center;
 }
 
 .geometry-dot-grid {
-  bottom: 56px;
-  left: 24px;
-  width: 84px;
-  height: 84px;
+  bottom: 50px;
+  left: 26px;
+  width: 112px;
+  height: 112px;
   background-image: radial-gradient(
     circle,
     var(--geometry-dot) 1.1px,
@@ -146,39 +138,73 @@ main {
   );
   background-size: 14px 14px;
   transform: translate3d(var(--dots-x, 0), var(--dots-y, 0), 0)
-    rotate(var(--dots-rotation, 0deg));
+    scale(var(--dots-scale, 1));
+  transform-origin: center;
 }
 
-.geometry-triangle {
-  width: 130px;
+.geometry-coordinate {
+  top: 31vh;
+  left: -96px;
+  width: 280px;
+  height: 280px;
+  transform: translate3d(var(--axis-x, 0), var(--axis-y, 0), 0)
+    rotate(var(--axis-rotation, 0deg));
+  transform-origin: center;
+}
+
+.geometry-coordinate::before,
+.geometry-coordinate::after {
+  position: absolute;
+  content: "";
+}
+
+.geometry-coordinate::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  border-top: 1px dotted var(--geometry-line);
+}
+
+.geometry-coordinate::after {
+  top: 0;
+  left: 50%;
+  height: 100%;
+  border-left: 1px dotted var(--geometry-line);
+}
+
+.geometry-origin {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--geometry-dot);
+  border-radius: 50%;
+  transform: translate(-2px, -2px);
+}
+
+.geometry-parabola {
+  bottom: 14vh;
+  left: 10vw;
+  width: 220px;
   height: auto;
   overflow: visible;
+  transform: translate3d(
+      var(--parabola-x, 0),
+      var(--parabola-y, 0),
+      0
+    )
+    rotate(var(--parabola-rotation, -18deg))
+    scale(var(--parabola-scale, 1));
+  transform-origin: center;
 }
 
-.geometry-triangle path {
+.geometry-parabola path {
   fill: none;
   stroke: var(--geometry-line);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
-}
-
-.geometry-triangle-one {
-  top: 18vh;
-  left: -54px;
-  transform: translate3d(0, var(--triangle-one-y, 0), 0)
-    rotate(var(--triangle-one-rotation, -8deg));
-}
-
-.geometry-triangle-two {
-  right: 7vw;
-  bottom: 9vh;
-  width: 96px;
-  transform: translate3d(
-      var(--triangle-two-x, 0),
-      var(--triangle-two-y, 0),
-      0
-    )
-    rotate(var(--triangle-two-rotation, 12deg));
 }
 
 a {
@@ -500,16 +526,10 @@ strong {
 }
 
 .research-schematic {
-  width: min(780px, 100%);
+  width: min(760px, 100%);
   margin: 22px auto 34px;
-}
-
-.research-schematic svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  padding: 10px;
-  background: transparent;
+  overflow: hidden;
+  background: var(--background);
   border: 1px solid var(--line);
   border-radius: 8px;
   transition:
@@ -517,105 +537,16 @@ strong {
     border-color 280ms ease;
 }
 
-.schematic-polyhedron {
-  stroke-width: 1.5;
-  vector-effect: non-scaling-stroke;
+.research-schematic img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: none;
+  transition: filter 280ms ease;
 }
 
-.schematic-blue-polyhedron {
-  fill: var(--schematic-blue-fill);
-  stroke: var(--schematic-blue);
-}
-
-.schematic-amber-polyhedron {
-  fill: var(--schematic-amber-fill);
-  stroke: var(--schematic-amber);
-}
-
-.schematic-unit-bonds,
-.schematic-disorder-link {
-  fill: none;
-  stroke: var(--schematic-bond);
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-unit-bonds {
-  stroke-width: 1;
-}
-
-.schematic-disorder-link {
-  stroke-width: 2;
-}
-
-.schematic-atom {
-  stroke: var(--foreground);
-  stroke-width: 1.5;
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-blue-atom {
-  fill: var(--schematic-blue);
-}
-
-.schematic-amber-atom {
-  fill: var(--schematic-amber);
-}
-
-.schematic-vertex {
-  fill: var(--schematic-node);
-  stroke: var(--schematic-bond);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-robot,
-.schematic-flask {
-  fill: none;
-  stroke: var(--foreground);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-icon-label,
-.schematic-structure-label {
-  fill: var(--muted);
-  font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.schematic-vacancy {
-  fill: none;
-  stroke: var(--schematic-bond);
-  stroke-width: 2;
-  stroke-dasharray: 7 7;
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-question-arrow {
-  stroke: var(--schematic-arrow);
-  stroke-width: 6;
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-arrow-head {
-  fill: var(--schematic-arrow);
-}
-
-.schematic-question-circle {
-  fill: var(--background);
-  stroke: var(--schematic-arrow);
-  stroke-width: 5;
-  vector-effect: non-scaling-stroke;
-}
-
-.schematic-question {
-  fill: var(--schematic-arrow);
-  font-family: var(--font-sans);
-  font-size: 52px;
-  font-weight: 600;
+html[data-theme="dark"] .research-schematic img {
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.88) brightness(1.02);
 }
 
 .interest-section p {
@@ -907,8 +838,18 @@ strong {
   border: 1px solid var(--line);
   border-radius: 8px;
   transition:
-    background-color 280ms ease,
-    border-color 280ms ease;
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.publication-item:hover,
+.publication-item:focus-within {
+  background: var(--publication-hover);
+  border-color: color-mix(in srgb, var(--blue) 34%, var(--line));
+  box-shadow: var(--publication-hover-shadow);
+  transform: translateY(-2px);
 }
 
 .publication-item h3 {
@@ -1209,26 +1150,29 @@ strong {
   }
 
   .geometry-ring {
-    right: -235px;
-    width: 330px;
-    height: 330px;
+    top: 25vh;
+    right: -340px;
+    width: 500px;
+    height: 500px;
   }
 
-  .geometry-triangle-one {
-    left: -66px;
-    width: 110px;
+  .geometry-coordinate {
+    left: -86px;
+    width: 180px;
+    height: 180px;
   }
 
-  .geometry-triangle-two {
-    right: -18px;
-    width: 76px;
+  .geometry-parabola {
+    bottom: 13vh;
+    left: 20px;
+    width: 140px;
   }
 
   .geometry-dot-grid {
     bottom: 32px;
     left: 6px;
-    width: 56px;
-    height: 56px;
+    width: 68px;
+    height: 68px;
   }
 }
 
@@ -1238,7 +1182,9 @@ strong {
   .theme-toggle,
   .portrait-panel,
   .icon-links a,
-  .research-schematic svg,
+  .research-schematic,
+  .research-schematic img,
+  .publication-item,
   .gallery-arrow {
     transition: none;
   }
