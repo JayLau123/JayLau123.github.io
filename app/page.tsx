@@ -237,11 +237,10 @@ export default function Home() {
               </a>
             </h3>
             <p>
-              I am excited to contribute as a PhD student to CLEAR-AI:
+              I am excited to have the opportunity to contribute to CLEAR-AI:
               Closed-Loop, Efficient, Adaptive, and Robust AI for Agentic
               Chemical Manufacturing, selected by the U.S. Department of
-              Energy as a Phase I project in the inaugural Genesis Mission
-              cohort.
+              Energy as a Phase I project in the Genesis Mission.
             </p>
             <p>
               CLEAR-AI will develop a closed-loop, agentic AI platform that

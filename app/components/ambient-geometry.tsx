@@ -36,14 +36,14 @@ export function AmbientGeometry() {
       root.style.setProperty("--ring-left-y", `${24 * progress}px`);
       root.style.setProperty("--ring-right-x", `${-52 * progress}px`);
       root.style.setProperty("--ring-right-y", `${-92 * progress}px`);
-      root.style.setProperty("--ring-scale", `${0.92 + 0.3 * progress}`);
+      root.style.setProperty("--ring-scale", `${1.02 + 0.3 * progress}`);
       root.style.setProperty(
         "--axis-left-rotation",
-        `${-2 + 5 * progress}deg`,
+        `${-2 + 9 * progress}deg`,
       );
       root.style.setProperty(
         "--axis-right-rotation",
-        `${1 + 4 * progress}deg`,
+        `${1 + 8 * progress}deg`,
       );
     }
 

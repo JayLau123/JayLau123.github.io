@@ -24,7 +24,7 @@
   --publication-hover: #fbfaf7;
   --publication-hover-shadow: 0 14px 34px rgba(34, 39, 34, 0.08);
   --geometry-line: rgba(49, 93, 80, 0.18);
-  --geometry-origin: #de7356;
+  --geometry-origin: rgba(222, 115, 86, 0.72);
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -53,7 +53,7 @@ html[data-theme="dark"] {
   --publication-hover: #262926;
   --publication-hover-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
   --geometry-line: rgba(141, 179, 163, 0.18);
-  --geometry-origin: #de7356;
+  --geometry-origin: rgba(222, 115, 86, 0.72);
 }
 
 @theme inline {
@@ -128,7 +128,7 @@ main {
       var(--ring-left-y, 0),
       0
     )
-    scale(var(--ring-scale, 0.92));
+    scale(var(--ring-scale, 1.02));
 }
 
 .geometry-ring-right {
@@ -141,7 +141,7 @@ main {
       var(--ring-right-y, 0),
       0
     )
-    scale(var(--ring-scale, 0.92));
+    scale(var(--ring-scale, 1.02));
 }
 
 .geometry-coordinate {
@@ -447,8 +447,9 @@ strong {
 
 .portrait-panel img {
   display: block;
-  width: 100%;
+  width: calc(100% - 16px);
   aspect-ratio: 0.92 / 1;
+  justify-self: center;
   object-fit: cover;
   border-radius: 6px;
   background: var(--image-placeholder);

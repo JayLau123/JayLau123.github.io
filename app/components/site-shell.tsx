@@ -55,10 +55,7 @@ export function SiteHeader({ active }: { active: NavItem["icon"] }) {
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <p>
-        &copy; 2026 Chuanyu Liu. Built with OpenAI Sites. Hosted on GitHub
-        Pages.
-      </p>
+      <p>&copy; 2026 Chuanyu Liu. Hosted on GitHub Pages.</p>
     </footer>
   );
 }

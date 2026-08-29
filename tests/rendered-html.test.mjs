@@ -68,6 +68,10 @@ test("server-renders the academic homepage", async () => {
   );
   assert.match(html, /Recent News/);
   assert.match(html, /CLEAR-AI selected for Genesis Mission Phase I/);
+  assert.match(
+    html,
+    /I am excited to have the opportunity to contribute to CLEAR-AI:[\s\S]*Phase I project in the Genesis Mission\./,
+  );
   assert.match(html, /genesis-logo-lockup-black\.png/);
   assert.match(html, /<div class="news-mark"><img/);
   assert.doesNotMatch(html, /<a class="news-mark"/);
@@ -95,7 +99,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /aria-label="LinkedIn"/);
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
-  assert.match(html, /Built with OpenAI Sites/);
+  assert.doesNotMatch(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);
   assert.doesNotMatch(html, /GPT Image/);
   assert.match(html, /art of photography/);

@@ -14,6 +14,10 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /Research Interests/);
   assert.match(html, /Recent News/);
   assert.match(html, /CLEAR-AI selected for Genesis Mission Phase I/);
+  assert.match(
+    html,
+    /I am excited to have the opportunity to contribute to CLEAR-AI:[\s\S]*Phase I project in the Genesis Mission\./,
+  );
   assert.match(html, /genesis-logo-lockup-black\.png/);
   assert.match(html, /<div class="news-mark"><img/);
   assert.doesNotMatch(html, /<a class="news-mark"/);
@@ -45,6 +49,7 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
+  assert.doesNotMatch(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);
   assert.match(html, /JACS Au/);
   assert.match(html, /ACS Energy Letters/);
