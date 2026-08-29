@@ -29,6 +29,15 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /citations\?user=u6tJUFwAAAAJ&amp;hl=en/);
   assert.match(html, /citations\?user=2U-7B-MAAAAJ&amp;hl=en/);
   assert.match(html, /user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate/);
+  assert.match(html, /Dr\.Thomas Mallouk/);
+  assert.match(html, /Dr\.Hongliang Xin/);
+  assert.match(html, /Dr\.Sen Zhang/);
+  assert.match(html, /Dr\.Yugang Zhang/);
+  assert.match(html, /Dr\.Chang Liu/);
+  assert.match(
+    html,
+    /I am open to chat and collaboration about quantum chemistry,[\s\S]*art of photography/,
+  );
   assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /research-schematic-v2\.png/);
   assert.match(html, /class="geometry-ring geometry-ring-left"/);

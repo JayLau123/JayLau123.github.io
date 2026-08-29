@@ -252,23 +252,23 @@ export default function Home() {
               It&apos;s so glad to learn from and work alongside an outstanding
               team spanning {" "}
               <a href="https://scholar.google.com/citations?user=NK94F4kAAAAJ&amp;hl=en">
-                Thomas Mallouk
+                Dr.Thomas Mallouk
               </a>{" "}
               at the University of Pennsylvania, {" "}
               <a href="https://scholar.google.com/citations?user=P_iNYbQAAAAJ&amp;hl=en">
-                Hongliang Xin
+                Dr.Hongliang Xin
               </a>{" "}
               at Virginia Tech, {" "}
               <a href="https://scholar.google.com/citations?user=u6tJUFwAAAAJ&amp;hl=en">
-                Sen Zhang
+                Dr.Sen Zhang
               </a>{" "}
               at the University of Virginia, {" "}
               <a href="https://scholar.google.com/citations?user=2U-7B-MAAAAJ&amp;hl=en">
-                Yugang Zhang
+                Dr.Yugang Zhang
               </a>{" "}
               at Brookhaven National Laboratory, and {" "}
               <a href="https://scholar.google.com/citations?hl=en&amp;user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate">
-                Chang Liu
+                Dr.Chang Liu
               </a>{" "}
               at Oak Ridge National Laboratory. I look forward to helping
               demonstrate CLEAR-AI and advance agentic AI for broader
@@ -312,8 +312,9 @@ export default function Home() {
         <div className="section-heading">
           <h2>Let us connect</h2>
           <p>
-            I am open to chat about quantum chemistry, DFT, and physically
-            grounded machine learning — or the art of photography.
+            I am open to chat and collaboration about quantum chemistry, DFT,
+            and physically grounded machine learning — or the art of
+            photography.
           </p>
           <div
             className="icon-links contact-icon-links"

@@ -86,6 +86,11 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /citations\?user=u6tJUFwAAAAJ&amp;hl=en/);
   assert.match(html, /citations\?user=2U-7B-MAAAAJ&amp;hl=en/);
   assert.match(html, /user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate/);
+  assert.match(html, /Dr\.Thomas Mallouk/);
+  assert.match(html, /Dr\.Hongliang Xin/);
+  assert.match(html, /Dr\.Sen Zhang/);
+  assert.match(html, /Dr\.Yugang Zhang/);
+  assert.match(html, /Dr\.Chang Liu/);
   assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
   assert.match(
@@ -107,7 +112,10 @@ test("server-renders the academic homepage", async () => {
   assert.doesNotMatch(html, /Built with OpenAI Sites/);
   assert.match(html, /Hosted on GitHub Pages/);
   assert.doesNotMatch(html, /GPT Image/);
-  assert.match(html, /art of photography/);
+  assert.match(
+    html,
+    /I am open to chat and collaboration about quantum chemistry,[\s\S]*art of photography/,
+  );
   assert.doesNotMatch(html, /computational chemistry \| ai for science/);
   assert.doesNotMatch(html, /Research Path/);
   assert.doesNotMatch(html, /Public papers/);
