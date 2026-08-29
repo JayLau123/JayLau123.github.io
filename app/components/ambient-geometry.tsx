@@ -8,9 +8,6 @@ const geometryProperties = [
   "--ring-right-x",
   "--ring-right-y",
   "--ring-scale",
-  "--dots-x",
-  "--dots-y",
-  "--dots-scale",
   "--axis-left-rotation",
   "--axis-right-rotation",
 ] as const;
@@ -40,9 +37,6 @@ export function AmbientGeometry() {
       root.style.setProperty("--ring-right-x", `${-52 * progress}px`);
       root.style.setProperty("--ring-right-y", `${-92 * progress}px`);
       root.style.setProperty("--ring-scale", `${0.92 + 0.3 * progress}`);
-      root.style.setProperty("--dots-x", `${32 * progress}px`);
-      root.style.setProperty("--dots-y", `${-44 * progress}px`);
-      root.style.setProperty("--dots-scale", `${0.96 + 0.28 * progress}`);
       root.style.setProperty(
         "--axis-left-rotation",
         `${-2 + 5 * progress}deg`,
@@ -76,7 +70,6 @@ export function AmbientGeometry() {
     <div className="ambient-geometry" aria-hidden="true">
       <span className="geometry-ring geometry-ring-left" />
       <span className="geometry-ring geometry-ring-right" />
-      <span className="geometry-dot-grid" />
       <span className="geometry-coordinate geometry-coordinate-left">
         <span className="geometry-origin" />
       </span>

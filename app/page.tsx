@@ -222,9 +222,55 @@ export default function Home() {
         <div className="section-heading">
           <h2>Recent News</h2>
         </div>
-        <div className="news-placeholder">
-          <p>News updates will be added soon.</p>
-        </div>
+        <article className="news-item">
+          <a
+            className="news-mark"
+            href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission"
+            aria-label="Learn more about the DOE Genesis Mission"
+          >
+            <img
+              src="/genesis-mission.svg"
+              alt="Genesis Mission symbol"
+            />
+          </a>
+          <div className="news-copy">
+            <p className="news-meta">DOE Genesis Mission · 2026</p>
+            <h3>
+              <a href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission">
+                CLEAR-AI selected for Genesis Mission Phase I
+              </a>
+            </h3>
+            <p>
+              I am excited to contribute, as a PhD student in Prof. Jiayu
+              Peng&apos;s group, to <strong>CLEAR-AI: Closed-Loop, Efficient,
+              Adaptive, and Robust AI for Agentic Chemical Manufacturing</strong>,
+              selected by the U.S. Department of Energy as a Phase I project
+              in the inaugural Genesis Mission cohort.
+            </p>
+            <p>
+              CLEAR-AI will develop a closed-loop, agentic AI platform that
+              connects modeling and experiment to accelerate catalyst and
+              process development for the electrosynthesis of carbon-based
+              fuels and chemicals.
+            </p>
+            <p>
+              I am grateful for the opportunity to learn from and work
+              alongside an outstanding team spanning Thomas Mallouk at the
+              University of Pennsylvania, Hongliang Xin at Virginia Tech, Sen
+              Zhang at the University of Virginia, Yugang Zhang at Brookhaven
+              National Laboratory, and Chang Liu at Oak Ridge National
+              Laboratory. I look forward to helping demonstrate CLEAR-AI and
+              advance agentic AI for broader electrosynthetic and chemical
+              manufacturing applications.
+            </p>
+            <a
+              className="news-link"
+              href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission"
+            >
+              Explore the Genesis Mission <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
       </section>
 
       <section

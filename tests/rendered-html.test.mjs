@@ -45,6 +45,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
   assert.match(html, /class="geometry-ring geometry-ring-left"/);
   assert.match(html, /class="geometry-ring geometry-ring-right"/);
+  assert.doesNotMatch(html, /geometry-dot-grid/);
   assert.match(
     html,
     /class="geometry-coordinate geometry-coordinate-left"/,
@@ -66,7 +67,11 @@ test("server-renders the academic homepage", async () => {
     /research-schematic-v1|research-schematic-v3|research-schematic-v4/,
   );
   assert.match(html, /Recent News/);
-  assert.match(html, /News updates will be added soon\./);
+  assert.match(html, /CLEAR-AI selected for Genesis Mission Phase I/);
+  assert.match(html, /genesis-mission\.svg/);
+  assert.match(html, /Closed-Loop, Efficient,[\s\S]*Agentic Chemical Manufacturing/);
+  assert.match(html, /href="https:\/\/www\.energy\.gov\/undersecretaryforscience\/genesis-mission\/genesis-mission"/);
+  assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
   assert.match(html, /JACS Au/);
   assert.match(html, /ACS Energy Letters/);

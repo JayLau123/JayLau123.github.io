@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Genesis Mission symbol</title>
+  <desc id="desc">Three offset circular rings with a horizontal opening on the left.</desc>
+  <defs>
+    <mask id="opening">
+      <rect width="600" height="600" fill="white" />
+      <rect x="0" y="282" width="138" height="36" fill="black" />
+    </mask>
+  </defs>
+  <g
+    fill="none"
+    stroke="#1a1c1a"
+    stroke-width="38"
+    mask="url(#opening)"
+  >
+    <circle cx="300" cy="300" r="230" />
+    <circle cx="230" cy="300" r="150" />
+    <circle cx="160" cy="300" r="72" />
+  </g>
+</svg>

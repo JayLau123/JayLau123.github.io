@@ -24,7 +24,7 @@
   --publication-hover: #fbfaf7;
   --publication-hover-shadow: 0 14px 34px rgba(34, 39, 34, 0.08);
   --geometry-line: rgba(49, 93, 80, 0.18);
-  --geometry-dot: rgba(36, 93, 168, 0.22);
+  --geometry-origin: #245da8;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -53,7 +53,7 @@ html[data-theme="dark"] {
   --publication-hover: #262926;
   --publication-hover-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
   --geometry-line: rgba(141, 179, 163, 0.18);
-  --geometry-dot: rgba(146, 185, 236, 0.21);
+  --geometry-origin: #92b9ec;
 }
 
 @theme inline {
@@ -107,7 +107,6 @@ main {
 }
 
 .geometry-ring,
-.geometry-dot-grid,
 .geometry-coordinate {
   position: absolute;
   will-change: transform;
@@ -145,22 +144,6 @@ main {
     scale(var(--ring-scale, 0.92));
 }
 
-.geometry-dot-grid {
-  bottom: 44px;
-  left: 22px;
-  width: 144px;
-  height: 144px;
-  background-image: radial-gradient(
-    circle,
-    var(--geometry-dot) 1.35px,
-    transparent 1.45px
-  );
-  background-size: 16px 16px;
-  transform: translate3d(var(--dots-x, 0), var(--dots-y, 0), 0)
-    scale(var(--dots-scale, 0.96));
-  transform-origin: center;
-}
-
 .geometry-coordinate {
   inset: 0;
   width: 100vw;
@@ -180,12 +163,12 @@ main {
   height: 3px;
   background-image: radial-gradient(
     circle,
-    var(--geometry-line) 1.45px,
-    transparent 1.55px
+    var(--geometry-line) 1.15px,
+    transparent 1.25px
   );
   background-repeat: repeat-x;
   background-position: center;
-  background-size: 16px 3px;
+  background-size: 13px 3px;
 }
 
 .geometry-coordinate::after {
@@ -195,12 +178,12 @@ main {
   height: 160vh;
   background-image: radial-gradient(
     circle,
-    var(--geometry-line) 1.45px,
-    transparent 1.55px
+    var(--geometry-line) 1.15px,
+    transparent 1.25px
   );
   background-repeat: repeat-y;
   background-position: center;
-  background-size: 3px 16px;
+  background-size: 3px 13px;
 }
 
 .geometry-coordinate-left {
@@ -224,7 +207,7 @@ main {
   left: var(--axis-origin-x);
   width: 9px;
   height: 9px;
-  background: var(--geometry-dot);
+  background: var(--geometry-origin);
   border-radius: 50%;
   transform: translate(-4px, -4px);
 }
@@ -400,13 +383,13 @@ h3 {
 
 h1 {
   margin-bottom: 22px;
-  font-size: clamp(2.7rem, 8vw, 4.9rem);
+  font-size: clamp(2.9rem, 8vw, 5.15rem);
   line-height: 1.03;
 }
 
 h2 {
   margin-bottom: 18px;
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(1.9rem, 4vw, 2.45rem);
   line-height: 1.15;
 }
 
@@ -582,7 +565,6 @@ html[data-theme="dark"] .research-schematic img {
   margin-bottom: 0;
 }
 
-.news-placeholder,
 .placeholder-panel {
   width: min(760px, 100%);
   padding: 18px 20px;
@@ -595,10 +577,95 @@ html[data-theme="dark"] .research-schematic img {
     border-color 280ms ease;
 }
 
-.news-placeholder p,
 .placeholder-panel p {
   margin: 0;
   line-height: 1.8;
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+  width: min(940px, 100%);
+  padding-top: 8px;
+}
+
+.news-mark {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 22px;
+  color: var(--foreground);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.news-mark:hover,
+.news-mark:focus-visible {
+  background: var(--publication-hover);
+  border-color: rgba(36, 93, 168, 0.45);
+  transform: translateY(-2px);
+}
+
+.news-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 280ms ease;
+}
+
+html[data-theme="dark"] .news-mark img {
+  filter: invert(0.94);
+}
+
+.news-copy {
+  min-width: 0;
+}
+
+.news-meta {
+  margin-bottom: 8px;
+  color: var(--amber);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.news-copy h3 {
+  margin-bottom: 14px;
+  font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+  line-height: 1.3;
+}
+
+.news-copy h3 a {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.news-copy h3 a:hover {
+  color: var(--blue);
+}
+
+.news-copy p:not(.news-meta) {
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.82;
+}
+
+.news-link {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  min-height: 42px;
+  margin-top: 2px;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .compact-section {
@@ -1171,6 +1238,16 @@ html[data-theme="dark"] .research-schematic img {
     padding: 17px;
   }
 
+  .news-item {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .news-mark {
+    width: 140px;
+    padding: 18px;
+  }
+
   .geometry-ring-left {
     top: -185px;
     left: -270px;
@@ -1195,12 +1272,6 @@ html[data-theme="dark"] .research-schematic img {
     --axis-origin-y: 67vh;
   }
 
-  .geometry-dot-grid {
-    bottom: 28px;
-    left: 4px;
-    width: 92px;
-    height: 92px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
