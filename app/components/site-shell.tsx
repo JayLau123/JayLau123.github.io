@@ -1,3 +1,5 @@
+import { ThemeToggle } from "./theme-toggle";
+
 const navItems = [
   { label: "About", href: "/", icon: "about" },
   { label: "Blog", href: "/blog/", icon: "blog" },
@@ -44,6 +46,7 @@ export function SiteHeader({ active }: { active: NavItem["icon"] }) {
             <span>{item.label}</span>
           </a>
         ))}
+        <ThemeToggle />
       </nav>
     </header>
   );

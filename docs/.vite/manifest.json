@@ -29,8 +29,17 @@
       "_framework-CXnKph_e.js"
     ]
   },
+  "app/components/theme-toggle.tsx": {
+    "file": "assets/theme-toggle-DtH_PFWn.js",
+    "name": "theme-toggle",
+    "src": "app/components/theme-toggle.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_framework-CXnKph_e.js"
+    ]
+  },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-Dq6oylCa.js",
+    "file": "assets/layout-segment-context-CwO6_gdA.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -41,7 +50,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-Bd1yEJCN.js",
+    "file": "assets/index-ChbA--kN.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
@@ -51,6 +60,7 @@
     ],
     "dynamicImports": [
       "virtual:vinext-app-browser-entry",
+      "app/components/theme-toggle.tsx",
       "app/components/gallery-year-carousel.tsx",
       "app/components/smooth-scroll-link.tsx",
       "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js"

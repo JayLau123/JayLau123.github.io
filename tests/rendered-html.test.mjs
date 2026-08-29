@@ -37,6 +37,10 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /href="\/" aria-current="page"[\s\S]*About/);
   assert.match(html, /href="\/blog\/"[\s\S]*Blog/);
   assert.match(html, /href="\/gallery\/"[\s\S]*Gallery/);
+  assert.match(html, /aria-label="Toggle light and dark mode"/);
+  assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
+  assert.match(html, /Dark mode/);
+  assert.match(html, /Light mode/);
   assert.match(
     html,
     /real-world conditions\.[\s\S]*research-schematic-v2\.png[\s\S]*My methodological focus/,

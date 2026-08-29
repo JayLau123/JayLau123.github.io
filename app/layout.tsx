@@ -2,6 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 
+const themeScript = `
+  (function () {
+    try {
+      var savedTheme = window.localStorage.getItem("theme");
+      var theme = savedTheme === "dark" ? "dark" : "light";
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+    } catch (error) {
+      document.documentElement.dataset.theme = "light";
+    }
+  })();
+`;
+
 export const metadata: Metadata = {
   title: "Chuanyu Liu",
   description:
@@ -24,8 +37,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body>
+        <div className="ambient-geometry" aria-hidden="true">
+          <span className="geometry-ring" />
+          <span className="geometry-line geometry-line-solid" />
+          <span className="geometry-line geometry-line-dashed" />
+          <span className="geometry-dot-grid" />
+        </div>
+        {children}
+      </body>
     </html>
   );
 }
