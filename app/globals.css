@@ -521,7 +521,8 @@ strong {
   width: min(760px, 100%);
   margin: 22px auto 34px;
   overflow: hidden;
-  background: var(--background);
+  isolation: isolate;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   transition:
@@ -533,12 +534,16 @@ strong {
   display: block;
   width: 100%;
   height: auto;
-  filter: none;
-  transition: filter 280ms ease;
+  filter: contrast(1.08) brightness(1.04);
+  mix-blend-mode: normal;
+  transition:
+    filter 280ms ease,
+    mix-blend-mode 280ms ease;
 }
 
 html[data-theme="dark"] .research-schematic img {
   filter: invert(0.92) hue-rotate(180deg) saturate(0.88) brightness(1.02);
+  mix-blend-mode: lighten;
 }
 
 .interest-section p {
