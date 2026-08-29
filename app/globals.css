@@ -3,6 +3,7 @@
 :root {
   --background: #f7f5ef;
   --surface: #ffffff;
+  --feature-surface: #fbfaf6;
   --foreground: #1a1c1a;
   --muted: #606760;
   --line: #d9d8cd;
@@ -31,6 +32,7 @@
 html[data-theme="dark"] {
   --background: #171918;
   --surface: #212421;
+  --feature-surface: #212421;
   --foreground: #f0efe9;
   --muted: #b7bcb6;
   --line: #3a3e39;
@@ -421,7 +423,7 @@ strong {
   display: grid;
   gap: 16px;
   padding: 20px;
-  background: var(--surface);
+  background: var(--feature-surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   box-shadow: var(--shadow);
@@ -522,7 +524,7 @@ strong {
   margin: 22px auto 34px;
   overflow: hidden;
   isolation: isolate;
-  background: var(--surface);
+  background: var(--feature-surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   transition:
@@ -535,7 +537,7 @@ strong {
   width: 100%;
   height: auto;
   filter: contrast(1.08) brightness(1.04);
-  mix-blend-mode: normal;
+  mix-blend-mode: darken;
   transition:
     filter 280ms ease,
     mix-blend-mode 280ms ease;
