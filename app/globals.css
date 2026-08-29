@@ -24,7 +24,7 @@
   --publication-hover: #fbfaf7;
   --publication-hover-shadow: 0 14px 34px rgba(34, 39, 34, 0.08);
   --geometry-line: rgba(49, 93, 80, 0.18);
-  --geometry-origin: #245da8;
+  --geometry-origin: #de7356;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -53,7 +53,7 @@ html[data-theme="dark"] {
   --publication-hover: #262926;
   --publication-hover-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
   --geometry-line: rgba(141, 179, 163, 0.18);
-  --geometry-origin: #92b9ec;
+  --geometry-origin: #de7356;
 }
 
 @theme inline {
@@ -205,11 +205,11 @@ main {
   z-index: 1;
   top: var(--axis-origin-y);
   left: var(--axis-origin-x);
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
   background: var(--geometry-origin);
   border-radius: 50%;
-  transform: translate(-4px, -4px);
+  transform: translate(-3px, -3px);
 }
 
 a {
@@ -584,45 +584,28 @@ html[data-theme="dark"] .research-schematic img {
 
 .news-item {
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 34px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
   width: min(940px, 100%);
   padding-top: 8px;
 }
 
 .news-mark {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1;
-  padding: 22px;
-  color: var(--foreground);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  text-decoration: none;
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
-}
-
-.news-mark:hover,
-.news-mark:focus-visible {
-  background: var(--publication-hover);
-  border-color: rgba(36, 93, 168, 0.45);
-  transform: translateY(-2px);
+  width: min(720px, 100%);
 }
 
 .news-mark img {
   display: block;
   width: 100%;
   height: auto;
+  mix-blend-mode: multiply;
   transition: filter 280ms ease;
 }
 
 html[data-theme="dark"] .news-mark img {
   filter: invert(0.94);
+  mix-blend-mode: screen;
 }
 
 .news-copy {
@@ -1239,13 +1222,11 @@ html[data-theme="dark"] .news-mark img {
   }
 
   .news-item {
-    grid-template-columns: 1fr;
     gap: 20px;
   }
 
   .news-mark {
-    width: 140px;
-    padding: 18px;
+    width: 100%;
   }
 
   .geometry-ring-left {

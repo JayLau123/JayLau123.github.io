@@ -223,29 +223,25 @@ export default function Home() {
           <h2>Recent News</h2>
         </div>
         <article className="news-item">
-          <a
-            className="news-mark"
-            href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission"
-            aria-label="Learn more about the DOE Genesis Mission"
-          >
+          <div className="news-mark">
             <img
-              src="/genesis-mission.svg"
-              alt="Genesis Mission symbol"
+              src="/genesis-logo-lockup-black.png"
+              alt="Genesis Mission"
             />
-          </a>
+          </div>
           <div className="news-copy">
-            <p className="news-meta">DOE Genesis Mission · 2026</p>
+            <p className="news-meta">07/2026</p>
             <h3>
-              <a href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission">
+              <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485926986947858432/">
                 CLEAR-AI selected for Genesis Mission Phase I
               </a>
             </h3>
             <p>
-              I am excited to contribute, as a PhD student in Prof. Jiayu
-              Peng&apos;s group, to <strong>CLEAR-AI: Closed-Loop, Efficient,
-              Adaptive, and Robust AI for Agentic Chemical Manufacturing</strong>,
-              selected by the U.S. Department of Energy as a Phase I project
-              in the inaugural Genesis Mission cohort.
+              I am excited to contribute as a PhD student to CLEAR-AI:
+              Closed-Loop, Efficient, Adaptive, and Robust AI for Agentic
+              Chemical Manufacturing, selected by the U.S. Department of
+              Energy as a Phase I project in the inaugural Genesis Mission
+              cohort.
             </p>
             <p>
               CLEAR-AI will develop a closed-loop, agentic AI platform that
@@ -254,14 +250,30 @@ export default function Home() {
               fuels and chemicals.
             </p>
             <p>
-              I am grateful for the opportunity to learn from and work
-              alongside an outstanding team spanning Thomas Mallouk at the
-              University of Pennsylvania, Hongliang Xin at Virginia Tech, Sen
-              Zhang at the University of Virginia, Yugang Zhang at Brookhaven
-              National Laboratory, and Chang Liu at Oak Ridge National
-              Laboratory. I look forward to helping demonstrate CLEAR-AI and
-              advance agentic AI for broader electrosynthetic and chemical
-              manufacturing applications.
+              It&apos;s so glad to learn from and work alongside an outstanding
+              team spanning {" "}
+              <a href="https://scholar.google.com/citations?user=NK94F4kAAAAJ&amp;hl=en">
+                Thomas Mallouk
+              </a>{" "}
+              at the University of Pennsylvania, {" "}
+              <a href="https://scholar.google.com/citations?user=P_iNYbQAAAAJ&amp;hl=en">
+                Hongliang Xin
+              </a>{" "}
+              at Virginia Tech, {" "}
+              <a href="https://scholar.google.com/citations?user=u6tJUFwAAAAJ&amp;hl=en">
+                Sen Zhang
+              </a>{" "}
+              at the University of Virginia, {" "}
+              <a href="https://scholar.google.com/citations?user=2U-7B-MAAAAJ&amp;hl=en">
+                Yugang Zhang
+              </a>{" "}
+              at Brookhaven National Laboratory, and {" "}
+              <a href="https://scholar.google.com/citations?hl=en&amp;user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate">
+                Chang Liu
+              </a>{" "}
+              at Oak Ridge National Laboratory. I look forward to helping
+              demonstrate CLEAR-AI and advance agentic AI for broader
+              electrosynthetic and chemical manufacturing applications.
             </p>
             <a
               className="news-link"

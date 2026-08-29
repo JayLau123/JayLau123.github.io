@@ -14,7 +14,17 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /Research Interests/);
   assert.match(html, /Recent News/);
   assert.match(html, /CLEAR-AI selected for Genesis Mission Phase I/);
-  assert.match(html, /genesis-mission\.svg/);
+  assert.match(html, /genesis-logo-lockup-black\.png/);
+  assert.match(html, /<div class="news-mark"><img/);
+  assert.doesNotMatch(html, /<a class="news-mark"/);
+  assert.doesNotMatch(html, /genesis-mission\.svg/);
+  assert.match(html, /class="news-meta">07\/2026/);
+  assert.match(html, /href="https:\/\/www\.linkedin\.com\/feed\/update\/urn:li:activity:7485926986947858432\/"/);
+  assert.match(html, /citations\?user=NK94F4kAAAAJ&amp;hl=en/);
+  assert.match(html, /citations\?user=P_iNYbQAAAAJ&amp;hl=en/);
+  assert.match(html, /citations\?user=u6tJUFwAAAAJ&amp;hl=en/);
+  assert.match(html, /citations\?user=2U-7B-MAAAAJ&amp;hl=en/);
+  assert.match(html, /user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate/);
   assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /research-schematic-v2\.png/);
   assert.match(html, /class="geometry-ring geometry-ring-left"/);
