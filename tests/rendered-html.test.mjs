@@ -32,19 +32,24 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Hi, I&#x27;m Chuanyu Liu,/);
   assert.match(html, /Research Interests/);
-  assert.match(html, /research-schematic-v2\.png/);
+  assert.match(
+    html,
+    /Ordered AI predictions and disordered experimental materials/,
+  );
   assert.match(html, /<nav class="site-nav" aria-label="Primary navigation">/);
   assert.match(html, /href="\/" aria-current="page"[\s\S]*About/);
   assert.match(html, /href="\/blog\/"[\s\S]*Blog/);
   assert.match(html, /href="\/gallery\/"[\s\S]*Gallery/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
+  assert.match(html, /geometry-triangle geometry-triangle-one/);
   assert.match(html, /Dark mode/);
   assert.match(html, /Light mode/);
   assert.match(
     html,
-    /real-world conditions\.[\s\S]*research-schematic-v2\.png[\s\S]*My methodological focus/,
+    /real-world conditions\.[\s\S]*research-schematic-title[\s\S]*My methodological focus/,
   );
+  assert.doesNotMatch(html, /research-schematic-v2\.png/);
   assert.doesNotMatch(
     html,
     /research-schematic-v1|research-schematic-v3|research-schematic-v4/,
@@ -52,6 +57,10 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Recent News/);
   assert.match(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
+  assert.match(html, /JACS Au/);
+  assert.match(html, /ACS Energy Letters/);
+  assert.match(html, /citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC/);
+  assert.doesNotMatch(html, /arXiv:2606\.20753|arXiv:2605\.03081/);
   assert.match(html, /profile\.jpg/);
   assert.match(html, /mailto:jayjob2023@gmail\.com/);
   assert.match(html, /aria-label="Email"/);

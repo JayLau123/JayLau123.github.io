@@ -20,8 +20,16 @@
   --gallery-control-strong: rgba(255, 255, 255, 0.94);
   --footer: #7a817a;
   --link-underline: rgba(26, 28, 26, 0.22);
+  --header-background: rgba(247, 245, 239, 0.9);
   --geometry-line: rgba(49, 93, 80, 0.12);
   --geometry-dot: rgba(36, 93, 168, 0.15);
+  --schematic-blue: #3f769f;
+  --schematic-blue-fill: rgba(63, 118, 159, 0.13);
+  --schematic-amber: #a47644;
+  --schematic-amber-fill: rgba(164, 118, 68, 0.13);
+  --schematic-bond: rgba(75, 83, 77, 0.54);
+  --schematic-node: #f7f5ef;
+  --schematic-arrow: #315d50;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -46,8 +54,16 @@ html[data-theme="dark"] {
   --gallery-control-strong: rgba(33, 36, 33, 0.96);
   --footer: #929791;
   --link-underline: rgba(240, 239, 233, 0.25);
+  --header-background: rgba(23, 25, 24, 0.9);
   --geometry-line: rgba(141, 179, 163, 0.11);
   --geometry-dot: rgba(146, 185, 236, 0.14);
+  --schematic-blue: #8ab5d4;
+  --schematic-blue-fill: rgba(138, 181, 212, 0.14);
+  --schematic-amber: #d1a878;
+  --schematic-amber-fill: rgba(209, 168, 120, 0.14);
+  --schematic-bond: rgba(211, 216, 209, 0.48);
+  --schematic-node: #171918;
+  --schematic-arrow: #8db3a3;
 }
 
 @theme inline {
@@ -75,8 +91,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-size: 17px;
-  font-weight: 350;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.65;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -101,9 +117,10 @@ main {
 }
 
 .geometry-ring,
-.geometry-line,
-.geometry-dot-grid {
+.geometry-dot-grid,
+.geometry-triangle {
   position: absolute;
+  will-change: transform;
 }
 
 .geometry-ring {
@@ -113,22 +130,8 @@ main {
   height: 520px;
   border: 1px solid var(--geometry-line);
   border-radius: 50%;
-}
-
-.geometry-line-solid {
-  top: 29vh;
-  left: -22px;
-  width: 210px;
-  border-top: 1px solid var(--geometry-line);
-  transform: rotate(-8deg);
-}
-
-.geometry-line-dashed {
-  right: -48px;
-  bottom: 20vh;
-  width: 300px;
-  border-top: 1px dashed var(--geometry-line);
-  transform: rotate(11deg);
+  transform: translate3d(var(--ring-x, 0), var(--ring-y, 0), 0)
+    rotate(var(--ring-rotation, 0deg)) scale(var(--ring-scale, 1));
 }
 
 .geometry-dot-grid {
@@ -142,6 +145,40 @@ main {
     transparent 1.2px
   );
   background-size: 14px 14px;
+  transform: translate3d(var(--dots-x, 0), var(--dots-y, 0), 0)
+    rotate(var(--dots-rotation, 0deg));
+}
+
+.geometry-triangle {
+  width: 130px;
+  height: auto;
+  overflow: visible;
+}
+
+.geometry-triangle path {
+  fill: none;
+  stroke: var(--geometry-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.geometry-triangle-one {
+  top: 18vh;
+  left: -54px;
+  transform: translate3d(0, var(--triangle-one-y, 0), 0)
+    rotate(var(--triangle-one-rotation, -8deg));
+}
+
+.geometry-triangle-two {
+  right: 7vw;
+  bottom: 9vh;
+  width: 96px;
+  transform: translate3d(
+      var(--triangle-two-x, 0),
+      var(--triangle-two-y, 0),
+      0
+    )
+    rotate(var(--triangle-two-rotation, 12deg));
 }
 
 a {
@@ -157,11 +194,29 @@ a:hover {
 }
 
 .site-header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
   display: flex;
   justify-content: flex-end;
-  margin: 28px 0 46px;
-  padding-bottom: 18px;
+  margin: 0 0 46px;
+  padding: 14px 0;
+  isolation: isolate;
+}
+
+.site-header::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  content: "";
+  background: var(--header-background);
   border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  transform: translateX(-50%);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .site-nav {
@@ -445,25 +500,122 @@ strong {
 }
 
 .research-schematic {
-  width: min(760px, 100%);
+  width: min(780px, 100%);
   margin: 22px auto 34px;
 }
 
-.research-schematic img {
+.research-schematic svg {
   display: block;
   width: 100%;
   height: auto;
-  background: var(--background);
+  padding: 10px;
+  background: transparent;
   border: 1px solid var(--line);
   border-radius: 8px;
   transition:
     background-color 280ms ease,
-    border-color 280ms ease,
-    filter 280ms ease;
+    border-color 280ms ease;
 }
 
-html[data-theme="dark"] .research-schematic img {
-  filter: brightness(0.82) saturate(0.9);
+.schematic-polyhedron {
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-blue-polyhedron {
+  fill: var(--schematic-blue-fill);
+  stroke: var(--schematic-blue);
+}
+
+.schematic-amber-polyhedron {
+  fill: var(--schematic-amber-fill);
+  stroke: var(--schematic-amber);
+}
+
+.schematic-unit-bonds,
+.schematic-disorder-link {
+  fill: none;
+  stroke: var(--schematic-bond);
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-unit-bonds {
+  stroke-width: 1;
+}
+
+.schematic-disorder-link {
+  stroke-width: 2;
+}
+
+.schematic-atom {
+  stroke: var(--foreground);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-blue-atom {
+  fill: var(--schematic-blue);
+}
+
+.schematic-amber-atom {
+  fill: var(--schematic-amber);
+}
+
+.schematic-vertex {
+  fill: var(--schematic-node);
+  stroke: var(--schematic-bond);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-robot,
+.schematic-flask {
+  fill: none;
+  stroke: var(--foreground);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-icon-label,
+.schematic-structure-label {
+  fill: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.schematic-vacancy {
+  fill: none;
+  stroke: var(--schematic-bond);
+  stroke-width: 2;
+  stroke-dasharray: 7 7;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-question-arrow {
+  stroke: var(--schematic-arrow);
+  stroke-width: 6;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-arrow-head {
+  fill: var(--schematic-arrow);
+}
+
+.schematic-question-circle {
+  fill: var(--background);
+  stroke: var(--schematic-arrow);
+  stroke-width: 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic-question {
+  fill: var(--schematic-arrow);
+  font-family: var(--font-sans);
+  font-size: 52px;
+  font-weight: 600;
 }
 
 .interest-section p {
@@ -508,6 +660,7 @@ html[data-theme="dark"] .research-schematic img {
 .blog-content {
   width: min(860px, 100%);
   padding-bottom: 24px;
+  scroll-margin-top: 88px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -573,7 +726,7 @@ html[data-theme="dark"] .research-schematic img {
 .blog-post {
   min-height: 72vh;
   padding: 72px 0 54px;
-  scroll-margin-top: 28px;
+  scroll-margin-top: 88px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -996,8 +1149,8 @@ html[data-theme="dark"] .research-schematic img {
   }
 
   .site-header {
-    margin-top: 22px;
     margin-bottom: 38px;
+    padding-block: 10px;
   }
 
   .site-nav {
@@ -1061,13 +1214,14 @@ html[data-theme="dark"] .research-schematic img {
     height: 330px;
   }
 
-  .geometry-line-solid {
+  .geometry-triangle-one {
+    left: -66px;
     width: 110px;
   }
 
-  .geometry-line-dashed {
-    right: -105px;
-    width: 210px;
+  .geometry-triangle-two {
+    right: -18px;
+    width: 76px;
   }
 
   .geometry-dot-grid {
@@ -1084,7 +1238,7 @@ html[data-theme="dark"] .research-schematic img {
   .theme-toggle,
   .portrait-panel,
   .icon-links a,
-  .research-schematic img,
+  .research-schematic svg,
   .gallery-arrow {
     transition: none;
   }

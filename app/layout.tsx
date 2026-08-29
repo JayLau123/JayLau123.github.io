@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AmbientGeometry } from "./components/ambient-geometry";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 
@@ -42,12 +43,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <div className="ambient-geometry" aria-hidden="true">
-          <span className="geometry-ring" />
-          <span className="geometry-line geometry-line-solid" />
-          <span className="geometry-line geometry-line-dashed" />
-          <span className="geometry-dot-grid" />
-        </div>
+        <AmbientGeometry />
         {children}
       </body>
     </html>

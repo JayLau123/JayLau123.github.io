@@ -1,4 +1,5 @@
 import { SiteFooter, SiteHeader } from "./components/site-shell";
+import { ResearchSchematic } from "./components/research-schematic";
 
 const scholarUrl =
   "https://scholar.google.com/citations?hl=en&user=f2qAmGIAAAAJ&scilu=&scisig=AKLELW8AAAAAamA-UixXKb5bXOUC94G6p-iPr2U&gmla=AO4B3jsDrYJAtgxAtTYhd2ZKamz0I8z-iOgFEDGwYQA2Hd8fVtVCZCItY274crw7cpnxSuM2f_5KHe05OqBEPBTeLHRRflV94_vj-bc&sciund=1239809507754054681";
@@ -46,7 +47,7 @@ const publications = [
     title: "Empowering Polymeric Materials Discovery by Artificial Intelligence",
     authors:
       "C. Ma, L. Zhang, Y. Chen, W. Du, S. Fang, Z. Jiang, C. Liu, X. Ma, R. Su, and others",
-    venue: "arXiv preprint arXiv:2606.20753",
+    venue: "JACS Au",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:4TOpqqG69KYC",
   },
   {
@@ -55,8 +56,8 @@ const publications = [
       "Building a physics-aware AI ecosystem for solid-state hydrogen storage materials",
     authors:
       "S.-H. Jang, Y. Yao, C. Liu, L. Zhang, D. Zhang, X. Jia, H. B. Tran, E. J. Cheng, and others",
-    venue: "arXiv preprint arXiv:2605.03081",
-    href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:_kc_bZDykSQC",
+    venue: "ACS Energy Letters",
+    href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC",
   },
   {
     year: "2026",
@@ -196,12 +197,7 @@ export default function Home() {
             driven disorder inherent in bulk and surface structures under
             real-world conditions.
           </p>
-          <figure className="research-schematic">
-            <img
-              src="/research-schematic-v2.png"
-              alt="Schematic comparing AI-predicted ordered structures with experimentally synthesized disordered structures"
-            />
-          </figure>
+          <ResearchSchematic />
           <p>
             My methodological focus lies in developing physics-informed,
             data-driven machine learning methods to capture the fundamental laws

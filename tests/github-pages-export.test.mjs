@@ -13,13 +13,20 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Research Interests/);
   assert.match(html, /Recent News/);
-  assert.match(html, /research-schematic-v2\.png/);
+  assert.match(
+    html,
+    /Ordered AI predictions and disordered experimental materials/,
+  );
+  assert.doesNotMatch(html, /research-schematic-v2\.png/);
   assert.match(html, /profile\.jpg/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
   assert.match(html, /Hosted on GitHub Pages/);
+  assert.match(html, /JACS Au/);
+  assert.match(html, /ACS Energy Letters/);
+  assert.match(html, /citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC/);
   assert.match(blogHtml, /<h1 id="blog-title">Blog<\/h1>/);
   assert.match(blogHtml, /research notes and unpolished thoughts/);
   assert.doesNotMatch(blogHtml, /<h2 id="posts-title">Content<\/h2>/);

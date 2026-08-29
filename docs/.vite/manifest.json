@@ -10,8 +10,18 @@
     "file": "assets/rolldown-runtime-S-ySWqyJ.js",
     "name": "rolldown-runtime"
   },
+  "app/components/ambient-geometry.tsx": {
+    "file": "assets/ambient-geometry-pR3i5uKW.js",
+    "name": "ambient-geometry",
+    "src": "app/components/ambient-geometry.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_framework-CXnKph_e.js"
+    ]
+  },
   "app/components/gallery-year-carousel.tsx": {
-    "file": "assets/gallery-year-carousel-hnbGB-DF.js",
+    "file": "assets/gallery-year-carousel-B6TuysfJ.js",
     "name": "gallery-year-carousel",
     "src": "app/components/gallery-year-carousel.tsx",
     "isDynamicEntry": true,
@@ -21,7 +31,7 @@
     ]
   },
   "app/components/smooth-scroll-link.tsx": {
-    "file": "assets/smooth-scroll-link-BWpkpq_J.js",
+    "file": "assets/smooth-scroll-link-o5Y5JmcW.js",
     "name": "smooth-scroll-link",
     "src": "app/components/smooth-scroll-link.tsx",
     "isDynamicEntry": true,
@@ -30,7 +40,7 @@
     ]
   },
   "app/components/theme-toggle.tsx": {
-    "file": "assets/theme-toggle-DtH_PFWn.js",
+    "file": "assets/theme-toggle-DxNUcXrR.js",
     "name": "theme-toggle",
     "src": "app/components/theme-toggle.tsx",
     "isDynamicEntry": true,
@@ -39,7 +49,7 @@
     ]
   },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-CwO6_gdA.js",
+    "file": "assets/layout-segment-context-C8HsTuj7.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -50,7 +60,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-ChbA--kN.js",
+    "file": "assets/index-qprCog5G.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
@@ -59,6 +69,7 @@
       "_framework-CXnKph_e.js"
     ],
     "dynamicImports": [
+      "app/components/ambient-geometry.tsx",
       "virtual:vinext-app-browser-entry",
       "app/components/theme-toggle.tsx",
       "app/components/gallery-year-carousel.tsx",
