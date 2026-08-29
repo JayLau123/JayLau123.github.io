@@ -70,12 +70,8 @@ export function AmbientGeometry() {
     <div className="ambient-geometry" aria-hidden="true">
       <span className="geometry-ring geometry-ring-left" />
       <span className="geometry-ring geometry-ring-right" />
-      <span className="geometry-coordinate geometry-coordinate-left">
-        <span className="geometry-origin" />
-      </span>
-      <span className="geometry-coordinate geometry-coordinate-right">
-        <span className="geometry-origin" />
-      </span>
+      <span className="geometry-coordinate geometry-coordinate-left" />
+      <span className="geometry-coordinate geometry-coordinate-right" />
     </div>
   );
 }

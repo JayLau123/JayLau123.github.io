@@ -295,14 +295,14 @@ export default function Home() {
         <ol className="publication-list">
           {publications.map((paper) => (
             <li className="publication-item" key={paper.title}>
-              <span className="year">{paper.year}</span>
-              <div>
-                <h3>
-                  <a href={paper.href}>{paper.title}</a>
-                </h3>
-                <p className="authors">{paper.authors}</p>
-                <p className="venue">{paper.venue}</p>
-              </div>
+              <a className="publication-item-link" href={paper.href}>
+                <span className="year">{paper.year}</span>
+                <div>
+                  <h3>{paper.title}</h3>
+                  <p className="authors">{paper.authors}</p>
+                  <p className="venue">{paper.venue}</p>
+                </div>
+              </a>
             </li>
           ))}
         </ol>

@@ -24,7 +24,6 @@
   --publication-hover: #fbfaf7;
   --publication-hover-shadow: 0 14px 34px rgba(34, 39, 34, 0.08);
   --geometry-line: rgba(49, 93, 80, 0.18);
-  --geometry-origin: rgba(222, 115, 86, 0.72);
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -53,7 +52,6 @@ html[data-theme="dark"] {
   --publication-hover: #262926;
   --publication-hover-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
   --geometry-line: rgba(141, 179, 163, 0.18);
-  --geometry-origin: rgba(222, 115, 86, 0.72);
 }
 
 @theme inline {
@@ -198,18 +196,6 @@ main {
   --axis-origin-y: 66vh;
   transform: rotate(var(--axis-right-rotation, 1deg));
   transform-origin: var(--axis-origin-x) var(--axis-origin-y);
-}
-
-.geometry-origin {
-  position: absolute;
-  z-index: 1;
-  top: var(--axis-origin-y);
-  left: var(--axis-origin-x);
-  width: 7px;
-  height: 7px;
-  background: var(--geometry-origin);
-  border-radius: 50%;
-  transform: translate(-3px, -3px);
 }
 
 a {
@@ -903,13 +889,19 @@ html[data-theme="dark"] .news-mark img {
 }
 
 .publication-item {
+  list-style: none;
+}
+
+.publication-item-link {
   display: grid;
   grid-template-columns: 70px minmax(0, 1fr);
   gap: 20px;
   padding: 18px 20px;
+  color: var(--foreground);
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
+  text-decoration: none;
   transition:
     background-color 180ms ease,
     border-color 180ms ease,
@@ -917,8 +909,9 @@ html[data-theme="dark"] .news-mark img {
     transform 180ms ease;
 }
 
-.publication-item:hover,
-.publication-item:focus-within {
+.publication-item-link:hover,
+.publication-item-link:focus-visible {
+  color: var(--foreground);
   background: var(--publication-hover);
   border-color: color-mix(in srgb, var(--blue) 34%, var(--line));
   box-shadow: var(--publication-hover-shadow);
@@ -926,16 +919,14 @@ html[data-theme="dark"] .news-mark img {
 }
 
 .publication-item h3 {
+  color: var(--foreground);
   font-size: 1.02rem;
   font-weight: 550;
+  transition: color 180ms ease;
 }
 
-.publication-item h3 a {
-  color: var(--foreground);
-  text-decoration-color: var(--link-underline);
-}
-
-.publication-item h3 a:hover {
+.publication-item-link:hover h3,
+.publication-item-link:focus-visible h3 {
   color: var(--blue);
 }
 
@@ -1142,7 +1133,7 @@ html[data-theme="dark"] .news-mark img {
     margin-top: 62px;
   }
 
-  .publication-item {
+  .publication-item-link {
     grid-template-columns: 1fr;
     gap: 8px;
   }
@@ -1218,7 +1209,7 @@ html[data-theme="dark"] .news-mark img {
     font-size: 0.78rem;
   }
 
-  .publication-item {
+  .publication-item-link {
     padding: 17px;
   }
 
@@ -1264,7 +1255,7 @@ html[data-theme="dark"] .news-mark img {
   .icon-links a,
   .research-schematic,
   .research-schematic img,
-  .publication-item,
+  .publication-item-link,
   .gallery-arrow {
     transition: none;
   }

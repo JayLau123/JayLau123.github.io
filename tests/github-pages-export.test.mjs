@@ -42,9 +42,14 @@ test("exports static GitHub Pages pages", async () => {
     html,
     /class="geometry-coordinate geometry-coordinate-right"/,
   );
+  assert.doesNotMatch(html, /geometry-origin/);
   assert.doesNotMatch(html, /geometry-parabola/);
   assert.doesNotMatch(html, /geometry-triangle/);
   assert.match(html, /profile\.jpg/);
+  assert.match(
+    html,
+    /<li class="publication-item"><a class="publication-item-link" href="https:\/\/scholar\.google\.com\//,
+  );
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);

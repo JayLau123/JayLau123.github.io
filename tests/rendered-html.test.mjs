@@ -54,6 +54,7 @@ test("server-renders the academic homepage", async () => {
     html,
     /class="geometry-coordinate geometry-coordinate-right"/,
   );
+  assert.doesNotMatch(html, /geometry-origin/);
   assert.doesNotMatch(html, /geometry-parabola/);
   assert.doesNotMatch(html, /geometry-triangle/);
   assert.match(html, /Dark mode/);
@@ -87,6 +88,10 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate/);
   assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
+  assert.match(
+    html,
+    /<li class="publication-item"><a class="publication-item-link" href="https:\/\/scholar\.google\.com\//,
+  );
   assert.match(html, /JACS Au/);
   assert.match(html, /ACS Energy Letters/);
   assert.match(html, /citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC/);
