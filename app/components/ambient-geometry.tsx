@@ -39,10 +39,10 @@ export function AmbientGeometry() {
       root.style.setProperty("--ring-left-y", `${24 * progress}px`);
       root.style.setProperty("--ring-right-x", `${-52 * progress}px`);
       root.style.setProperty("--ring-right-y", `${-92 * progress}px`);
-      root.style.setProperty("--ring-scale", `${0.88 + 0.28 * progress}`);
+      root.style.setProperty("--ring-scale", `${0.92 + 0.3 * progress}`);
       root.style.setProperty("--dots-x", `${32 * progress}px`);
       root.style.setProperty("--dots-y", `${-44 * progress}px`);
-      root.style.setProperty("--dots-scale", `${0.82 + 0.36 * progress}`);
+      root.style.setProperty("--dots-scale", `${0.96 + 0.28 * progress}`);
       root.style.setProperty(
         "--axis-left-rotation",
         `${-2 + 5 * progress}deg`,
