@@ -14,8 +14,17 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /Research Interests/);
   assert.match(html, /Recent News/);
   assert.match(html, /research-schematic-v2\.png/);
-  assert.match(html, /class="geometry-coordinate"/);
-  assert.match(html, /class="geometry-parabola"/);
+  assert.match(html, /class="geometry-ring geometry-ring-left"/);
+  assert.match(html, /class="geometry-ring geometry-ring-right"/);
+  assert.match(
+    html,
+    /class="geometry-coordinate geometry-coordinate-left"/,
+  );
+  assert.match(
+    html,
+    /class="geometry-coordinate geometry-coordinate-right"/,
+  );
+  assert.doesNotMatch(html, /geometry-parabola/);
   assert.doesNotMatch(html, /geometry-triangle/);
   assert.match(html, /profile\.jpg/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);

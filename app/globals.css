@@ -108,22 +108,41 @@ main {
 
 .geometry-ring,
 .geometry-dot-grid,
-.geometry-coordinate,
-.geometry-parabola {
+.geometry-coordinate {
   position: absolute;
   will-change: transform;
 }
 
 .geometry-ring {
+  border: 1px solid var(--geometry-line);
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.geometry-ring-left {
+  top: -180px;
+  left: -220px;
+  width: 560px;
+  height: 560px;
+  transform: translate3d(
+      var(--ring-left-x, 0),
+      var(--ring-left-y, 0),
+      0
+    )
+    scale(var(--ring-scale, 0.88));
+}
+
+.geometry-ring-right {
   top: 22vh;
   right: -430px;
   width: 760px;
   height: 760px;
-  border: 1px solid var(--geometry-line);
-  border-radius: 50%;
-  transform: translate3d(var(--ring-x, 0), var(--ring-y, 0), 0)
-    scale(var(--ring-scale, 1));
-  transform-origin: center;
+  transform: translate3d(
+      var(--ring-right-x, 0),
+      var(--ring-right-y, 0),
+      0
+    )
+    scale(var(--ring-scale, 0.88));
 }
 
 .geometry-dot-grid {
@@ -143,13 +162,9 @@ main {
 }
 
 .geometry-coordinate {
-  top: 31vh;
-  left: -96px;
-  width: 280px;
-  height: 280px;
-  transform: translate3d(var(--axis-x, 0), var(--axis-y, 0), 0)
-    rotate(var(--axis-rotation, 0deg));
-  transform-origin: center;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .geometry-coordinate::before,
@@ -159,52 +174,43 @@ main {
 }
 
 .geometry-coordinate::before {
-  top: 50%;
-  left: 0;
-  width: 100%;
+  top: var(--axis-origin-y);
+  left: -30vw;
+  width: 160vw;
   border-top: 1px dotted var(--geometry-line);
 }
 
 .geometry-coordinate::after {
-  top: 0;
-  left: 50%;
-  height: 100%;
+  top: -30vh;
+  left: var(--axis-origin-x);
+  height: 160vh;
   border-left: 1px dotted var(--geometry-line);
+}
+
+.geometry-coordinate-left {
+  --axis-origin-x: 17vw;
+  --axis-origin-y: 36vh;
+  transform: rotate(var(--axis-left-rotation, -2deg));
+  transform-origin: var(--axis-origin-x) var(--axis-origin-y);
+}
+
+.geometry-coordinate-right {
+  --axis-origin-x: 83vw;
+  --axis-origin-y: 66vh;
+  transform: rotate(var(--axis-right-rotation, 1deg));
+  transform-origin: var(--axis-origin-x) var(--axis-origin-y);
 }
 
 .geometry-origin {
   position: absolute;
   z-index: 1;
-  top: 50%;
-  left: 50%;
+  top: var(--axis-origin-y);
+  left: var(--axis-origin-x);
   width: 5px;
   height: 5px;
   background: var(--geometry-dot);
   border-radius: 50%;
   transform: translate(-2px, -2px);
-}
-
-.geometry-parabola {
-  bottom: 14vh;
-  left: 10vw;
-  width: 220px;
-  height: auto;
-  overflow: visible;
-  transform: translate3d(
-      var(--parabola-x, 0),
-      var(--parabola-y, 0),
-      0
-    )
-    rotate(var(--parabola-rotation, -18deg))
-    scale(var(--parabola-scale, 1));
-  transform-origin: center;
-}
-
-.geometry-parabola path {
-  fill: none;
-  stroke: var(--geometry-line);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
 }
 
 a {
@@ -1149,23 +1155,28 @@ html[data-theme="dark"] .research-schematic img {
     padding: 17px;
   }
 
-  .geometry-ring {
+  .geometry-ring-left {
+    top: -140px;
+    left: -210px;
+    width: 360px;
+    height: 360px;
+  }
+
+  .geometry-ring-right {
     top: 25vh;
     right: -340px;
     width: 500px;
     height: 500px;
   }
 
-  .geometry-coordinate {
-    left: -86px;
-    width: 180px;
-    height: 180px;
+  .geometry-coordinate-left {
+    --axis-origin-x: 11vw;
+    --axis-origin-y: 32vh;
   }
 
-  .geometry-parabola {
-    bottom: 13vh;
-    left: 20px;
-    width: 140px;
+  .geometry-coordinate-right {
+    --axis-origin-x: 89vw;
+    --axis-origin-y: 67vh;
   }
 
   .geometry-dot-grid {

@@ -3,19 +3,16 @@
 import { useEffect } from "react";
 
 const geometryProperties = [
-  "--ring-x",
-  "--ring-y",
+  "--ring-left-x",
+  "--ring-left-y",
+  "--ring-right-x",
+  "--ring-right-y",
   "--ring-scale",
   "--dots-x",
   "--dots-y",
   "--dots-scale",
-  "--axis-x",
-  "--axis-y",
-  "--axis-rotation",
-  "--parabola-x",
-  "--parabola-y",
-  "--parabola-rotation",
-  "--parabola-scale",
+  "--axis-left-rotation",
+  "--axis-right-rotation",
 ] as const;
 
 export function AmbientGeometry() {
@@ -37,27 +34,22 @@ export function AmbientGeometry() {
         1,
       );
       const progress = Math.min(Math.max(window.scrollY / scrollableHeight, 0), 1);
-      const phase = progress * Math.PI * 2;
-      const breathing = Math.sin(phase);
 
-      root.style.setProperty("--ring-x", `${-52 * progress}px`);
-      root.style.setProperty("--ring-y", `${-92 * progress}px`);
-      root.style.setProperty("--ring-scale", `${1 + 0.16 * breathing}`);
+      root.style.setProperty("--ring-left-x", `${30 * progress}px`);
+      root.style.setProperty("--ring-left-y", `${24 * progress}px`);
+      root.style.setProperty("--ring-right-x", `${-52 * progress}px`);
+      root.style.setProperty("--ring-right-y", `${-92 * progress}px`);
+      root.style.setProperty("--ring-scale", `${0.88 + 0.28 * progress}`);
       root.style.setProperty("--dots-x", `${32 * progress}px`);
       root.style.setProperty("--dots-y", `${-44 * progress}px`);
-      root.style.setProperty("--dots-scale", `${1 - 0.2 * breathing}`);
-      root.style.setProperty("--axis-x", `${-20 * progress}px`);
-      root.style.setProperty("--axis-y", `${34 * progress}px`);
-      root.style.setProperty("--axis-rotation", `${5 * breathing}deg`);
-      root.style.setProperty("--parabola-x", `${28 * progress}px`);
-      root.style.setProperty("--parabola-y", `${-58 * progress}px`);
+      root.style.setProperty("--dots-scale", `${0.82 + 0.36 * progress}`);
       root.style.setProperty(
-        "--parabola-rotation",
-        `${-18 + 82 * progress}deg`,
+        "--axis-left-rotation",
+        `${-2 + 5 * progress}deg`,
       );
       root.style.setProperty(
-        "--parabola-scale",
-        `${1 + 0.07 * Math.cos(phase)}`,
+        "--axis-right-rotation",
+        `${1 + 4 * progress}deg`,
       );
     }
 
@@ -82,14 +74,15 @@ export function AmbientGeometry() {
 
   return (
     <div className="ambient-geometry" aria-hidden="true">
-      <span className="geometry-ring" />
+      <span className="geometry-ring geometry-ring-left" />
+      <span className="geometry-ring geometry-ring-right" />
       <span className="geometry-dot-grid" />
-      <span className="geometry-coordinate">
+      <span className="geometry-coordinate geometry-coordinate-left">
         <span className="geometry-origin" />
       </span>
-      <svg className="geometry-parabola" viewBox="0 0 200 150">
-        <path d="M10 18Q100 208 190 18" />
-      </svg>
+      <span className="geometry-coordinate geometry-coordinate-right">
+        <span className="geometry-origin" />
+      </span>
     </div>
   );
 }

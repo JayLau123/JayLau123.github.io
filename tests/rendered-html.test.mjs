@@ -43,8 +43,17 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /href="\/gallery\/"[\s\S]*Gallery/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
-  assert.match(html, /class="geometry-coordinate"/);
-  assert.match(html, /class="geometry-parabola"/);
+  assert.match(html, /class="geometry-ring geometry-ring-left"/);
+  assert.match(html, /class="geometry-ring geometry-ring-right"/);
+  assert.match(
+    html,
+    /class="geometry-coordinate geometry-coordinate-left"/,
+  );
+  assert.match(
+    html,
+    /class="geometry-coordinate geometry-coordinate-right"/,
+  );
+  assert.doesNotMatch(html, /geometry-parabola/);
   assert.doesNotMatch(html, /geometry-triangle/);
   assert.match(html, /Dark mode/);
   assert.match(html, /Light mode/);
