@@ -1,4 +1,5 @@
 import { SiteFooter, SiteHeader } from "./components/site-shell";
+import { PublicationList } from "./components/publication-list";
 
 const scholarUrl =
   "https://scholar.google.com/citations?hl=en&user=f2qAmGIAAAAJ&scilu=&scisig=AKLELW8AAAAAamA-UixXKb5bXOUC94G6p-iPr2U&gmla=AO4B3jsDrYJAtgxAtTYhd2ZKamz0I8z-iOgFEDGwYQA2Hd8fVtVCZCItY274crw7cpnxSuM2f_5KHe05OqBEPBTeLHRRflV94_vj-bc&sciund=1239809507754054681";
@@ -33,71 +34,95 @@ const profileLinks = [
 
 const publications = [
   {
-    year: "2026",
-    title:
-      "Breaking Bottlenecks in Solid Electrolyte Discovery with Large Artificial Intelligence Models",
-    authors:
-      "E. J. Cheng, M. Hong, Z. Zeng, C. Liu, Q. Wang, M. J. Meadowcroft, V. Badilita, and others",
-    venue: "arXiv preprint arXiv:2606.24480",
-    href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:M3ejUd6NZC8C",
-  },
-  {
-    year: "2026",
+    date: "08/2026",
+    dateTime: "2026-08",
     title: "Empowering Polymeric Materials Discovery by Artificial Intelligence",
     authors:
       "C. Ma, L. Zhang, Y. Chen, W. Du, S. Fang, Z. Jiang, C. Liu, X. Ma, R. Su, and others",
     venue: "JACS Au",
+    abstract:
+      "Polymeric materials underpin modern technologies spanning energy storage, microelectronics, healthcare and sustainable manufacturing. Yet their rational design remains exceptionally challenging because material performance emerges from complex interactions among molecular composition, chain architecture, processing history and hierarchical structural evolution across multiple length and time scales. Consequently, polymer research has long relied on labor-intensive experimentation and fragmented modeling approaches, limiting both mechanistic understanding and innovation efficiency. Recent advances in data infrastructure, machine learning, large artificial intelligence models and laboratory automation are beginning to reshape this landscape. Rather than functioning as isolated tools, polymer databases, predictive models, AI agents and automated laboratories are increasingly converging into interconnected discovery ecosystems. As a result, the central challenge is shifting from improving predictive accuracy alone to enabling reliable decision-making, adaptive learning and seamless integration across computation, experimentation and scientific reasoning. We argue that polymer science is entering an era of autonomous discovery, in which data, simulation, reasoning and experimentation operate within self-improving feedback loops that continuously generate hypotheses, design materials, execute experiments and refine predictive models. By unifying molecular design, process optimization, experimental validation and industrial translation, such autonomous ecosystems establish a more predictive, reproducible and scalable paradigm for polymer innovation, fundamentally transforming how polymer research is conducted.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:4TOpqqG69KYC",
   },
   {
-    year: "2026",
+    date: "08/2026",
+    dateTime: "2026-08",
     title:
       "Building a physics-aware AI ecosystem for solid-state hydrogen storage materials",
     authors:
       "S.-H. Jang, Y. Yao, C. Liu, L. Zhang, D. Zhang, X. Jia, H. B. Tran, E. J. Cheng, and others",
     venue: "ACS Energy Letters",
+    abstract:
+      "Hydrogen storage remains a central bottleneck for scalable hydrogen energy systems due to the multiscale and coupled nature of the thermodynamics, kinetics, and microstructural evolution of hydrogen storage materials. Although artificial intelligence has accelerated materials discovery, current approaches remain constrained by fragmented data, limited physical consistency, and weak integration with experimental validation. Here, we propose a unified framework that integrates coherent data infrastructure, physics-grounded modeling, and AI-driven inverse design within a closed-loop discovery paradigm. By constraining optimization with thermodynamics, kinetics, uncertainty, provenance, and experimental feedback, this approach enables adaptive, physically consistent optimization, thereby establishing a pathway toward autonomous, digital-twin-enabled discovery of hydrogen storage materials.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC",
   },
   {
-    year: "2026",
+    date: "06/2026",
+    dateTime: "2026-06",
+    title:
+      "Breaking Bottlenecks in Solid Electrolyte Discovery with Large Artificial Intelligence Models",
+    authors:
+      "E. J. Cheng, M. Hong, Z. Zeng, C. Liu, Q. Wang, M. J. Meadowcroft, V. Badilita, and others",
+    venue: "arXiv preprint arXiv:2606.24480",
+    abstract:
+      "Solid electrolytes are central to next-generation metal batteries, yet their discovery remains constrained by fragmented data, limited transferability of simulations, and slow experimental iteration. Unlike catalysis, where surface reactivity dominates, solid electrolytes require simultaneous optimization of bulk ion transport, defect chemistry, mechanical integrity, and interfacial stability. Here, we outline a framework for autonomous solid-electrolyte discovery enabled by large artificial intelligence models, including machine learning interatomic potentials and large language models. We discuss the evolution from static materials databases to dynamic, self-updating knowledge systems, the role of machine learning interatomic potentials in bridging density functional theory and long-timescale ion migration, and the emergence of large language models as engines for literature mining, hypothesis generation, and scientific reasoning. We further describe a closed-loop architecture integrating AI-driven candidate design, multiscale simulation, uncertainty-aware selection, and experimental validation. Such systems shift solid-electrolyte research from intuition-guided exploration to data-informed, self-improving cycles. We conclude by highlighting challenges in data standardization, interfacial complexity, and reproducibility, and propose design principles for building autonomous laboratories for solid-state battery materials.",
+    href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:M3ejUd6NZC8C",
+  },
+  {
+    date: "02/2026",
+    dateTime: "2026-02",
     title:
       "Accelerating catalyst materials discovery with large artificial intelligence models",
     authors:
       "D. Zhang, Y. Chen, C. Liu, Y. Liu, H. Xin, J. Peng, P. Ou, and H. Li",
     venue: "Angewandte Chemie International Edition 65 (16), e26150",
+    abstract:
+      "The integration of artificial intelligence into catalysis is fundamentally reshaping the research paradigm of catalyst discovery. Unlike traditional trial-and-error approaches, AI-empowered data-driven technologies, particularly large AI models such as universal machine learning interatomic potentials and large language models, offer unprecedented capabilities in exploring complex spaces, predicting catalytic performance, and accelerating rational design. Standing at the forefront of data-driven science, we underscore how databases, universal machine learning interatomic potentials, and large language models are revolutionizing the traditional catalysis paradigm and bridging the ontology-concept-computation-experiment continuum. We demonstrate significant recent progress and discuss its potential and challenges in catalysis. By leveraging these technologies, researchers can conduct large-scale simulations, highly efficient data acquisition, training, prediction, and even self-directed research. Looking ahead, integrated universal machine learning interatomic potentials, multimodal large language models, and automation systems could enable AI-empowered closed-loop platforms and cross-disciplinary digital materials ecosystems.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:YOwf2qJgpHMC",
   },
   {
-    year: "2025",
+    date: "11/2025",
+    dateTime: "2025-11",
     title:
       "Accelerating Multimetallic Catalyst Discovery with Robotics and Agentic AI",
     authors: "J. Peng, C. Liu, Y. Luo, and K. Dandapat",
     venue: "ChemRxiv 2025 (1106)",
+    abstract:
+      "The design space of catalyst materials spans composition, processing, atomistic structure, and microstructure. As materials become more complex, the dimension of this parameter space grows combinatorially. Conventional active learning approaches operate on a single data stream and stay decoupled from the messy reality of experiments, limiting their efficiency and reproducibility in real-world catalyst optimization. To tackle this limitation, Li and coworkers developed a robotic platform, Copilot for Real-world Experimental Scientists (CRESt), which facilitates multimetallic catalyst discovery in a multiplex parameter space by combining multimodal large vision-language models, knowledge-assisted Bayesian optimization, and robotic automation of synthesis, characterization, and electrochemical tests.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:Zph67rFs4hoC",
   },
   {
-    year: "2021",
+    date: "08/2021",
+    dateTime: "2021-08",
     title:
       "Automatically adaptive ventilated metamaterial absorber for environment with varying noises",
     authors:
       "H. Tian, X. Xiang, K. He, C. Liu, S. Hou, S. Wang, Y. Huang, X. Wu, and W. Wen",
     venue: "Advanced Materials Technologies 6 (12), 2100668",
+    abstract:
+      "An automatically adaptive metamaterial sound absorber is designed to absorb tunable low-frequency sounds below 500 Hz under ventilated conditions. A feedback circuit actively detects noise signals and adjusts sliders on the reconfigurable absorbers. The system adapts its sound-absorption units directly to the external environment while retaining efficient absorption and ventilation. The intelligent absorber is demonstrated experimentally, and an effective model of coupled lossy oscillators is used to understand its mechanism. The device can be adjusted for different working frequencies in applications such as ventilated smart windows, where it can reduce external noise while preserving a fresh and bright working environment. It may also be useful in ducts where noise frequencies vary over time and manual tuning is difficult or inaccurate.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:roLk4NBRz8UC",
   },
   {
-    year: "2021",
+    date: "07/2021",
+    dateTime: "2021-07",
     title:
       "Microfluidic transport of hybrid optoplasmonic particles for repeatable SERS detection",
     authors: "D. Liu, C. Liu, Y. Yuan, X. Zhang, Y. Huang, and S. Yan",
     venue: "Analytical Chemistry 93 (30), 10672-10678",
+    abstract:
+      "A hybrid optoplasmonic microfluidic conveyer is developed in which movable, highly ordered optoplasmonic particles are delivered to a detection spot for surface-enhanced Raman spectroscopy. Each particle is a silica microsphere with silver nanoparticles reduced photochemically in situ on its surface. The converged light at the microsphere surface produces strong Raman spectra in the channel, consistent with simulated electric-field distributions. The experiments demonstrate quantitative analysis at 1 nM. Used particles can be ejected by changing the injected fluid velocity, allowing a new particle to move into the same detection spot for repeatable measurements. The transport dynamics are investigated, and a theoretical model accurately predicts particle release. The resulting conveyer provides replaceable, highly sensitive enhanced substrates that reduce cross-contamination between target molecules during repeated detection.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:hqOjcs7Dif8C",
   },
   {
-    year: "2021",
+    date: "07/2021",
+    dateTime: "2021-07",
     title: "Optoplasmonic film for SERS",
     authors: "L. Ju, J. Shi, C. Liu, Y. Huang, and X. Sun",
     venue:
       "Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy 255, 119698",
+    abstract:
+      "Combining plasmonic and photonic elements, optoplasmonic hybrid structures can exhibit optical properties beyond conventional plasmonic or photonic systems. This work investigates a simple optoplasmonic film composed of silica microspheres and a gold film without nanostructuring. With the microspheres acting as lenses, the surface-enhanced Raman spectroscopy intensity on the gold film increases by approximately 1000 times compared with bare gold. Simulated electromagnetic fields attribute the enhancement to the optical lens effect, which concentrates light beneath each microsphere and excites surface plasmons on the gold film. Experiments further show that this enhancement depends strongly on microsphere size and incident-light wavelength. The simple film avoids fabrication and storage challenges associated with nanostructured substrates and offers potential for enhanced spectroscopy, photocatalysis, photothermal effects, and hot-electron generation.",
     href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&oe=ASCII&user=f2qAmGIAAAAJ&citation_for_view=f2qAmGIAAAAJ:YsMSGLbcyi4C",
   },
 ] as const;
@@ -292,20 +317,7 @@ export default function Home() {
         <div className="section-heading">
           <h2 id="publications-title">Publications</h2>
         </div>
-        <ol className="publication-list">
-          {publications.map((paper) => (
-            <li className="publication-item" key={paper.title}>
-              <a className="publication-item-link" href={paper.href}>
-                <span className="year">{paper.year}</span>
-                <div>
-                  <h3>{paper.title}</h3>
-                  <p className="authors">{paper.authors}</p>
-                  <p className="venue">{paper.venue}</p>
-                </div>
-              </a>
-            </li>
-          ))}
-        </ol>
+        <PublicationList publications={publications} />
       </section>
 
       <section className="section contact-section" id="contact">

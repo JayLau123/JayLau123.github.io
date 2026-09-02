@@ -57,8 +57,20 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /profile\.jpg/);
   assert.match(
     html,
-    /<li class="publication-item"><a class="publication-item-link" href="https:\/\/scholar\.google\.com\//,
+    /<li class="publication-item" data-publication-index="0"><button class="publication-summary" type="button" aria-expanded="false"/,
   );
+  assert.equal((html.match(/class="publication-summary"/g) ?? []).length, 8);
+  assert.equal((html.match(/class="publication-read-more"/g) ?? []).length, 8);
+  assert.match(html, /class="publication-date" dateTime="2026-08">08\/2026<\/time>/);
+  assert.match(html, /class="publication-date" dateTime="2025-11">11\/2025<\/time>/);
+  assert.match(html, /class="publication-date" dateTime="2021-07">07\/2021<\/time>/);
+  assert.match(html, /<h3>Abstract<\/h3>/);
+  assert.match(html, /class="publication-abstract"/);
+  assert.match(
+    html,
+    /class="publication-read-more" href="https:\/\/scholar\.google\.com\/citations\?[^\"]+" target="_blank" rel="noreferrer" tabindex="-1">Read more/,
+  );
+  assert.doesNotMatch(html, /publication-item-link/);
   assert.match(html, /aria-label="Toggle light and dark mode"/);
   assert.match(html, /class="ambient-geometry" aria-hidden="true"/);
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);

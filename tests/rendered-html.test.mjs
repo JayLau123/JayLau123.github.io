@@ -95,8 +95,20 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Publications/);
   assert.match(
     html,
-    /<li class="publication-item"><a class="publication-item-link" href="https:\/\/scholar\.google\.com\//,
+    /<li class="publication-item" data-publication-index="0"><button class="publication-summary" type="button" aria-expanded="false"/,
   );
+  assert.equal((html.match(/class="publication-summary"/g) ?? []).length, 8);
+  assert.equal((html.match(/class="publication-read-more"/g) ?? []).length, 8);
+  assert.match(html, /class="publication-date" dateTime="2026-08">08\/2026<\/time>/);
+  assert.match(html, /class="publication-date" dateTime="2025-11">11\/2025<\/time>/);
+  assert.match(html, /class="publication-date" dateTime="2021-07">07\/2021<\/time>/);
+  assert.match(html, /<h3>Abstract<\/h3>/);
+  assert.match(html, /class="publication-abstract"/);
+  assert.match(
+    html,
+    /class="publication-read-more" href="https:\/\/scholar\.google\.com\/citations\?[^\"]+" target="_blank" rel="noreferrer" tabindex="-1">Read more/,
+  );
+  assert.doesNotMatch(html, /publication-item-link/);
   assert.match(html, /JACS Au/);
   assert.match(html, /ACS Energy Letters/);
   assert.match(html, /citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC/);
