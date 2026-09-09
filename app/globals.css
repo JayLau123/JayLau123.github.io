@@ -597,6 +597,17 @@ html[data-theme="dark"] .research-schematic img {
   transition: filter 280ms ease;
 }
 
+.news-mission-tagline {
+  width: 79%;
+  margin: 8px 0 0 21%;
+  color: var(--muted);
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas,
+    "Liberation Mono", Menlo, monospace;
+  font-size: clamp(0.86rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  text-align: center;
+}
+
 html[data-theme="dark"] .news-mark img {
   filter: invert(0.94);
   mix-blend-mode: screen;
@@ -633,6 +644,9 @@ html[data-theme="dark"] .news-mark img {
   color: var(--muted);
   font-size: 1.02rem;
   line-height: 1.82;
+  hyphens: auto;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .news-link {

@@ -253,6 +253,9 @@ export default function Home() {
               src="/genesis-logo-lockup-black.png"
               alt="Genesis Mission"
             />
+            <p className="news-mission-tagline">
+              <em>Decoding origins, designing futures</em>
+            </p>
           </div>
           <div className="news-copy">
             <p className="news-meta">07/2026</p>
