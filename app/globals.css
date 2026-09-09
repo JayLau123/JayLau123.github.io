@@ -599,7 +599,7 @@ html[data-theme="dark"] .research-schematic img {
 
 .news-mission-tagline {
   width: 79%;
-  margin: 8px 0 0 21%;
+  margin: clamp(-22px, -3.1vw, -11px) 0 0 21%;
   color: var(--muted);
   font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas,
     "Liberation Mono", Menlo, monospace;
