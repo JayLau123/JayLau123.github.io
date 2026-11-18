@@ -61,7 +61,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Light mode/);
   assert.match(
     html,
-    /real-world conditions\.[\s\S]*research-schematic-v2\.png[\s\S]*My methodological focus/,
+    /Bayesian Optimization for Scientific Agents[\s\S]*CO₂ reduction catalysts[\s\S]*class="bo-demo-canvas"[\s\S]*Disordered Modeling[\s\S]*research-schematic-v2\.png/,
   );
   assert.doesNotMatch(
     html,

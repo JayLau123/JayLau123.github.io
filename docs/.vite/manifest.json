@@ -20,8 +20,18 @@
       "_framework-CXnKph_e.js"
     ]
   },
+  "app/components/bayesian-optimization-demo.tsx": {
+    "file": "assets/bayesian-optimization-demo-2JpxqE7E.js",
+    "name": "bayesian-optimization-demo",
+    "src": "app/components/bayesian-optimization-demo.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_framework-CXnKph_e.js"
+    ]
+  },
   "app/components/gallery-year-carousel.tsx": {
-    "file": "assets/gallery-year-carousel-B6TuysfJ.js",
+    "file": "assets/gallery-year-carousel-BNNwmxDo.js",
     "name": "gallery-year-carousel",
     "src": "app/components/gallery-year-carousel.tsx",
     "isDynamicEntry": true,
@@ -31,7 +41,7 @@
     ]
   },
   "app/components/publication-list.tsx": {
-    "file": "assets/publication-list-CTfU43uV.js",
+    "file": "assets/publication-list-B7X4zErb.js",
     "name": "publication-list",
     "src": "app/components/publication-list.tsx",
     "isDynamicEntry": true,
@@ -41,7 +51,7 @@
     ]
   },
   "app/components/smooth-scroll-link.tsx": {
-    "file": "assets/smooth-scroll-link-MvaWjVoc.js",
+    "file": "assets/smooth-scroll-link-dczWB4Lx.js",
     "name": "smooth-scroll-link",
     "src": "app/components/smooth-scroll-link.tsx",
     "isDynamicEntry": true,
@@ -50,7 +60,7 @@
     ]
   },
   "app/components/theme-toggle.tsx": {
-    "file": "assets/theme-toggle-ClG__18e.js",
+    "file": "assets/theme-toggle-uNzy21ls.js",
     "name": "theme-toggle",
     "src": "app/components/theme-toggle.tsx",
     "isDynamicEntry": true,
@@ -59,7 +69,7 @@
     ]
   },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-hJ6qfytz.js",
+    "file": "assets/layout-segment-context-BRFIKPYP.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -70,7 +80,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-DPiM801r.js",
+    "file": "assets/index-CguUso-v.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
@@ -85,7 +95,8 @@
       "app/components/gallery-year-carousel.tsx",
       "app/components/smooth-scroll-link.tsx",
       "app/components/publication-list.tsx",
-      "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js"
+      "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
+      "app/components/bayesian-optimization-demo.tsx"
     ]
   }
 }

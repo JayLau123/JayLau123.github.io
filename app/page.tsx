@@ -1,5 +1,6 @@
 import { SiteFooter, SiteHeader } from "./components/site-shell";
 import { PublicationList } from "./components/publication-list";
+import { BayesianOptimizationDemo } from "./components/bayesian-optimization-demo";
 
 const scholarUrl =
   "https://scholar.google.com/citations?hl=en&user=f2qAmGIAAAAJ&scilu=&scisig=AKLELW8AAAAAamA-UixXKb5bXOUC94G6p-iPr2U&gmla=AO4B3jsDrYJAtgxAtTYhd2ZKamz0I8z-iOgFEDGwYQA2Hd8fVtVCZCItY274crw7cpnxSuM2f_5KHe05OqBEPBTeLHRRflV94_vj-bc&sciund=1239809507754054681";
@@ -214,12 +215,26 @@ export default function Home() {
       >
         <div className="section-heading">
           <h2 id="interests-title">Research Interests</h2>
+        </div>
+        <article className="research-topic" aria-labelledby="bayesian-optimization-title">
+          <h3 id="bayesian-optimization-title">Bayesian Optimization for Scientific Agents</h3>
           <p>
-            Current AI-driven materials discovery often faces a bottleneck:
-            models frequently over-idealize structures by predicting perfectly
-            ordered crystallographic sites, neglecting the thermodynamically
-            driven disorder inherent in bulk and surface structures under
-            real-world conditions.
+            I develop data-efficient methods that help scientific AI agents decide
+            what to measure next when experiments are costly. In CLEAR-AI, a
+            U.S. Department of Energy Genesis Mission project, I use multi-output
+            Gaussian processes and adaptive acquisition policies to search for
+            CO₂ reduction catalysts across competing objectives. I benchmark
+            these policies on archived catalyst measurements, revealing each
+            outcome only when the policy selects that candidate.
+          </p>
+          <BayesianOptimizationDemo />
+        </article>
+        <article className="research-topic" aria-labelledby="disordered-modeling-title">
+          <h3 id="disordered-modeling-title">Disordered Modeling</h3>
+          <p>
+            I use physics-informed machine learning and atomistic simulations to
+            model disorder in bulk materials and surfaces and connect local
+            structure to experimental observables.
           </p>
           <figure className="research-schematic">
             <img
@@ -227,20 +242,7 @@ export default function Home() {
               alt="Schematic comparing an ordered AI-predicted structure with a disordered experimentally synthesized structure"
             />
           </figure>
-          <p>
-            My methodological focus lies in developing physics-informed,
-            data-driven machine learning methods to capture the fundamental laws
-            of materials thermodynamics and surface kinetics from atomistic
-            simulations and characterization data, bridging material behavior
-            from the single-atom level up to experimental observables.
-          </p>
-          <p>
-            My goal is to close the loop between idealized computational design,
-            the experimental workbench, and practical applications in catalysts,
-            electrolytes, and energy storage materials, accelerating innovation
-            at the AI-energy nexus.
-          </p>
-        </div>
+        </article>
       </section>
 
       <section className="section news-section" id="news">
