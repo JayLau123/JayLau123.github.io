@@ -146,7 +146,7 @@ function drawPlot(
   ctx.textAlign = "left";
   ctx.fillStyle = colors.text;
   ctx.fillText("Response (a.u.)", left, 9);
-  ctx.fillText("Expected improvement", left, bottom + 13);
+  ctx.fillText("Predicted gain over best", left, bottom + 13);
 
   ctx.strokeStyle = colors.grid;
   ctx.lineWidth = 1;
