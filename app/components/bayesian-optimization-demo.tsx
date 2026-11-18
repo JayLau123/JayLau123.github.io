@@ -91,15 +91,28 @@ function createFrames() {
 
 const frames = createFrames();
 const acquisitionMax = Math.max(...frames.flatMap(({ posterior }) => posterior.map((p) => p.acquisition)));
-const colors = {
-  grid: "#244341",
-  text: "#b0c7c1",
-  mean: "#6ff0d0",
-  observation: "#ecfff8",
-  next: "#ffcf7c",
-};
+function readPlotColors(canvas: HTMLCanvasElement) {
+  const styles = window.getComputedStyle(canvas);
+  const color = (name: string) => styles.getPropertyValue(name).trim();
+  return {
+    grid: color("--line"),
+    text: color("--muted"),
+    mean: color("--green"),
+    band: color("--bo-band"),
+    observation: color("--foreground"),
+    surface: color("--feature-surface"),
+    next: color("--amber"),
+    acquisition: color("--bo-acquisition-fill"),
+  };
+}
 
-function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number, progress: number) {
+function drawPlot(
+  canvas: HTMLCanvasElement,
+  colors: ReturnType<typeof readPlotColors>,
+  step: number,
+  previousStep: number,
+  progress: number,
+) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
@@ -120,10 +133,10 @@ function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number,
   const mix = (from: number, to: number) => from + (to - from) * progress;
   const left = width < 420 ? 28 : 39;
   const right = width - 15;
-  const top = 29;
-  const bottom = height - 123;
-  const acquisitionTop = bottom + 32;
-  const acquisitionBottom = height - 40;
+  const top = 24;
+  const bottom = height - 101;
+  const acquisitionTop = bottom + 25;
+  const acquisitionBottom = height - 33;
   const plotX = (x: number) => left + (right - left) * x;
   const plotY = (y: number) => bottom - ((y + 1.6) / 4.8) * (bottom - top);
   const acquisitionY = (y: number) => acquisitionBottom - (y / acquisitionMax) * (acquisitionBottom - acquisitionTop);
@@ -132,8 +145,8 @@ function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number,
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
   ctx.fillStyle = colors.text;
-  ctx.fillText("Response (a.u.)", left, 12);
-  ctx.fillText("Expected improvement", left, bottom + 15);
+  ctx.fillText("Response (a.u.)", left, 9);
+  ctx.fillText("Expected improvement", left, bottom + 13);
 
   ctx.strokeStyle = colors.grid;
   ctx.lineWidth = 1;
@@ -157,7 +170,7 @@ function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number,
   ctx.moveTo(left, acquisitionBottom);
   ctx.lineTo(right, acquisitionBottom);
   ctx.stroke();
-  ctx.fillText("Composition fraction", (left + right) / 2, height - 7);
+  ctx.fillText("Composition fraction", (left + right) / 2, height - 5);
 
   const traceCurve = (ordinate: (index: number) => number, reverse = false) => {
     for (let i = 0; i < grid.length; i += 1) {
@@ -177,24 +190,12 @@ function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number,
   ctx.rect(left, top, right - left, bottom - top);
   ctx.clip();
 
-  const band = ctx.createLinearGradient(left, top, right, bottom);
-  band.addColorStop(0, "rgba(82, 213, 178, 0.34)");
-  band.addColorStop(1, "rgba(51, 166, 224, 0.20)");
   ctx.beginPath();
   traceCurve((index) => plotY(valueAt(index, "upper")));
   traceCurve((index) => plotY(valueAt(index, "lower")), true);
   ctx.closePath();
-  ctx.fillStyle = band;
+  ctx.fillStyle = colors.band;
   ctx.fill();
-
-  ctx.beginPath();
-  const bestY = plotY(mix(previous.best, frame.best));
-  ctx.moveTo(left, bestY);
-  ctx.lineTo(right, bestY);
-  ctx.strokeStyle = "rgba(236, 255, 248, 0.3)";
-  ctx.setLineDash([4, 5]);
-  ctx.stroke();
-  ctx.setLineDash([]);
 
   ctx.beginPath();
   traceCurve((index) => plotY(valueAt(index, "mean")));
@@ -210,10 +211,7 @@ function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number,
   ctx.lineTo(right, acquisitionBottom);
   ctx.lineTo(left, acquisitionBottom);
   ctx.closePath();
-  const scoreFill = ctx.createLinearGradient(0, acquisitionTop, 0, acquisitionBottom);
-  scoreFill.addColorStop(0, "rgba(255, 207, 124, 0.38)");
-  scoreFill.addColorStop(1, "rgba(255, 207, 124, 0.04)");
-  ctx.fillStyle = scoreFill;
+  ctx.fillStyle = colors.acquisition;
   ctx.fill();
   ctx.beginPath();
   traceCurve(scoreY);
@@ -242,19 +240,20 @@ function drawPlot(canvas: HTMLCanvasElement, step: number, previousStep: number,
     const x = plotX(grid[observation.index]);
     const y = plotY(observation.value);
     const isNew = i >= previous.observations.length;
-    ctx.globalAlpha = isNew ? progress : 1;
     if (isNew && progress < 1) {
       ctx.beginPath();
       ctx.arc(x, y, 5 + 9 * progress, 0, 2 * Math.PI);
-      ctx.strokeStyle = `rgba(111, 240, 208, ${1 - progress})`;
+      ctx.globalAlpha = 1 - progress;
+      ctx.strokeStyle = colors.mean;
       ctx.stroke();
     }
+    ctx.globalAlpha = isNew ? progress : 1;
     ctx.beginPath();
     ctx.arc(x, y, 4.4, 0, 2 * Math.PI);
     ctx.fillStyle = colors.observation;
     ctx.fill();
     ctx.lineWidth = 1.5;
-    ctx.strokeStyle = "#0b2526";
+    ctx.strokeStyle = colors.surface;
     ctx.stroke();
   }
   ctx.globalAlpha = 1;
@@ -307,9 +306,15 @@ export function BayesianOptimizationDemo() {
     let progress = reducedMotion || from >= step ? 1 : 0;
     let animation = 0;
     const started = performance.now();
-    const paint = () => drawPlot(canvas, step, from, 1 - (1 - progress) ** 3);
+    let colors = readPlotColors(canvas);
+    const paint = () => drawPlot(canvas, colors, step, from, 1 - (1 - progress) ** 3);
     const resize = new ResizeObserver(paint);
     resize.observe(canvas);
+    const theme = new MutationObserver(() => {
+      colors = readPlotColors(canvas);
+      paint();
+    });
+    theme.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     function animate(now: number) {
       progress = Math.min(1, (now - started) / 850);
@@ -321,6 +326,7 @@ export function BayesianOptimizationDemo() {
     if (progress < 1) animation = requestAnimationFrame(animate);
     return () => {
       resize.disconnect();
+      theme.disconnect();
       cancelAnimationFrame(animation);
     };
   }, [step, reducedMotion]);
@@ -328,14 +334,10 @@ export function BayesianOptimizationDemo() {
   const frame = frames[step];
   const finished = step === evaluationCount;
   const status = frame.next === null
-    ? "Evaluation budget reached"
-    : `Next composition fraction ${grid[frame.next].toFixed(2)}`;
+    ? "Evaluation budget reached."
+    : `Next composition fraction ${grid[frame.next].toFixed(2)}.`;
   return (
-    <figure className="bo-demo" aria-labelledby="bo-demo-title">
-      <div className="bo-demo-heading">
-        <strong id="bo-demo-title">How Bayesian optimization chooses the next experiment</strong>
-        <span className="bo-demo-count">{frame.observations.length} observations</span>
-      </div>
+    <figure className="research-schematic bo-demo" aria-label="Bayesian optimization demo">
       <ul className="bo-demo-legend" aria-label="Plot legend">
         <li><span className="bo-key-mean" />GP mean</li>
         <li><span className="bo-key-band" />95% credible interval</li>
@@ -346,7 +348,7 @@ export function BayesianOptimizationDemo() {
         ref={canvasRef}
         className="bo-demo-canvas"
         role="img"
-        aria-label={`Gaussian process fitted to ${frame.observations.length} observations. Best observed response ${frame.best.toFixed(2)}. ${status}.`}
+        aria-label={`Gaussian process fitted to ${frame.observations.length} observations. Best observed response ${frame.best.toFixed(2)}. ${status}`}
         aria-describedby="bo-demo-caption"
       >
         The Gaussian process prediction and uncertainty update after each new observation.
@@ -373,13 +375,12 @@ export function BayesianOptimizationDemo() {
         >
           Step <span aria-hidden="true">→</span>
         </button>
-        <span className="bo-demo-status" aria-live={playing ? "off" : "polite"}>{status}</span>
+        <span className="bo-demo-count">{frame.observations.length} observations</span>
+        <span className="sr-only" aria-live={playing ? "off" : "polite"}>
+          {frame.observations.length} observations. {status}
+        </span>
       </div>
-      <figcaption id="bo-demo-caption">
-        In this synthetic example, expected improvement picks the next candidate
-        using the predicted response and its uncertainty. Each observation updates
-        the Gaussian process before the next choice.
-      </figcaption>
+      <figcaption id="bo-demo-caption">Synthetic example</figcaption>
     </figure>
   );
 }

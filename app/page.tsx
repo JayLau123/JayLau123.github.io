@@ -219,13 +219,30 @@ export default function Home() {
         <article className="research-topic" aria-labelledby="bayesian-optimization-title">
           <h3 id="bayesian-optimization-title">Bayesian Optimization for Scientific Agents</h3>
           <p>
-            I develop data-efficient methods that help scientific AI agents decide
-            what to measure next when experiments are costly. In CLEAR-AI, a
-            U.S. Department of Energy Genesis Mission project, I use multi-output
-            Gaussian processes and adaptive acquisition policies to search for
-            CO₂ reduction catalysts across competing objectives. I benchmark
-            these policies on archived catalyst measurements, revealing each
-            outcome only when the policy selects that candidate.
+            AI can propose molecules, materials, and chemical reactions far faster
+            than scientists can test them. With limited experimental capacity, the
+            central question is <strong>what to measure next</strong>. I develop
+            decision-making methods for scientific AI agents that learn from limited
+            data and update their experimental plans as evidence accumulates. I use
+            Gaussian processes as probabilistic surrogates to predict outcomes and
+            quantify uncertainty, then use Bayesian optimization to balance
+            exploring uncertain candidates with pursuing promising ones.
+          </p>
+          <p>
+            In <strong>CLEAR-AI (a Genesis Mission project)</strong>, I apply these
+            methods to the search for ternary alloy catalysts for electrochemical
+            CO₂ reduction. Multi-output Gaussian processes jointly model onset
+            potentials measured under CO₂ and N₂, with the N₂ response serving as
+            a proxy for competing hydrogen evolution. I study how adapting
+            language-model embeddings, GP kernels, and acquisition policies can
+            improve the search across these objectives.
+          </p>
+          <p>
+            I benchmark these decision systems through prospective replays of
+            archived catalyst measurements, revealing each outcome only after
+            the policy selects that candidate. This lets me compare how
+            effectively different strategies find promising catalysts under the
+            same measurement budget.
           </p>
           <BayesianOptimizationDemo />
         </article>
