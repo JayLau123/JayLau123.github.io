@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type Ref } from "react";
 
 const grid = Array.from({ length: 151 }, (_, index) => index / 150);
 const priorMean = 0.55;
@@ -90,7 +90,6 @@ function createFrames() {
 }
 
 const frames = createFrames();
-const acquisitionMax = Math.max(...frames.flatMap(({ posterior }) => posterior.map((p) => p.acquisition)));
 function readPlotColors(canvas: HTMLCanvasElement) {
   const styles = window.getComputedStyle(canvas);
   const color = (name: string) => styles.getPropertyValue(name).trim();
@@ -102,7 +101,6 @@ function readPlotColors(canvas: HTMLCanvasElement) {
     observation: color("--foreground"),
     surface: color("--feature-surface"),
     next: color("--amber"),
-    acquisition: color("--bo-acquisition-fill"),
   };
 }
 
@@ -131,22 +129,23 @@ function drawPlot(
   const frame = frames[step];
   const previous = frames[previousStep];
   const mix = (from: number, to: number) => from + (to - from) * progress;
-  const left = width < 420 ? 28 : 39;
+  const left = width < 420 ? 42 : 52;
   const right = width - 15;
-  const top = 24;
-  const bottom = height - 101;
-  const acquisitionTop = bottom + 25;
-  const acquisitionBottom = height - 33;
+  const top = 12;
+  const bottom = height - 29;
   const plotX = (x: number) => left + (right - left) * x;
   const plotY = (y: number) => bottom - ((y + 1.6) / 4.8) * (bottom - top);
-  const acquisitionY = (y: number) => acquisitionBottom - (y / acquisitionMax) * (acquisitionBottom - acquisitionTop);
 
   ctx.font = "12px system-ui, sans-serif";
   ctx.textBaseline = "middle";
-  ctx.textAlign = "left";
+  ctx.textAlign = "center";
   ctx.fillStyle = colors.text;
-  ctx.fillText("Response (a.u.)", left, 9);
-  ctx.fillText("Predicted gain over best", left, bottom + 13);
+  ctx.fillText("Composition space", (left + right) / 2, bottom + 17);
+  ctx.save();
+  ctx.translate(9, (top + bottom) / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText("Prediction", 0, 0);
+  ctx.restore();
 
   ctx.strokeStyle = colors.grid;
   ctx.lineWidth = 1;
@@ -162,15 +161,10 @@ function drawPlot(
     const x = plotX(value);
     ctx.moveTo(x, top);
     ctx.lineTo(x, bottom);
-    ctx.moveTo(x, acquisitionTop);
-    ctx.lineTo(x, acquisitionBottom);
-    ctx.textAlign = "center";
-    ctx.fillText(String(value), x, acquisitionBottom + 13);
   }
-  ctx.moveTo(left, acquisitionBottom);
-  ctx.lineTo(right, acquisitionBottom);
+  ctx.moveTo(left, bottom);
+  ctx.lineTo(right, bottom);
   ctx.stroke();
-  ctx.fillText("Composition fraction", (left + right) / 2, height - 5);
 
   const traceCurve = (ordinate: (index: number) => number, reverse = false) => {
     for (let i = 0; i < grid.length; i += 1) {
@@ -182,7 +176,7 @@ function drawPlot(
     }
   };
 
-  const valueAt = (index: number, key: keyof (typeof frame.posterior)[number]) =>
+  const valueAt = (index: number, key: "mean" | "upper" | "lower") =>
     mix(previous.posterior[index][key], frame.posterior[index][key]);
 
   ctx.save();
@@ -205,20 +199,6 @@ function drawPlot(
   ctx.stroke();
   ctx.restore();
 
-  const scoreY = (index: number) => acquisitionY(valueAt(index, "acquisition"));
-  ctx.beginPath();
-  traceCurve(scoreY);
-  ctx.lineTo(right, acquisitionBottom);
-  ctx.lineTo(left, acquisitionBottom);
-  ctx.closePath();
-  ctx.fillStyle = colors.acquisition;
-  ctx.fill();
-  ctx.beginPath();
-  traceCurve(scoreY);
-  ctx.strokeStyle = colors.next;
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-
   if (frame.next !== null) {
     const x = plotX(grid[frame.next]);
     ctx.globalAlpha = previousStep === step ? 1 : progress;
@@ -226,14 +206,10 @@ function drawPlot(
     ctx.beginPath();
     ctx.moveTo(x, top);
     ctx.lineTo(x, bottom);
-    ctx.moveTo(x, acquisitionTop);
-    ctx.lineTo(x, acquisitionBottom);
+    ctx.strokeStyle = colors.next;
+    ctx.lineWidth = 1.5;
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.beginPath();
-    ctx.arc(x, scoreY(frame.next), 4, 0, 2 * Math.PI);
-    ctx.fillStyle = colors.next;
-    ctx.fill();
   }
 
   for (const [i, observation] of frame.observations.entries()) {
@@ -259,7 +235,13 @@ function drawPlot(
   ctx.globalAlpha = 1;
 }
 
-export function BayesianOptimizationDemo() {
+export function BayesianOptimizationDemo({
+  onExplore3D,
+  exploreButtonRef,
+}: {
+  onExplore3D: () => void;
+  exploreButtonRef: Ref<HTMLButtonElement>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const previousStep = useRef(0);
   const [step, setStep] = useState(0);
@@ -341,7 +323,7 @@ export function BayesianOptimizationDemo() {
       <ul className="bo-demo-legend" aria-label="Plot legend">
         <li><span className="bo-key-mean" />GP mean</li>
         <li><span className="bo-key-band" />95% credible interval</li>
-        <li><span className="bo-key-observation" />Observation</li>
+        <li><span className="bo-key-observation" />{frame.observations.length} observations</li>
         <li><span className="bo-key-next" />Next candidate</li>
       </ul>
       <canvas
@@ -349,7 +331,6 @@ export function BayesianOptimizationDemo() {
         className="bo-demo-canvas"
         role="img"
         aria-label={`Gaussian process fitted to ${frame.observations.length} observations. Best observed response ${frame.best.toFixed(2)}. ${status}`}
-        aria-describedby="bo-demo-caption"
       >
         The Gaussian process prediction and uncertainty update after each new observation.
       </canvas>
@@ -373,14 +354,21 @@ export function BayesianOptimizationDemo() {
             setStep((current) => Math.min(evaluationCount, current + 1));
           }}
         >
-          Step <span aria-hidden="true">→</span>
+          Step
         </button>
-        <span className="bo-demo-count">{frame.observations.length} observations</span>
+        <button
+          ref={exploreButtonRef}
+          type="button"
+          className="bo-demo-explore"
+          aria-controls="bo-visualization"
+          onClick={onExplore3D}
+        >
+          Interactive 3D
+        </button>
         <span className="sr-only" aria-live={playing ? "off" : "polite"}>
           {frame.observations.length} observations. {status}
         </span>
       </div>
-      <figcaption id="bo-demo-caption">Synthetic example</figcaption>
     </figure>
   );
 }

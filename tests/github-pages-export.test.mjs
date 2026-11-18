@@ -13,11 +13,14 @@ test("exports static GitHub Pages pages", async () => {
 
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Research Interests/);
-  assert.match(html, /aria-controls="bo-visualization">Explore in 3D<\/button>/);
+  assert.match(html, /class="bo-demo-controls"[\s\S]*>Step<\/button><button[^>]*aria-controls="bo-visualization">Interactive 3D<\/button>/);
   assert.match(html, /class="bo-demo-canvas"/);
+  assert.doesNotMatch(html, /Synthetic example|<strong>what to measure next<\/strong>|In <strong>CLEAR-AI<\/strong>/);
   assert.doesNotMatch(html, /<iframe[^>]*title="3D Bayesian optimization explorer"/);
   assert.match(explorerHtml, /Surrogate model \(Gaussian process\)/);
   assert.match(explorerHtml, /True response/);
+  assert.match(explorerHtml, /class="text-small ternary-legend"[^>]*>[^\n]*data-count>2 Measured<\/span>/);
+  assert.doesNotMatch(explorerHtml, /type="range"|Select a point to inspect/);
   for (const plot of ["response", "uncertainty", "truth"]) {
     assert.match(explorerHtml, new RegExp(`<canvas[^>]*data-plot="${plot}"`));
   }

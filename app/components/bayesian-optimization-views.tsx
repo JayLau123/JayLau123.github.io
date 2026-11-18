@@ -8,6 +8,20 @@ const explorerUrl = "/research/bayesian-optimization-3d/";
 export function BayesianOptimizationViews() {
   const [show3D, setShow3D] = useState(false);
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const exploreButtonRef = useRef<HTMLButtonElement>(null);
+  const backButtonRef = useRef<HTMLButtonElement>(null);
+  const moveFocus = useRef(false);
+
+  function changeView(nextShow3D: boolean) {
+    moveFocus.current = true;
+    setShow3D(nextShow3D);
+  }
+
+  useEffect(() => {
+    if (!moveFocus.current) return;
+    moveFocus.current = false;
+    (show3D ? backButtonRef : exploreButtonRef).current?.focus();
+  }, [show3D]);
 
   useEffect(() => {
     const frame = frameRef.current;
@@ -52,18 +66,24 @@ export function BayesianOptimizationViews() {
 
   return (
     <div className="bo-views">
-      <div className="bo-demo-controls bo-view-controls">
-        <button
-          type="button"
-          aria-controls="bo-visualization"
-          onClick={() => setShow3D((current) => !current)}
-        >
-          {show3D ? "Back to 2D" : "Explore in 3D"}
-        </button>
-      </div>
+      {show3D && (
+        <div className="bo-demo-controls bo-view-controls">
+          <button
+            ref={backButtonRef}
+            type="button"
+            aria-controls="bo-visualization"
+            onClick={() => changeView(false)}
+          >
+            Back to 2D
+          </button>
+        </div>
+      )}
       <div id="bo-visualization">
         <div hidden={show3D}>
-          <BayesianOptimizationDemo />
+          <BayesianOptimizationDemo
+            onExplore3D={() => changeView(true)}
+            exploreButtonRef={exploreButtonRef}
+          />
         </div>
         {show3D && (
           <div className="research-schematic bo-3d-panel">

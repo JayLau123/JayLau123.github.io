@@ -88,13 +88,7 @@
     .btn:hover:not(:disabled) { border-color: var(--green); }
     .btn:disabled { opacity: .55; cursor: default; }
     :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-    .form-range input { width: 100%; accent-color: var(--green); }
     .ternary-surface figcaption { font-size: .92rem; font-weight: 600; }
-    .ternary-help { margin-left: auto; }
-
-    @media (max-width: 620px) {
-      .ternary-help { margin-left: 0; }
-    }
   </style>
 </head>
 <body>
@@ -106,25 +100,19 @@
         <button class="btn btn-primary" type="button" data-play>Play</button>
         <button class="btn" type="button" data-step>Measure next</button>
       </div>
-      <label class="form-range ternary-orbit">
-        <span>Orbit</span>
-        <input type="range" min="0" max="360" value="76" step="1" aria-label="Orbit angle">
-      </label>
-      <span class="text-small tabular-nums" data-count>2 measurements</span>
     </div>
     <div class="ternary-pair">
       <figure class="ternary-surface">
         <figcaption id="ternary-mean-title">Predicted response</figcaption>
-        <canvas class="ternary-chart" data-plot="response" role="img" aria-labelledby="ternary-mean-title" aria-describedby="ternary-model-detail"></canvas>
+        <canvas class="ternary-chart" data-plot="response" role="img" tabindex="0" aria-labelledby="ternary-mean-title" aria-describedby="ternary-model-detail" aria-description="Use the arrow keys to rotate."></canvas>
       </figure>
       <figure class="ternary-surface">
         <figcaption id="ternary-sd-title">Uncertainty</figcaption>
-        <canvas class="ternary-chart" data-plot="uncertainty" role="img" aria-labelledby="ternary-sd-title" aria-describedby="ternary-model-detail"></canvas>
+        <canvas class="ternary-chart" data-plot="uncertainty" role="img" tabindex="0" aria-labelledby="ternary-sd-title" aria-describedby="ternary-model-detail" aria-description="Use the arrow keys to rotate."></canvas>
       </figure>
     </div>
     <div class="viz-row ternary-key-row">
-      <span class="text-small ternary-legend"><i aria-hidden="true"></i>Measured <b aria-hidden="true"></b>Next candidate</span>
-      <span class="text-small text-muted ternary-help">Drag to rotate · Select a point to inspect</span>
+      <span class="text-small ternary-legend"><i aria-hidden="true"></i><span class="tabular-nums" data-count>2 Measured</span> <b aria-hidden="true"></b>Next candidate</span>
     </div>
     <p id="ternary-model-detail" class="text-small tabular-nums ternary-detail" role="status" aria-live="polite"></p>
   </section>
@@ -132,7 +120,7 @@
   <section aria-labelledby="ternary-truth-title">
     <h3 id="ternary-truth-title">True response <span class="text-small text-muted">(synthetic)</span></h3>
     <figure class="ternary-surface ternary-ground-truth">
-      <canvas class="ternary-chart" data-plot="truth" role="img" aria-labelledby="ternary-truth-title" aria-describedby="ternary-truth-detail"></canvas>
+      <canvas class="ternary-chart" data-plot="truth" role="img" tabindex="0" aria-labelledby="ternary-truth-title" aria-describedby="ternary-truth-detail" aria-description="Use the arrow keys to rotate."></canvas>
     </figure>
     <p id="ternary-truth-detail" class="text-small tabular-nums ternary-detail"></p>
   </section>
@@ -146,7 +134,6 @@
     min-width: 0;
   }
   #ternary-bayesian-optimization .ternary-toolbar {
-    justify-content: space-between;
     margin-top: calc(var(--font-size-base) * .7);
     gap: var(--ternary-control-gap);
   }
@@ -190,16 +177,6 @@
   }
   #ternary-bayesian-optimization .ternary-chart[data-orbiting] { cursor: grabbing; }
   #ternary-bayesian-optimization .ternary-ground-truth .ternary-chart { height: 315px; }
-  #ternary-bayesian-optimization .ternary-orbit {
-    width: min(40%, 210px);
-    min-width: 112px;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: calc(var(--font-size-base) * .5);
-  }
-  #ternary-bayesian-optimization .ternary-orbit input { min-width: 0; }
   #ternary-bayesian-optimization .ternary-detail {
     margin-top: calc(var(--font-size-base) * .4);
     color: var(--muted-foreground);
@@ -352,7 +329,6 @@
   const count = root.querySelector('[data-count]');
   const play = root.querySelector('[data-play]');
   const stepButton = root.querySelector('[data-step]');
-  const orbit = root.querySelector('input[type="range"]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const sampleCanvas = document.createElement('canvas');
@@ -403,7 +379,7 @@
     [frame.response[index], frame.uncertainty[index]]
   )));
 
-  const initialCamera = { yaw: Number(orbit.defaultValue), tilt: 25 };
+  const initialCamera = { yaw: 76, tilt: 25 };
   let step = 0;
   let { yaw, tilt } = initialCamera;
   let theme = readTheme();
@@ -438,7 +414,7 @@
 
   function updateDetail() {
     const frame = frames[step];
-    count.textContent = `${frame.seen.length} measurements`;
+    count.textContent = `${frame.seen.length} Measured`;
     const index = inspected ?? frame.next;
     if (index !== null) {
       const point = frame.posterior[index];
@@ -711,16 +687,25 @@
     saveState();
   });
 
-  orbit.addEventListener('input', () => {
-    yaw = Number(orbit.value);
-    queueDraw();
-  });
-  orbit.addEventListener('change', saveState);
-
+  const keyRotation = new Map([
+    ['ArrowLeft', [-8, 0]],
+    ['ArrowRight', [8, 0]],
+    ['ArrowUp', [0, 5]],
+    ['ArrowDown', [0, -5]],
+  ]);
   const resize = new ResizeObserver(queueDraw);
   for (const plot of plots) {
     const { canvas } = plot;
     resize.observe(canvas);
+    canvas.addEventListener('keydown', event => {
+      const rotation = keyRotation.get(event.key);
+      if (!rotation) return;
+      event.preventDefault();
+      yaw = wrapAngle(yaw + rotation[0]);
+      tilt = clamp(tilt + rotation[1], 15, 72);
+      queueDraw();
+      saveState();
+    });
     canvas.addEventListener('pointerdown', event => {
       if (event.button !== 0 || pointer) return;
       pointer = { id: event.pointerId, x: event.clientX, y: event.clientY, yaw, tilt, moved: false };
@@ -735,7 +720,6 @@
       canvas.dataset.orbiting = '';
       yaw = wrapAngle(pointer.yaw + dx * 0.55);
       tilt = clamp(pointer.tilt + dy * 0.34, 15, 72);
-      orbit.value = Math.round(yaw);
       queueDraw();
     });
     canvas.addEventListener('pointerup', event => {
@@ -778,7 +762,6 @@
     yaw = Number.isFinite(restored.yaw) ? wrapAngle(restored.yaw) : initialCamera.yaw;
     tilt = Number.isFinite(restored.tilt) ? clamp(restored.tilt, 15, 72) : initialCamera.tilt;
     inspected = Number.isInteger(restored.inspected) && grid[restored.inspected] ? restored.inspected : null;
-    orbit.value = Math.round(yaw);
     transition = null;
   }
 

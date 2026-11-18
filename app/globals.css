@@ -578,17 +578,14 @@ html[data-theme="dark"] .research-schematic img {
 
 .bo-demo {
   --bo-band: rgba(75, 132, 112, 0.23);
-  --bo-acquisition-fill: rgba(177, 126, 50, 0.17);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 9px 14px;
+  gap: 9px;
   padding: clamp(12px, 1.5vw, 17px);
   line-height: 1.4;
 }
 
 html[data-theme="dark"] .bo-demo {
   --bo-band: rgba(141, 179, 163, 0.24);
-  --bo-acquisition-fill: rgba(211, 170, 115, 0.19);
 }
 
 .bo-demo-legend,
@@ -599,12 +596,13 @@ html[data-theme="dark"] .bo-demo {
 }
 
 .bo-demo-legend {
-  grid-area: 1 / 1;
+  justify-content: center;
   gap: 5px 14px;
   margin: 0;
   padding: 0;
   color: var(--muted);
   font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
   list-style: none;
 }
 
@@ -642,13 +640,12 @@ html[data-theme="dark"] .bo-demo {
 
 .bo-demo-canvas {
   display: block;
-  grid-column: 1 / -1;
+  min-width: 0;
   width: 100%;
-  height: clamp(218px, 36vw, 314px);
+  height: clamp(205px, 31vw, 280px);
 }
 
 .bo-demo-controls {
-  grid-column: 1 / -1;
   gap: 8px;
 }
 
@@ -698,10 +695,12 @@ html[data-theme="dark"] .bo-demo {
   margin-bottom: 9px;
 }
 
+.bo-demo-controls .bo-demo-explore,
 .bo-view-controls button {
   color: var(--green);
   background: var(--soft-surface);
   font-weight: 650;
+  scroll-margin-block: 90px 16px;
 }
 
 .bo-views .research-schematic {
@@ -713,20 +712,6 @@ html[data-theme="dark"] .bo-demo {
   width: 100%;
   height: 800px;
   border: 0;
-}
-
-.bo-demo-count {
-  margin-left: auto;
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.bo-demo figcaption {
-  grid-area: 1 / 2;
-  align-self: start;
-  color: var(--muted);
-  font-size: 0.76rem;
 }
 
 .placeholder-panel {

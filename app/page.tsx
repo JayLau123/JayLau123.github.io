@@ -221,7 +221,7 @@ export default function Home() {
           <p>
             AI can propose molecules, materials, and chemical reactions far faster
             than scientists can test them. With limited experimental capacity, the
-            central question is <strong>what to measure next</strong>. My research
+            central question is what to measure next. My research
             develops decision-making methods for scientific AI agents that learn
             from limited data and update their experimental plans as evidence
             accumulates. For example, I use Gaussian processes as probabilistic
@@ -231,7 +231,7 @@ export default function Home() {
           </p>
           <BayesianOptimizationViews />
           <p>
-            In <strong>CLEAR-AI</strong>, I apply these methods to identify promising
+            I apply these methods to identify promising
             catalysts for target chemical reactions. The research explores how
             language-model representations, multi-output Gaussian processes, kernel
             design, and adaptive acquisition policies can improve search efficiency
