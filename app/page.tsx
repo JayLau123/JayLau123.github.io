@@ -243,9 +243,11 @@ export default function Home() {
         <article className="research-topic" aria-labelledby="disordered-modeling-title">
           <h3 id="disordered-modeling-title">Disordered Modeling</h3>
           <p>
-            I use physics-informed machine learning and atomistic simulations to
-            model disorder in bulk materials and surfaces and connect local
-            structure to experimental observables.
+            Current AI-driven materials discovery often faces a bottleneck:
+            models frequently over-idealize structures by predicting perfectly
+            ordered crystallographic sites, neglecting the thermodynamically
+            driven disorder inherent in bulk and surface structures under
+            real-world conditions.
           </p>
           <figure className="research-schematic">
             <img
@@ -253,6 +255,19 @@ export default function Home() {
               alt="Schematic comparing an ordered AI-predicted structure with a disordered experimentally synthesized structure"
             />
           </figure>
+          <p>
+            My methodological focus lies in developing physics-informed,
+            data-driven machine learning methods to capture the fundamental laws
+            of materials thermodynamics and surface kinetics from atomistic
+            simulations and characterization data, bridging material behavior
+            from the single-atom level up to experimental observables.
+          </p>
+          <p>
+            My goal is to close the loop between idealized computational design,
+            the experimental workbench, and practical applications in catalysts,
+            electrolytes, and energy storage materials, accelerating innovation
+            at the AI-energy nexus.
+          </p>
         </article>
       </section>
 
