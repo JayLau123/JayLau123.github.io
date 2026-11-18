@@ -1,6 +1,6 @@
 import { SiteFooter, SiteHeader } from "./components/site-shell";
 import { PublicationList } from "./components/publication-list";
-import { BayesianOptimizationDemo } from "./components/bayesian-optimization-demo";
+import { BayesianOptimizationViews } from "./components/bayesian-optimization-views";
 
 const scholarUrl =
   "https://scholar.google.com/citations?hl=en&user=f2qAmGIAAAAJ&scilu=&scisig=AKLELW8AAAAAamA-UixXKb5bXOUC94G6p-iPr2U&gmla=AO4B3jsDrYJAtgxAtTYhd2ZKamz0I8z-iOgFEDGwYQA2Hd8fVtVCZCItY274crw7cpnxSuM2f_5KHe05OqBEPBTeLHRRflV94_vj-bc&sciund=1239809507754054681";
@@ -229,7 +229,7 @@ export default function Home() {
             Bayesian optimization to balance exploring uncertain candidates with
             pursuing promising ones.
           </p>
-          <BayesianOptimizationDemo />
+          <BayesianOptimizationViews />
           <p>
             In <strong>CLEAR-AI</strong>, I apply these methods to identify promising
             catalysts for target chemical reactions. The research explores how

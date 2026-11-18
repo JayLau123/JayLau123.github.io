@@ -3,15 +3,24 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("exports static GitHub Pages pages", async () => {
-  const [html, blogHtml, galleryHtml, galleryData] = await Promise.all([
+  const [html, blogHtml, galleryHtml, galleryData, explorerHtml] = await Promise.all([
     readFile(new URL("../docs/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/blog/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/gallery/index.html", import.meta.url), "utf8"),
     readFile(new URL("../app/gallery-data.ts", import.meta.url), "utf8"),
+    readFile(new URL("../docs/research/bayesian-optimization-3d/index.html", import.meta.url), "utf8"),
   ]);
 
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Research Interests/);
+  assert.match(html, /aria-controls="bo-visualization">Explore in 3D<\/button>/);
+  assert.match(html, /class="bo-demo-canvas"/);
+  assert.doesNotMatch(html, /<iframe[^>]*title="3D Bayesian optimization explorer"/);
+  assert.match(explorerHtml, /Surrogate model \(Gaussian process\)/);
+  assert.match(explorerHtml, /True response/);
+  for (const plot of ["response", "uncertainty", "truth"]) {
+    assert.match(explorerHtml, new RegExp(`<canvas[^>]*data-plot="${plot}"`));
+  }
   assert.match(html, /Recent News/);
   assert.match(html, /CLEAR-AI selected for Genesis Mission Phase I/);
   assert.match(

@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Bayesian optimization explorer</title>
+  <script>
+    try {
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+    } catch {
+      // Use the light theme if browser storage is unavailable.
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #fbfaf6;
+      --surface: #ffffff;
+      --foreground: #1a1c1a;
+      --muted-foreground: #606760;
+      --line: #d9d8cd;
+      --blue: #339cff;
+      --focus: #245da8;
+      --green: #315d50;
+      --soft-surface: #f3f0e8;
+      --viz-series-2: #cb8743;
+      --font-size-base: 1rem;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #212421;
+      --surface: #212421;
+      --foreground: #f0efe9;
+      --muted-foreground: #b7bcb6;
+      --line: #3a3e39;
+      --blue: #92b9ec;
+      --focus: #92b9ec;
+      --green: #8db3a3;
+      --soft-surface: #292c29;
+      --viz-series-2: #d3aa73;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(12px, 2.1vw, 18px);
+      color: var(--foreground);
+      background: var(--background);
+      font: 1rem/1.45 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    h3 {
+      margin: 0;
+      color: var(--green);
+      font-size: 1.16rem;
+      font-weight: 650;
+      line-height: 1.3;
+    }
+
+    p { margin: 0; }
+    hr { margin: 16px 0; border: 0; border-top: 1px solid var(--line); }
+    .viz-row { display: flex; flex-wrap: wrap; align-items: center; }
+    .text-small { font-size: .82rem; }
+    .text-muted { color: var(--muted-foreground); }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+
+    .btn {
+      min-height: 44px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--foreground);
+      background: var(--surface);
+      font: inherit;
+      font-size: .88rem;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      color: var(--green);
+      background: var(--soft-surface);
+      font-weight: 650;
+    }
+
+    .btn:hover:not(:disabled) { border-color: var(--green); }
+    .btn:disabled { opacity: .55; cursor: default; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .form-range input { width: 100%; accent-color: var(--green); }
+    .ternary-surface figcaption { font-size: .92rem; font-weight: 600; }
+    .ternary-help { margin-left: auto; }
+
+    @media (max-width: 620px) {
+      .ternary-help { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+<div id="ternary-bayesian-optimization">
+  <section aria-labelledby="ternary-bo-title">
+    <h3 id="ternary-bo-title">Surrogate model (Gaussian process)</h3>
+    <div class="viz-row ternary-toolbar">
+      <div class="viz-row" role="group" aria-label="Optimization replay">
+        <button class="btn btn-primary" type="button" data-play>Play</button>
+        <button class="btn" type="button" data-step>Measure next</button>
+      </div>
+      <label class="form-range ternary-orbit">
+        <span>Orbit</span>
+        <input type="range" min="0" max="360" value="76" step="1" aria-label="Orbit angle">
+      </label>
+      <span class="text-small tabular-nums" data-count>2 measurements</span>
+    </div>
+    <div class="ternary-pair">
+      <figure class="ternary-surface">
+        <figcaption id="ternary-mean-title">Predicted response</figcaption>
+        <canvas class="ternary-chart" data-plot="response" role="img" aria-labelledby="ternary-mean-title" aria-describedby="ternary-model-detail"></canvas>
+      </figure>
+      <figure class="ternary-surface">
+        <figcaption id="ternary-sd-title">Uncertainty</figcaption>
+        <canvas class="ternary-chart" data-plot="uncertainty" role="img" aria-labelledby="ternary-sd-title" aria-describedby="ternary-model-detail"></canvas>
+      </figure>
+    </div>
+    <div class="viz-row ternary-key-row">
+      <span class="text-small ternary-legend"><i aria-hidden="true"></i>Measured <b aria-hidden="true"></b>Next candidate</span>
+      <span class="text-small text-muted ternary-help">Drag to rotate · Select a point to inspect</span>
+    </div>
+    <p id="ternary-model-detail" class="text-small tabular-nums ternary-detail" role="status" aria-live="polite"></p>
+  </section>
+  <hr>
+  <section aria-labelledby="ternary-truth-title">
+    <h3 id="ternary-truth-title">True response <span class="text-small text-muted">(synthetic)</span></h3>
+    <figure class="ternary-surface ternary-ground-truth">
+      <canvas class="ternary-chart" data-plot="truth" role="img" aria-labelledby="ternary-truth-title" aria-describedby="ternary-truth-detail"></canvas>
+    </figure>
+    <p id="ternary-truth-detail" class="text-small tabular-nums ternary-detail"></p>
+  </section>
+</div>
+
+<style>
+  #ternary-bayesian-optimization {
+    --ternary-control-gap: calc(var(--font-size-base) * .7);
+    --ternary-uncertainty: light-dark(#4b8470, #8db3a3);
+    --ternary-gold: light-dark(#8b5d1d, #d3aa73);
+    min-width: 0;
+  }
+  #ternary-bayesian-optimization .ternary-toolbar {
+    justify-content: space-between;
+    margin-top: calc(var(--font-size-base) * .7);
+    gap: var(--ternary-control-gap);
+  }
+  #ternary-bayesian-optimization .ternary-toolbar > .viz-row {
+    gap: calc(var(--font-size-base) * .3);
+  }
+  #ternary-bayesian-optimization .ternary-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: calc(var(--font-size-base) * 1.3);
+    margin-top: calc(var(--font-size-base) * 1.25);
+  }
+  #ternary-bayesian-optimization .ternary-surface { margin: 0; min-width: 0; }
+  #ternary-bayesian-optimization .ternary-ground-truth { max-width: 590px; margin-inline: auto; }
+  #ternary-bayesian-optimization .ternary-key-row { gap: .3rem 1rem; margin-top: var(--ternary-control-gap); }
+  #ternary-bayesian-optimization .ternary-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--font-size-base) * .4);
+    color: var(--muted-foreground);
+  }
+  #ternary-bayesian-optimization .ternary-legend i,
+  #ternary-bayesian-optimization .ternary-legend b {
+    width: .55em;
+    height: .55em;
+    background: var(--foreground);
+    display: inline-block;
+  }
+  #ternary-bayesian-optimization .ternary-legend i { border-radius: 50%; }
+  #ternary-bayesian-optimization .ternary-legend b {
+    margin-left: .5em;
+    background: var(--viz-series-2);
+    transform: rotate(45deg);
+  }
+  #ternary-bayesian-optimization .ternary-chart {
+    display: block;
+    width: 100%;
+    height: 310px;
+    cursor: grab;
+    touch-action: pan-y pinch-zoom;
+  }
+  #ternary-bayesian-optimization .ternary-chart[data-orbiting] { cursor: grabbing; }
+  #ternary-bayesian-optimization .ternary-ground-truth .ternary-chart { height: 315px; }
+  #ternary-bayesian-optimization .ternary-orbit {
+    width: min(40%, 210px);
+    min-width: 112px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: calc(var(--font-size-base) * .5);
+  }
+  #ternary-bayesian-optimization .ternary-orbit input { min-width: 0; }
+  #ternary-bayesian-optimization .ternary-detail {
+    margin-top: calc(var(--font-size-base) * .4);
+    color: var(--muted-foreground);
+  }
+  #ternary-bayesian-optimization .ternary-detail:empty { display: none; }
+  @media (max-width: 620px) {
+    #ternary-bayesian-optimization .ternary-pair { grid-template-columns: minmax(0, 1fr); }
+    #ternary-bayesian-optimization .ternary-chart,
+    #ternary-bayesian-optimization .ternary-ground-truth .ternary-chart { height: 270px; }
+  }
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('ternary-bayesian-optimization');
+  const resolution = 36;
+  const rounds = 8;
+  const triangleHeight = Math.sqrt(3) / 2;
+  const priorMean = 0.55;
+  const lengthScale = 0.23;
+  const grid = [];
+  const indices = [];
+  for (let b = 0; b <= resolution; b += 1) {
+    indices[b] = [];
+    for (let c = 0; c <= resolution - b; c += 1) {
+      indices[b][c] = grid.length;
+      grid.push({
+        b, c, a: resolution - b - c,
+        x: (b + c / 2) / resolution - 0.5,
+        y: triangleHeight * (c / resolution - 1 / 3),
+      });
+    }
+  }
+
+  const corners = [indices[0][0], indices[resolution][0], indices[0][resolution]];
+  const faces = [];
+  for (let b = 0; b < resolution; b += 1) {
+    for (let c = 0; c < resolution - b; c += 1) {
+      const left = indices[b][c];
+      const right = indices[b + 1][c];
+      const top = indices[b][c + 1];
+      faces.push([left, right, top]);
+      if (b + c < resolution - 1) faces.push([right, indices[b + 1][c + 1], top]);
+    }
+  }
+
+  function bump(point, b, c, width) {
+    const dx = point.x - (b + c / 2 - 0.5);
+    const dy = point.y - triangleHeight * (c - 1 / 3);
+    return Math.exp(-(dx * dx + dy * dy) / (2 * width * width));
+  }
+
+  function syntheticResponse(point) {
+    return 0.38 + 1.02 * bump(point, 0.68, 0.13, 0.135)
+      + 1.93 * bump(point, 0.17, 0.56, 0.115)
+      - 0.25 * bump(point, 0.4, 0.26, 0.12);
+  }
+
+  function covariance(left, right) {
+    return Math.exp(-0.5 * ((left.x - right.x) ** 2 + (left.y - right.y) ** 2) / lengthScale ** 2);
+  }
+
+  function forwardSolve(lower, rightHandSide) {
+    const solution = [];
+    for (let i = 0; i < lower.length; i += 1) {
+      let residual = rightHandSide[i];
+      for (let j = 0; j < i; j += 1) residual -= lower[i][j] * solution[j];
+      solution.push(residual / lower[i][i]);
+    }
+    return solution;
+  }
+
+  function expectedGain(mean, deviation, best) {
+    const gain = mean - best;
+    const z = gain / deviation;
+    const density = Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI);
+    // Abramowitz and Stegun approximation of the standard normal CDF.
+    const t = 1 / (1 + 0.2316419 * Math.abs(z));
+    const tail = density * t * (
+      0.31938153 + t * (-0.356563782 + t * (1.781477937 + t * (-1.821255978 + t * 1.330274429)))
+    );
+    return Math.max(0, gain * (z >= 0 ? 1 - tail : tail) + deviation * density);
+  }
+
+  function makeFrames() {
+    const seen = [indices[6][7], indices[21][5]];
+    const outcomes = seen.map(index => syntheticResponse(grid[index]));
+    return Array.from({ length: rounds + 1 }, (_, step) => {
+      const lower = seen.map(() => Array(seen.length).fill(0));
+      for (let i = 0; i < seen.length; i += 1) {
+        for (let j = 0; j <= i; j += 1) {
+          let residual = covariance(grid[seen[i]], grid[seen[j]]);
+          for (let k = 0; k < j; k += 1) residual -= lower[i][k] * lower[j][k];
+          lower[i][j] = i === j ? Math.sqrt(residual + 1e-10) : residual / lower[j][j];
+        }
+      }
+      const centered = forwardSolve(lower, outcomes.map(value => value - priorMean));
+      const best = Math.max(...outcomes);
+      const posterior = grid.map((point, index) => {
+        const observed = seen.indexOf(index);
+        if (observed >= 0) return { response: outcomes[observed], uncertainty: 0, gain: 0 };
+        const weights = forwardSolve(lower, seen.map(index => covariance(point, grid[index])));
+        const response = weights.reduce((total, weight, i) => total + weight * centered[i], priorMean);
+        const remainingVariance = weights.reduce((total, weight) => total - weight * weight, 1);
+        const uncertainty = Math.sqrt(Math.max(1e-10, remainingVariance));
+        return { response, uncertainty, gain: expectedGain(response, uncertainty, best) };
+      });
+      let next = null;
+      if (step < rounds) {
+        let highestGain = -Infinity;
+        for (let index = 0; index < grid.length; index += 1) {
+          if (posterior[index].gain > highestGain && !seen.includes(index)) {
+            highestGain = posterior[index].gain;
+            next = index;
+          }
+        }
+      }
+      const frame = { posterior, seen: seen.slice(), outcomes: outcomes.slice(), best, next };
+      if (next !== null) {
+        seen.push(next);
+        outcomes.push(syntheticResponse(grid[next]));
+      }
+      return frame;
+    });
+  }
+
+  const frames = makeFrames();
+  // Only the viewer's reference surface evaluates the whole synthetic library.
+  const truth = grid.map(syntheticResponse);
+  const responses = frames.flatMap(frame => frame.posterior.map(point => point.response));
+  const responseRange = {
+    min: Math.floor(Math.min(0, ...responses, ...truth) * 2) / 2,
+    max: Math.ceil(Math.max(...responses, ...truth) * 2) / 2,
+  };
+  const surfaces = {
+    response: { ...responseRange, color: '--blue' },
+    uncertainty: { min: 0, max: 1, color: '--ternary-uncertainty' },
+    truth: { ...responseRange, color: '--ternary-gold' },
+  };
+
+  const plots = [...root.querySelectorAll('canvas[data-plot]')].map(canvas => ({
+    canvas,
+    ctx: canvas.getContext('2d'),
+    key: canvas.dataset.plot,
+    points: [],
+    faces: [],
+  }));
+  const detail = root.querySelector('#ternary-model-detail');
+  const truthDetail = root.querySelector('#ternary-truth-detail');
+  const count = root.querySelector('[data-count]');
+  const play = root.querySelector('[data-play]');
+  const stepButton = root.querySelector('[data-step]');
+  const orbit = root.querySelector('input[type="range"]');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const sampleCanvas = document.createElement('canvas');
+  sampleCanvas.width = sampleCanvas.height = 1;
+  const sampleContext = sampleCanvas.getContext('2d', { willReadFrequently: true });
+  const colorProbe = document.createElement('span');
+  colorProbe.hidden = true;
+  root.append(colorProbe);
+
+  function resolveColor(variable) {
+    colorProbe.style.color = `var(${variable})`;
+    sampleContext.clearRect(0, 0, 1, 1);
+    sampleContext.fillStyle = getComputedStyle(colorProbe).color;
+    sampleContext.fillRect(0, 0, 1, 1);
+    return Array.from(sampleContext.getImageData(0, 0, 1, 1).data).slice(0, 3);
+  }
+
+  function readTheme() {
+    const background = resolveColor('--background');
+    const foreground = resolveColor('--foreground');
+    const colors = Object.fromEntries(Object.entries(surfaces).map(([key, meta]) => [key, resolveColor(meta.color)]));
+    const dark = background[0] * 0.21 + background[1] * 0.72 + background[2] * 0.07 < 128;
+    return {
+      background,
+      foreground,
+      accent: resolveColor('--viz-series-2'),
+      surfaces: colors,
+      predictionShade: mixChannels(mixChannels(background, foreground, dark ? 0.17 : 0.54), colors.response, 0.16),
+      predictionLight: mixChannels(colors.response, dark ? foreground : background, dark ? 0.33 : 0.61),
+    };
+  }
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const wrapAngle = value => ((value % 360) + 360) % 360;
+  const rgb = channels => `rgb(${channels.join(',')})`;
+  const lerp = (from, to, fraction) => from + (to - from) * fraction;
+  const mixChannels = (from, to, fraction) => from.map((value, i) => Math.round(lerp(value, to[i], fraction)));
+  const blend = (from, to, fraction) => rgb(mixChannels(from, to, fraction));
+  const meshHeight = 0.52;
+  const scaleHeight = (value, settings) => meshHeight * clamp((value - settings.min) / (settings.max - settings.min), 0, 1);
+  const truthHeights = truth.map(value => scaleHeight(value, surfaces.truth));
+  const frameHeights = frames.map(frame => ({
+    response: frame.posterior.map(point => scaleHeight(point.response, surfaces.response)),
+    uncertainty: frame.posterior.map(point => scaleHeight(point.uncertainty, surfaces.uncertainty)),
+  }));
+  // The two GP views use the same projected composition footprint and camera fit.
+  const heightEnvelope = grid.map((_, index) => Math.max(truthHeights[index], ...frameHeights.flatMap(frame =>
+    [frame.response[index], frame.uncertainty[index]]
+  )));
+
+  const initialCamera = { yaw: Number(orbit.defaultValue), tilt: 25 };
+  let step = 0;
+  let { yaw, tilt } = initialCamera;
+  let theme = readTheme();
+  let playing = false;
+  let timer = 0;
+  let raf = 0;
+  let transition = null;
+  let pointer = null;
+  let inspected = null;
+
+  function currentHeights(now) {
+    const target = frameHeights[step];
+    if (!transition) return target;
+    const percent = clamp((now - transition.start) / 450, 0, 1);
+    if (percent === 1) {
+      transition = null;
+      return target;
+    }
+    const eased = percent * percent * (3 - 2 * percent);
+    return {
+      response: target.response.map((height, i) => lerp(transition.from.response[i], height, eased)),
+      uncertainty: target.uncertainty.map((height, i) => lerp(transition.from.uncertainty[i], height, eased)),
+    };
+  }
+
+  function composition(index) {
+    const point = grid[index];
+    const a = Math.round(100 * point.a / resolution);
+    const b = Math.round(100 * point.b / resolution);
+    return `A ${a}% · B ${b}% · C ${100 - a - b}%`;
+  }
+
+  function updateDetail() {
+    const frame = frames[step];
+    count.textContent = `${frame.seen.length} measurements`;
+    const index = inspected ?? frame.next;
+    if (index !== null) {
+      const point = frame.posterior[index];
+      const prefix = inspected === null ? 'Next candidate · ' : '';
+      detail.textContent = `${prefix}${composition(index)} · Prediction ${point.response.toFixed(2)} · Uncertainty ${point.uncertainty.toFixed(2)} · Predicted gain ${point.gain.toFixed(3)}`;
+    } else {
+      detail.textContent = `Best measured response ${frame.best.toFixed(2)}`;
+    }
+    if (inspected !== null) {
+      const status = frame.seen.includes(inspected) ? 'Measured' : 'Unmeasured';
+      truthDetail.textContent = `${composition(inspected)} · True response ${truth[inspected].toFixed(2)} · ${status}`;
+    } else {
+      truthDetail.textContent = '';
+    }
+  }
+
+  function updateControls() {
+    play.textContent = playing ? 'Pause' : step === rounds ? 'Replay' : 'Play';
+    stepButton.disabled = step === rounds;
+    detail.setAttribute('aria-live', playing ? 'off' : 'polite');
+    updateDetail();
+  }
+
+  function drawPlot(plot, z, uncertaintyHeights) {
+    const { canvas, ctx, key } = plot;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    if (!ctx || !width || !height) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const pixelsX = Math.round(width * dpr);
+    const pixelsY = Math.round(height * dpr);
+    if (pixelsX !== canvas.width || pixelsY !== canvas.height) {
+      canvas.width = pixelsX;
+      canvas.height = pixelsY;
+    }
+    ctx.setTransform(pixelsX / width, 0, 0, pixelsY / height, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const heading = yaw * Math.PI / 180;
+    const elevation = tilt * Math.PI / 180;
+    const cosHeading = Math.cos(heading);
+    const sinHeading = Math.sin(heading);
+    const cosTilt = Math.cos(elevation);
+    const sinTilt = Math.sin(elevation);
+    const groundCoordinates = corners.map(index => {
+      const { x, y } = grid[index];
+      return { x: x * cosHeading - y * sinHeading, y: -(x * sinHeading + y * cosHeading) * sinTilt };
+    });
+    const left = Math.min(...groundCoordinates.map(point => point.x));
+    const right = Math.max(...groundCoordinates.map(point => point.x));
+    const upper = Math.min(...grid.map((point, index) =>
+      -(point.x * sinHeading + point.y * cosHeading) * sinTilt - heightEnvelope[index] * cosTilt
+    ));
+    const lower = Math.max(...groundCoordinates.map(point => point.y));
+    const scale = Math.min((width - 74) / (right - left), (height - 58) / (lower - upper));
+    const centerX = (width - scale * (left + right)) / 2;
+    const centerY = (height - 14 - scale * (upper + lower)) / 2;
+
+    function project(point, z = 0) {
+      const depth = point.x * sinHeading + point.y * cosHeading;
+      return {
+        x: centerX + scale * (point.x * cosHeading - point.y * sinHeading),
+        y: centerY - scale * (depth * sinTilt + z * cosTilt),
+        depth: z * sinTilt - depth * cosTilt,
+      };
+    }
+
+    function line(from, to) {
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+    }
+
+    const base = corners.map(index => project(grid[index]));
+    ctx.strokeStyle = blend(theme.background, theme.foreground, 0.15);
+    ctx.lineWidth = 1;
+    for (let i = 6; i < resolution; i += 6) {
+      line(project(grid[indices[i][0]]), project(grid[indices[i][resolution - i]]));
+      line(project(grid[indices[0][i]]), project(grid[indices[resolution - i][i]]));
+      line(project(grid[indices[i][0]]), project(grid[indices[0][i]]));
+    }
+    ctx.strokeStyle = blend(theme.background, theme.foreground, 0.35);
+    for (let i = 0; i < 3; i += 1) line(base[i], base[(i + 1) % 3]);
+
+    const projectedPoints = grid.map((point, index) => project(point, z[index]));
+    const frame = frames[step];
+    const next = key === 'truth' ? null : frame.next;
+    const color = theme.surfaces[key];
+    const drawnFaces = faces.map(face => ({
+      face,
+      depth: face.reduce((sum, index) => sum + projectedPoints[index].depth, 0) / 3,
+    }));
+    drawnFaces.sort((left, right) => left.depth - right.depth);
+    plot.points = projectedPoints;
+    plot.faces = drawnFaces;
+    ctx.lineJoin = 'round';
+
+    for (const { face: [a, b, c] } of drawnFaces) {
+      const first = projectedPoints[a];
+      const second = projectedPoints[b];
+      const third = projectedPoints[c];
+      const ab = [grid[b].x - grid[a].x, grid[b].y - grid[a].y, z[b] - z[a]];
+      const ac = [grid[c].x - grid[a].x, grid[c].y - grid[a].y, z[c] - z[a]];
+      const nx = ab[1] * ac[2] - ab[2] * ac[1];
+      const ny = ab[2] * ac[0] - ab[0] * ac[2];
+      const nz = ab[0] * ac[1] - ab[1] * ac[0];
+      const lighting = (0.38 * nx - 0.3 * ny + 0.88 * nz) / Math.hypot(nx, ny, nz);
+      const level = 0.20 + 0.62 * (z[a] + z[b] + z[c]) / (3 * meshHeight);
+      if (key === 'response') {
+        // Prior variance is one. Its reduction gives a continuous light falloff from revealed points.
+        const variance = ((uncertaintyHeights[a] / meshHeight) ** 2 + (uncertaintyHeights[b] / meshHeight) ** 2 + (uncertaintyHeights[c] / meshHeight) ** 2) / 3;
+        const coverage = clamp(1 - variance, 0, 1);
+        const illumination = clamp(coverage ** 1.2 + 0.12 * (lighting - 0.7), 0, 1);
+        ctx.fillStyle = blend(theme.predictionShade, theme.predictionLight, illumination);
+      } else {
+        ctx.fillStyle = blend(theme.background, color, clamp(level + 0.10 * lighting, 0.15, 0.94));
+      }
+      ctx.strokeStyle = ctx.fillStyle;
+      ctx.lineWidth = 0.7;
+      ctx.beginPath();
+      ctx.moveTo(first.x, first.y);
+      ctx.lineTo(second.x, second.y);
+      ctx.lineTo(third.x, third.y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.strokeStyle = blend(color, theme.foreground, 0.28);
+      ctx.globalAlpha = 0.25;
+      ctx.lineWidth = 0.7;
+      for (const [start, end] of [[a, b], [b, c], [c, a]]) {
+        if (['a', 'b', 'c'].some(key => grid[start][key] === grid[end][key] && grid[start][key] % 6 === 0)) {
+          line(projectedPoints[start], projectedPoints[end]);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    if (next !== null) {
+      const ground = project(grid[next]);
+      const point = projectedPoints[next];
+      ctx.strokeStyle = blend(theme.accent, theme.foreground, 0.2);
+      ctx.setLineDash([3, 4]);
+      ctx.lineWidth = 1;
+      line(ground, point);
+      ctx.setLineDash([]);
+    }
+
+    ctx.lineWidth = 1.5;
+    for (const index of frame.seen) {
+      const point = projectedPoints[index];
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 4.2, 0, 2 * Math.PI);
+      ctx.fillStyle = rgb(theme.foreground);
+      ctx.fill();
+      ctx.strokeStyle = rgb(theme.background);
+      ctx.stroke();
+    }
+
+    if (next !== null) {
+      const { x, y } = projectedPoints[next];
+      ctx.beginPath();
+      ctx.moveTo(x, y - 7);
+      ctx.lineTo(x + 7, y);
+      ctx.lineTo(x, y + 7);
+      ctx.lineTo(x - 7, y);
+      ctx.closePath();
+      ctx.fillStyle = rgb(theme.accent);
+      ctx.fill();
+      ctx.strokeStyle = rgb(theme.background);
+      ctx.stroke();
+    }
+
+    if (inspected !== null) {
+      const { x, y } = projectedPoints[inspected];
+      ctx.beginPath();
+      ctx.arc(x, y, 5.8, 0, 2 * Math.PI);
+      ctx.strokeStyle = rgb(theme.background);
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+      ctx.strokeStyle = rgb(theme.foreground);
+      ctx.lineWidth = 1.3;
+      ctx.stroke();
+    }
+
+    ctx.font = '12px system-ui, sans-serif';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = rgb(theme.foreground);
+    for (const [i, point] of base.entries()) {
+      const dx = point.x - centerX;
+      const dy = point.y - centerY;
+      const distance = Math.max(1, Math.hypot(dx, dy));
+      const label = `100% ${'ABC'[i]}`;
+      const x = clamp(point.x + 20 * dx / distance, 28, width - 28);
+      const y = clamp(point.y + 20 * dy / distance, 11, height - 10);
+      ctx.strokeStyle = rgb(theme.background);
+      ctx.lineWidth = 4;
+      ctx.strokeText(label, x, y);
+      ctx.fillText(label, x, y);
+    }
+  }
+
+  function render(now) {
+    raf = 0;
+    const heights = currentHeights(now);
+    for (const plot of plots) drawPlot(plot, plot.key === 'truth' ? truthHeights : heights[plot.key], heights.uncertainty);
+    if (transition) queueDraw();
+  }
+
+  function queueDraw() {
+    if (!raf) raf = requestAnimationFrame(render);
+  }
+
+  function findComposition(plot, x, y) {
+    const frame = frames[step];
+    const { points: projectedPoints, faces: drawnFaces } = plot;
+    const distance = index => Math.hypot(projectedPoints[index].x - x, projectedPoints[index].y - y);
+    const markers = frame.next === null || plot.key === 'truth' ? frame.seen : [frame.next, ...frame.seen];
+    const onMarker = markers.find(index => distance(index) < 9);
+    if (onMarker !== undefined) return onMarker;
+
+    // Inspect the foremost rendered face where projected faces overlap.
+    for (let i = drawnFaces.length - 1; i >= 0; i -= 1) {
+      const { face } = drawnFaces[i];
+      const points = face.map(index => projectedPoints[index]);
+      const signs = points.map((start, j) => {
+        const end = points[(j + 1) % 3];
+        return (end.x - start.x) * (y - start.y) - (end.y - start.y) * (x - start.x);
+      });
+      if (signs.every(sign => sign >= 0) || signs.every(sign => sign <= 0)) {
+        return face.reduce((nearest, index) => distance(index) < distance(nearest) ? index : nearest);
+      }
+    }
+    return null;
+  }
+
+  function setStep(next) {
+    const from = currentHeights(performance.now());
+    step = clamp(next, 0, rounds);
+    transition = motion.matches ? null : { from, start: performance.now() };
+    updateControls();
+    queueDraw();
+  }
+
+  function schedulePlayback() {
+    clearTimeout(timer);
+    if (!playing) return;
+    timer = setTimeout(() => {
+      if (step + 1 === rounds) playing = false;
+      setStep(step + 1);
+      saveState();
+      schedulePlayback();
+    }, 1250);
+  }
+
+  stepButton.addEventListener('click', () => {
+    playing = false;
+    schedulePlayback();
+    setStep(step + 1);
+    saveState();
+  });
+
+  play.addEventListener('click', () => {
+    playing = !playing;
+    if (playing && step === rounds) setStep(0);
+    updateControls();
+    schedulePlayback();
+    saveState();
+  });
+
+  orbit.addEventListener('input', () => {
+    yaw = Number(orbit.value);
+    queueDraw();
+  });
+  orbit.addEventListener('change', saveState);
+
+  const resize = new ResizeObserver(queueDraw);
+  for (const plot of plots) {
+    const { canvas } = plot;
+    resize.observe(canvas);
+    canvas.addEventListener('pointerdown', event => {
+      if (event.button !== 0 || pointer) return;
+      pointer = { id: event.pointerId, x: event.clientX, y: event.clientY, yaw, tilt, moved: false };
+      canvas.setPointerCapture(event.pointerId);
+    });
+    canvas.addEventListener('pointermove', event => {
+      if (!pointer || pointer.id !== event.pointerId) return;
+      const dx = event.clientX - pointer.x;
+      const dy = event.clientY - pointer.y;
+      if (!pointer.moved && Math.hypot(dx, dy) < 4) return;
+      pointer.moved = true;
+      canvas.dataset.orbiting = '';
+      yaw = wrapAngle(pointer.yaw + dx * 0.55);
+      tilt = clamp(pointer.tilt + dy * 0.34, 15, 72);
+      orbit.value = Math.round(yaw);
+      queueDraw();
+    });
+    canvas.addEventListener('pointerup', event => {
+      if (!pointer || pointer.id !== event.pointerId) return;
+      if (!pointer.moved && plot.points.length) {
+        const bounds = canvas.getBoundingClientRect();
+        inspected = findComposition(plot, event.clientX - bounds.left, event.clientY - bounds.top);
+        updateDetail();
+        queueDraw();
+      }
+      pointer = null;
+      delete canvas.dataset.orbiting;
+      saveState();
+    });
+    canvas.addEventListener('lostpointercapture', event => {
+      if (pointer?.id === event.pointerId) pointer = null;
+      delete canvas.dataset.orbiting;
+    });
+  }
+
+  const storageKey = 'ternary-bayesian-optimization';
+
+  function saveState() {
+    try {
+      sessionStorage.setItem(storageKey, JSON.stringify({ version: 3, step, yaw, tilt, inspected }));
+    } catch {
+      // The explorer still works when session storage is unavailable.
+    }
+  }
+
+  function restoreState() {
+    let restored;
+    try {
+      restored = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+    } catch {
+      return;
+    }
+    if (restored?.version !== 3) return;
+    step = Number.isInteger(restored.step) ? clamp(restored.step, 0, rounds) : 0;
+    yaw = Number.isFinite(restored.yaw) ? wrapAngle(restored.yaw) : initialCamera.yaw;
+    tilt = Number.isFinite(restored.tilt) ? clamp(restored.tilt, 15, 72) : initialCamera.tilt;
+    inspected = Number.isInteger(restored.inspected) && grid[restored.inspected] ? restored.inspected : null;
+    orbit.value = Math.round(yaw);
+    transition = null;
+  }
+
+  const themeObserver = new MutationObserver(() => {
+    theme = readTheme();
+    queueDraw();
+  });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  restoreState();
+  updateControls();
+  queueDraw();
+})();
+</script>
+</body>
+</html>

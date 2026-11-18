@@ -689,6 +689,32 @@ html[data-theme="dark"] .bo-demo {
   cursor: default;
 }
 
+.bo-views {
+  margin: 22px 0 34px;
+}
+
+.bo-view-controls {
+  justify-content: flex-end;
+  margin-bottom: 9px;
+}
+
+.bo-view-controls button {
+  color: var(--green);
+  background: var(--soft-surface);
+  font-weight: 650;
+}
+
+.bo-views .research-schematic {
+  margin: 0;
+}
+
+.bo-3d-frame {
+  display: block;
+  width: 100%;
+  height: 800px;
+  border: 0;
+}
+
 .bo-demo-count {
   margin-left: auto;
   color: var(--muted);
