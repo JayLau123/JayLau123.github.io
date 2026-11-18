@@ -221,30 +221,24 @@ export default function Home() {
           <p>
             AI can propose molecules, materials, and chemical reactions far faster
             than scientists can test them. With limited experimental capacity, the
-            central question is <strong>what to measure next</strong>. I develop
-            decision-making methods for scientific AI agents that learn from limited
-            data and update their experimental plans as evidence accumulates. I use
-            Gaussian processes as probabilistic surrogates to predict outcomes and
-            quantify uncertainty, then use Bayesian optimization to balance
-            exploring uncertain candidates with pursuing promising ones.
-          </p>
-          <p>
-            In <strong>CLEAR-AI (a Genesis Mission project)</strong>, I apply these
-            methods to the search for ternary alloy catalysts for electrochemical
-            CO₂ reduction. Multi-output Gaussian processes jointly model onset
-            potentials measured under CO₂ and N₂, with the N₂ response serving as
-            a proxy for competing hydrogen evolution. I study how adapting
-            language-model embeddings, GP kernels, and acquisition policies can
-            improve the search across these objectives.
-          </p>
-          <p>
-            I benchmark these decision systems through prospective replays of
-            archived catalyst measurements, revealing each outcome only after
-            the policy selects that candidate. This lets me compare how
-            effectively different strategies find promising catalysts under the
-            same measurement budget.
+            central question is <strong>what to measure next</strong>. My research
+            develops decision-making methods for scientific AI agents that learn
+            from limited data and update their experimental plans as evidence
+            accumulates. For example, I use Gaussian processes as probabilistic
+            surrogates to predict outcomes and quantify uncertainty, then use
+            Bayesian optimization to balance exploring uncertain candidates with
+            pursuing promising ones.
           </p>
           <BayesianOptimizationDemo />
+          <p>
+            In <strong>CLEAR-AI</strong>, I apply these methods to identify promising
+            catalysts for target chemical reactions. The research explores how
+            language-model representations, multi-output Gaussian processes, kernel
+            design, and adaptive acquisition policies can improve search efficiency
+            across competing objectives. These decision systems are benchmarked
+            through sequential replays of archived experimental data, with each
+            outcome revealed only after a candidate is selected.
+          </p>
         </article>
         <article className="research-topic" aria-labelledby="disordered-modeling-title">
           <h3 id="disordered-modeling-title">Disordered Modeling</h3>

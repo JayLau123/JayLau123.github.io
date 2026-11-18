@@ -520,7 +520,7 @@ strong {
 }
 
 .research-schematic {
-  width: min(760px, 100%);
+  width: 100%;
   margin: 22px auto 34px;
   overflow: hidden;
   isolation: isolate;
@@ -644,7 +644,7 @@ html[data-theme="dark"] .bo-demo {
   display: block;
   grid-column: 1 / -1;
   width: 100%;
-  height: clamp(218px, 32vw, 264px);
+  height: clamp(218px, 36vw, 314px);
 }
 
 .bo-demo-controls {
@@ -1522,7 +1522,6 @@ html[data-theme="dark"] .news-mark img {
   }
 
   .research-schematic {
-    width: 100%;
     margin: 18px 0 28px;
   }
 

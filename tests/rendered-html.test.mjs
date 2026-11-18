@@ -61,7 +61,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Light mode/);
   assert.match(
     html,
-    /Bayesian Optimization for Scientific Agents[\s\S]*ternary alloy catalysts for electrochemical\s+CO₂ reduction[\s\S]*class="bo-demo-canvas"[\s\S]*Disordered Modeling[\s\S]*research-schematic-v2\.png/,
+    /Bayesian Optimization for Scientific Agents[\s\S]*what to measure next[\s\S]*class="bo-demo-canvas"[\s\S]*catalysts for target chemical reactions[\s\S]*sequential replays of archived experimental data[\s\S]*Disordered Modeling[\s\S]*research-schematic-v2\.png/,
   );
   assert.doesNotMatch(
     html,
