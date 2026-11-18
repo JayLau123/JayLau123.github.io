@@ -690,13 +690,7 @@ html[data-theme="dark"] .bo-demo {
   margin: 22px 0 34px;
 }
 
-.bo-view-controls {
-  justify-content: flex-end;
-  margin-bottom: 9px;
-}
-
-.bo-demo-controls .bo-demo-explore,
-.bo-view-controls button {
+.bo-demo-controls .bo-demo-explore {
   color: var(--green);
   background: var(--soft-surface);
   font-weight: 650;
@@ -712,6 +706,7 @@ html[data-theme="dark"] .bo-demo {
   width: 100%;
   height: 800px;
   border: 0;
+  scroll-margin-top: 80px;
 }
 
 .placeholder-panel {

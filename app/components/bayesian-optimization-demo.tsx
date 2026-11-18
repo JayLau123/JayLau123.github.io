@@ -354,7 +354,7 @@ export function BayesianOptimizationDemo({
             setStep((current) => Math.min(evaluationCount, current + 1));
           }}
         >
-          Step
+          Measure next
         </button>
         <button
           ref={exploreButtonRef}

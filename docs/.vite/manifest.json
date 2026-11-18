@@ -21,7 +21,7 @@
     ]
   },
   "app/components/bayesian-optimization-views.tsx": {
-    "file": "assets/bayesian-optimization-views-cWeBJSO2.js",
+    "file": "assets/bayesian-optimization-views-WV2kPcKn.js",
     "name": "bayesian-optimization-views",
     "src": "app/components/bayesian-optimization-views.tsx",
     "isDynamicEntry": true,
@@ -69,7 +69,7 @@
     ]
   },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-Cq78djPL.js",
+    "file": "assets/layout-segment-context-CThBiDw4.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -80,7 +80,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-dqVP6kYW.js",
+    "file": "assets/index-C5SX_GA2.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,

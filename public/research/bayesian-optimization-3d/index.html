@@ -88,19 +88,18 @@
     .btn:hover:not(:disabled) { border-color: var(--green); }
     .btn:disabled { opacity: .55; cursor: default; }
     :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-    .ternary-surface figcaption { font-size: .92rem; font-weight: 600; }
+    .ternary-surface figcaption { font-size: .92rem; font-weight: 600; text-align: center; }
   </style>
 </head>
 <body>
 <div id="ternary-bayesian-optimization">
   <section aria-labelledby="ternary-bo-title">
-    <h3 id="ternary-bo-title">Surrogate model (Gaussian process)</h3>
-    <div class="viz-row ternary-toolbar">
-      <div class="viz-row" role="group" aria-label="Optimization replay">
-        <button class="btn btn-primary" type="button" data-play>Play</button>
-        <button class="btn" type="button" data-step>Measure next</button>
-      </div>
+    <div class="viz-row ternary-toolbar" role="group" aria-label="Optimization replay">
+      <button class="btn btn-primary" type="button" data-play>Play</button>
+      <button class="btn" type="button" data-step>Measure next</button>
+      <button class="btn" type="button" data-back-to-2d hidden>Back to 2D</button>
     </div>
+    <h3 id="ternary-bo-title">Surrogate model (Gaussian process)</h3>
     <div class="ternary-pair">
       <figure class="ternary-surface">
         <figcaption id="ternary-mean-title">Predicted response</figcaption>
@@ -119,9 +118,16 @@
   <hr>
   <section aria-labelledby="ternary-truth-title">
     <h3 id="ternary-truth-title">True response <span class="text-small text-muted">(synthetic)</span></h3>
-    <figure class="ternary-surface ternary-ground-truth">
-      <canvas class="ternary-chart" data-plot="truth" role="img" tabindex="0" aria-labelledby="ternary-truth-title" aria-describedby="ternary-truth-detail" aria-description="Use the arrow keys to rotate."></canvas>
-    </figure>
+    <div class="ternary-pair">
+      <figure class="ternary-surface">
+        <figcaption id="ternary-prospective-title">Prospectively</figcaption>
+        <canvas class="ternary-chart" data-plot="prospective" role="img" tabindex="0" aria-labelledby="ternary-prospective-title" aria-describedby="ternary-truth-detail" aria-description="Measured responses only. Use the arrow keys to rotate."></canvas>
+      </figure>
+      <figure class="ternary-surface">
+        <figcaption id="ternary-retrospective-title">Retrospectively</figcaption>
+        <canvas class="ternary-chart" data-plot="retrospective" role="img" tabindex="0" aria-labelledby="ternary-retrospective-title" aria-describedby="ternary-truth-detail" aria-description="Full synthetic response surface with measured points. Use the arrow keys to rotate."></canvas>
+      </figure>
+    </div>
     <p id="ternary-truth-detail" class="text-small tabular-nums ternary-detail"></p>
   </section>
 </div>
@@ -134,10 +140,7 @@
     min-width: 0;
   }
   #ternary-bayesian-optimization .ternary-toolbar {
-    margin-top: calc(var(--font-size-base) * .7);
-    gap: var(--ternary-control-gap);
-  }
-  #ternary-bayesian-optimization .ternary-toolbar > .viz-row {
+    margin-bottom: calc(var(--font-size-base) * .85);
     gap: calc(var(--font-size-base) * .3);
   }
   #ternary-bayesian-optimization .ternary-pair {
@@ -147,7 +150,6 @@
     margin-top: calc(var(--font-size-base) * 1.25);
   }
   #ternary-bayesian-optimization .ternary-surface { margin: 0; min-width: 0; }
-  #ternary-bayesian-optimization .ternary-ground-truth { max-width: 590px; margin-inline: auto; }
   #ternary-bayesian-optimization .ternary-key-row { gap: .3rem 1rem; margin-top: var(--ternary-control-gap); }
   #ternary-bayesian-optimization .ternary-legend {
     display: inline-flex;
@@ -176,7 +178,6 @@
     touch-action: pan-y pinch-zoom;
   }
   #ternary-bayesian-optimization .ternary-chart[data-orbiting] { cursor: grabbing; }
-  #ternary-bayesian-optimization .ternary-ground-truth .ternary-chart { height: 315px; }
   #ternary-bayesian-optimization .ternary-detail {
     margin-top: calc(var(--font-size-base) * .4);
     color: var(--muted-foreground);
@@ -184,8 +185,7 @@
   #ternary-bayesian-optimization .ternary-detail:empty { display: none; }
   @media (max-width: 620px) {
     #ternary-bayesian-optimization .ternary-pair { grid-template-columns: minmax(0, 1fr); }
-    #ternary-bayesian-optimization .ternary-chart,
-    #ternary-bayesian-optimization .ternary-ground-truth .ternary-chart { height: 270px; }
+    #ternary-bayesian-optimization .ternary-chart { height: 270px; }
   }
 </style>
 
@@ -389,6 +389,7 @@
   let transition = null;
   let pointer = null;
   let inspected = null;
+  let inspectedRetrospectively = false;
 
   function currentHeights(now) {
     const target = frameHeights[step];
@@ -424,8 +425,10 @@
       detail.textContent = `Best measured response ${frame.best.toFixed(2)}`;
     }
     if (inspected !== null) {
-      const status = frame.seen.includes(inspected) ? 'Measured' : 'Unmeasured';
-      truthDetail.textContent = `${composition(inspected)} · True response ${truth[inspected].toFixed(2)} · ${status}`;
+      const measured = frame.seen.includes(inspected);
+      const status = measured ? 'Measured' : 'Unmeasured';
+      const value = measured || inspectedRetrospectively ? ` · True response ${truth[inspected].toFixed(2)}` : '';
+      truthDetail.textContent = `${composition(inspected)}${value} · ${status}`;
     } else {
       truthDetail.textContent = '';
     }
@@ -436,6 +439,10 @@
     stepButton.disabled = step === rounds;
     detail.setAttribute('aria-live', playing ? 'off' : 'polite');
     updateDetail();
+  }
+
+  function isSurrogatePlot(key) {
+    return key === 'response' || key === 'uncertainty';
   }
 
   function drawPlot(plot, z, uncertaintyHeights) {
@@ -500,11 +507,17 @@
     ctx.strokeStyle = blend(theme.background, theme.foreground, 0.35);
     for (let i = 0; i < 3; i += 1) line(base[i], base[(i + 1) % 3]);
 
-    const projectedPoints = grid.map((point, index) => project(point, z[index]));
     const frame = frames[step];
-    const next = key === 'truth' ? null : frame.next;
-    const color = theme.surfaces[key];
-    const drawnFaces = faces.map(face => ({
+    const prospective = key === 'prospective';
+    const projectedPoints = prospective ? [] : grid.map((point, index) => project(point, z[index]));
+    if (prospective) {
+      for (const [i, index] of frame.seen.entries()) {
+        projectedPoints[index] = project(grid[index], scaleHeight(frame.outcomes[i], surfaces.truth));
+      }
+    }
+    const next = isSurrogatePlot(key) ? frame.next : null;
+    const color = isSurrogatePlot(key) ? theme.surfaces[key] : theme.surfaces.truth;
+    const drawnFaces = prospective ? [] : faces.map(face => ({
       face,
       depth: face.reduce((sum, index) => sum + projectedPoints[index].depth, 0) / 3,
     }));
@@ -564,6 +577,12 @@
       ctx.setLineDash([]);
     }
 
+    if (prospective) {
+      ctx.strokeStyle = blend(theme.background, theme.foreground, 0.55);
+      ctx.lineWidth = 1;
+      for (const index of frame.seen) line(project(grid[index]), projectedPoints[index]);
+    }
+
     ctx.lineWidth = 1.5;
     for (const index of frame.seen) {
       const point = projectedPoints[index];
@@ -589,8 +608,9 @@
       ctx.stroke();
     }
 
-    if (inspected !== null) {
-      const { x, y } = projectedPoints[inspected];
+    const selection = inspected === null ? null : projectedPoints[inspected];
+    if (selection) {
+      const { x, y } = selection;
       ctx.beginPath();
       ctx.arc(x, y, 5.8, 0, 2 * Math.PI);
       ctx.strokeStyle = rgb(theme.background);
@@ -622,7 +642,7 @@
   function render(now) {
     raf = 0;
     const heights = currentHeights(now);
-    for (const plot of plots) drawPlot(plot, plot.key === 'truth' ? truthHeights : heights[plot.key], heights.uncertainty);
+    for (const plot of plots) drawPlot(plot, heights[plot.key] ?? truthHeights, heights.uncertainty);
     if (transition) queueDraw();
   }
 
@@ -633,8 +653,11 @@
   function findComposition(plot, x, y) {
     const frame = frames[step];
     const { points: projectedPoints, faces: drawnFaces } = plot;
-    const distance = index => Math.hypot(projectedPoints[index].x - x, projectedPoints[index].y - y);
-    const markers = frame.next === null || plot.key === 'truth' ? frame.seen : [frame.next, ...frame.seen];
+    const distance = index => {
+      const point = projectedPoints[index];
+      return point ? Math.hypot(point.x - x, point.y - y) : Infinity;
+    };
+    const markers = frame.next !== null && isSurrogatePlot(plot.key) ? [frame.next, ...frame.seen] : frame.seen;
     const onMarker = markers.find(index => distance(index) < 9);
     if (onMarker !== undefined) return onMarker;
 
@@ -727,6 +750,7 @@
       if (!pointer.moved && plot.points.length) {
         const bounds = canvas.getBoundingClientRect();
         inspected = findComposition(plot, event.clientX - bounds.left, event.clientY - bounds.top);
+        inspectedRetrospectively = inspected !== null && plot.key === 'retrospective';
         updateDetail();
         queueDraw();
       }
@@ -744,7 +768,7 @@
 
   function saveState() {
     try {
-      sessionStorage.setItem(storageKey, JSON.stringify({ version: 3, step, yaw, tilt, inspected }));
+      sessionStorage.setItem(storageKey, JSON.stringify({ version: 3, step, yaw, tilt, inspected, inspectedRetrospectively }));
     } catch {
       // The explorer still works when session storage is unavailable.
     }
@@ -762,6 +786,7 @@
     yaw = Number.isFinite(restored.yaw) ? wrapAngle(restored.yaw) : initialCamera.yaw;
     tilt = Number.isFinite(restored.tilt) ? clamp(restored.tilt, 15, 72) : initialCamera.tilt;
     inspected = Number.isInteger(restored.inspected) && grid[restored.inspected] ? restored.inspected : null;
+    inspectedRetrospectively = inspected !== null && restored.inspectedRetrospectively === true;
     transition = null;
   }
 

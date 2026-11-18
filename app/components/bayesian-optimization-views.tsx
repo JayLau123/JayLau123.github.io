@@ -9,26 +9,31 @@ export function BayesianOptimizationViews() {
   const [show3D, setShow3D] = useState(false);
   const frameRef = useRef<HTMLIFrameElement>(null);
   const exploreButtonRef = useRef<HTMLButtonElement>(null);
-  const backButtonRef = useRef<HTMLButtonElement>(null);
   const moveFocus = useRef(false);
 
-  function changeView(nextShow3D: boolean) {
+  function openExplorer() {
     moveFocus.current = true;
-    setShow3D(nextShow3D);
+    setShow3D(true);
   }
 
   useEffect(() => {
-    if (!moveFocus.current) return;
-    moveFocus.current = false;
-    (show3D ? backButtonRef : exploreButtonRef).current?.focus();
-  }, [show3D]);
-
-  useEffect(() => {
     const frame = frameRef.current;
-    if (!frame) return;
+    if (!frame) {
+      if (moveFocus.current) {
+        moveFocus.current = false;
+        exploreButtonRef.current?.focus();
+      }
+      return;
+    }
 
     const siteRoot = document.documentElement;
     let sizeObserver: ResizeObserver | undefined;
+    let backButton: HTMLButtonElement | null = null;
+
+    const returnTo2D = () => {
+      moveFocus.current = true;
+      setShow3D(false);
+    };
 
     const syncTheme = () => {
       const explorerRoot = frame.contentDocument?.documentElement;
@@ -39,10 +44,16 @@ export function BayesianOptimizationViews() {
 
     const connect = () => {
       sizeObserver?.disconnect();
+      backButton?.removeEventListener("click", returnTo2D);
       const explorer = frame.contentDocument;
       if (!explorer?.getElementById("ternary-bayesian-optimization")) return;
 
       syncTheme();
+      backButton = explorer.querySelector<HTMLButtonElement>("[data-back-to-2d]");
+      if (backButton) {
+        backButton.hidden = false;
+        backButton.addEventListener("click", returnTo2D);
+      }
       const body = explorer.body;
       const fitContent = () => {
         frame.style.height = `${Math.ceil(body.getBoundingClientRect().height)}px`;
@@ -50,6 +61,11 @@ export function BayesianOptimizationViews() {
       fitContent();
       sizeObserver = new ResizeObserver(fitContent);
       sizeObserver.observe(body);
+      if (moveFocus.current && backButton) {
+        moveFocus.current = false;
+        frame.scrollIntoView({ block: "start" });
+        backButton.focus({ preventScroll: true });
+      }
     };
 
     const themeObserver = new MutationObserver(syncTheme);
@@ -59,6 +75,7 @@ export function BayesianOptimizationViews() {
 
     return () => {
       sizeObserver?.disconnect();
+      backButton?.removeEventListener("click", returnTo2D);
       themeObserver.disconnect();
       frame.removeEventListener("load", connect);
     };
@@ -66,22 +83,10 @@ export function BayesianOptimizationViews() {
 
   return (
     <div className="bo-views">
-      {show3D && (
-        <div className="bo-demo-controls bo-view-controls">
-          <button
-            ref={backButtonRef}
-            type="button"
-            aria-controls="bo-visualization"
-            onClick={() => changeView(false)}
-          >
-            Back to 2D
-          </button>
-        </div>
-      )}
       <div id="bo-visualization">
         <div hidden={show3D}>
           <BayesianOptimizationDemo
-            onExplore3D={() => changeView(true)}
+            onExplore3D={openExplorer}
             exploreButtonRef={exploreButtonRef}
           />
         </div>

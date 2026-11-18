@@ -13,15 +13,17 @@ test("exports static GitHub Pages pages", async () => {
 
   assert.match(html, /<title>Chuanyu Liu<\/title>/i);
   assert.match(html, /Research Interests/);
-  assert.match(html, /class="bo-demo-controls"[\s\S]*>Step<\/button><button[^>]*aria-controls="bo-visualization">Interactive 3D<\/button>/);
+  assert.match(html, /class="bo-demo-controls"[\s\S]*>Measure next<\/button><button[^>]*aria-controls="bo-visualization">Interactive 3D<\/button>/);
   assert.match(html, /class="bo-demo-canvas"/);
   assert.doesNotMatch(html, /Synthetic example|<strong>what to measure next<\/strong>|In <strong>CLEAR-AI<\/strong>/);
   assert.doesNotMatch(html, /<iframe[^>]*title="3D Bayesian optimization explorer"/);
   assert.match(explorerHtml, /Surrogate model \(Gaussian process\)/);
+  assert.match(explorerHtml, /data-play>Play<\/button>\s*<button[^>]*data-step>Measure next<\/button>\s*<button[^>]*data-back-to-2d hidden>Back to 2D<\/button>[\s\S]*<h3 id="ternary-bo-title">/);
   assert.match(explorerHtml, /True response/);
+  assert.match(explorerHtml, /id="ternary-prospective-title">Prospectively<\/figcaption>[\s\S]*id="ternary-retrospective-title">Retrospectively<\/figcaption>/);
   assert.match(explorerHtml, /class="text-small ternary-legend"[^>]*>[^\n]*data-count>2 Measured<\/span>/);
   assert.doesNotMatch(explorerHtml, /type="range"|Select a point to inspect/);
-  for (const plot of ["response", "uncertainty", "truth"]) {
+  for (const plot of ["response", "uncertainty", "prospective", "retrospective"]) {
     assert.match(explorerHtml, new RegExp(`<canvas[^>]*data-plot="${plot}"`));
   }
   assert.match(html, /Recent News/);
