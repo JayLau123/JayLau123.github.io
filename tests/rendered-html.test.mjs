@@ -93,13 +93,18 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /Dr\.Chang Liu/);
   assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
-  assert.match(html, /href="https:\/\/scholar\.google\.com\/citations\?user=f2qAmGIAAAAJ&amp;hl=en">Full list on Google Scholar/);
+  assert.match(
+    html,
+    /<div class="publication-heading"><h2 id="publications-title">Publications<\/h2><a href="https:\/\/scholar\.google\.com\/citations\?user=f2qAmGIAAAAJ&amp;hl=en">Google Scholar<\/a><\/div>/,
+  );
   assert.match(
     html,
     /dateTime="2026-11">11\/2026<\/time>[\s\S]*?Advanced Materials 38 \(64\), e75354<\/span><span class="publication-cover">Cover Picture<\/span>/,
   );
   assert.match(html, /href="https:\/\/doi\.org\/10\.1002\/adma\.75354"[^>]*>View article/);
-  assert.match(html, /href="https:\/\/doi\.org\/10\.1002\/adma\.75557"[^>]*>View Cover Picture/);
+  const firstPublication = html.match(/<li class="publication-item"[^>]*>[\s\S]*?<\/li>/)?.[0] ?? "";
+  assert.equal((firstPublication.match(/<a /g) ?? []).length, 1);
+  assert.doesNotMatch(html, /Full list on Google Scholar|View Cover Picture/);
   assert.doesNotMatch(html, /arXiv:2606\.24480/);
   assert.match(html, /JACS Au 6 \(10\), 5517-5530/);
   assert.match(

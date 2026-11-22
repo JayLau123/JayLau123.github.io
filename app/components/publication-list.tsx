@@ -114,39 +114,15 @@ export function PublicationList({
                       <p className="publication-abstract">{paper.abstract}</p>
                     </>
                   )}
-                  <div className="publication-actions">
-                    {paper.articleUrl && (
-                      <a
-                        className="publication-source"
-                        href={citationUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        tabIndex={isExpanded ? 0 : -1}
-                      >
-                        Google Scholar
-                      </a>
-                    )}
-                    {paper.coverUrl && (
-                      <a
-                        className="publication-source"
-                        href={paper.coverUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        tabIndex={isExpanded ? 0 : -1}
-                      >
-                        View Cover Picture
-                      </a>
-                    )}
-                    <a
-                      className="publication-read-more"
-                      href={paper.articleUrl ?? citationUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      tabIndex={isExpanded ? 0 : -1}
-                    >
-                      {paper.articleUrl ? "View article" : "Read more"}
-                    </a>
-                  </div>
+                  <a
+                    className="publication-read-more"
+                    href={paper.articleUrl ?? citationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    tabIndex={isExpanded ? 0 : -1}
+                  >
+                    {paper.articleUrl ? "View article" : "Read more"}
+                  </a>
                 </div>
               </div>
             </div>

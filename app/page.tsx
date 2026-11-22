@@ -345,11 +345,9 @@ export default function Home() {
         id="publications"
         aria-labelledby="publications-title"
       >
-        <div className="section-heading">
+        <div className="publication-heading">
           <h2 id="publications-title">Publications</h2>
-          <p>
-            <a href={scholarUrl}>Full list on Google Scholar</a>
-          </p>
+          <a href={scholarUrl}>Google Scholar</a>
         </div>
         <PublicationList publications={publications} />
       </section>

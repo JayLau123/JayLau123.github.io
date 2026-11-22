@@ -1051,6 +1051,22 @@ html[data-theme="dark"] .news-mark img {
   transform: translateY(-1px);
 }
 
+.publication-heading {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.publication-heading h2 {
+  margin: 0;
+}
+
+.publication-heading a {
+  white-space: nowrap;
+}
+
 .publication-list {
   display: grid;
   gap: 14px;
@@ -1246,19 +1262,6 @@ html[data-theme="dark"] .news-mark img {
   text-justify: inter-word;
 }
 
-.publication-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 18px;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.publication-source {
-  padding: 8px 0;
-}
-
 .publication-read-more {
   display: flex;
   gap: 10px;
@@ -1267,6 +1270,7 @@ html[data-theme="dark"] .news-mark img {
   width: fit-content;
   min-width: 158px;
   min-height: 48px;
+  margin: 20px 0 0 auto;
   padding: 11px 18px;
   color: var(--background);
   font-size: 0.96rem;
@@ -1510,6 +1514,10 @@ html[data-theme="dark"] .news-mark img {
 }
 
 @media (max-width: 520px) {
+  .publication-heading h2 {
+    font-size: clamp(1.625rem, 8vw, 1.9rem);
+  }
+
   .hero-copy p:not(.eyebrow),
   .page-hero p:not(.eyebrow),
   .research-topic > p,
