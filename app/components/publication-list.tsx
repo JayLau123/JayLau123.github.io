@@ -2,9 +2,10 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import {
-  fetchScholarPublications,
-  mergeScholarPublications,
-  scholarCitationUrl,
+  fetchPublicationSnapshot,
+  mergePublicationSnapshot,
+  publicationCitationUrl,
+  publicationId,
   type Publication,
 } from "../scholar-publications";
 
@@ -14,7 +15,7 @@ export function PublicationList({
   publications: readonly Publication[];
 }) {
   const [publications, setPublications] = useState(() =>
-    mergeScholarPublications(curated),
+    mergePublicationSnapshot(curated),
   );
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const listRef = useRef<HTMLOListElement>(null);
@@ -22,10 +23,10 @@ export function PublicationList({
 
   useEffect(() => {
     const controller = new AbortController();
-    fetchScholarPublications(controller.signal)
+    fetchPublicationSnapshot(controller.signal)
       .then((records) => {
         if (records && !controller.signal.aborted) {
-          setPublications(mergeScholarPublications(curated, records));
+          setPublications(mergePublicationSnapshot(curated, records));
         }
       })
       .catch(() => {
@@ -68,22 +69,22 @@ export function PublicationList({
   return (
     <ol className="publication-list" ref={listRef}>
       {publications.map((paper, index) => {
-        const isExpanded = expandedId === paper.scholarId;
-        const panelId = `${panelIdPrefix}-publication-${paper.scholarId}`;
-        const citationUrl = scholarCitationUrl(paper.scholarId);
+        const id = publicationId(paper);
+        const isExpanded = expandedId === id;
+        const panelId = `${panelIdPrefix}-publication-${id}`;
 
         return (
           <li
             className={`publication-item${isExpanded ? " is-expanded" : ""}`}
             data-publication-index={index}
-            key={paper.scholarId}
+            key={id}
           >
             <button
               className="publication-summary"
               type="button"
               aria-expanded={isExpanded}
               aria-controls={panelId}
-              onClick={() => setExpandedId(isExpanded ? null : paper.scholarId)}
+              onClick={() => setExpandedId(isExpanded ? null : id)}
             >
               {paper.date ? (
                 <time className="publication-date" dateTime={paper.dateTime}>
@@ -116,7 +117,7 @@ export function PublicationList({
                   )}
                   <a
                     className="publication-read-more"
-                    href={paper.articleUrl ?? citationUrl}
+                    href={paper.articleUrl ?? publicationCitationUrl(paper)}
                     target="_blank"
                     rel="noreferrer"
                     tabIndex={isExpanded ? 0 : -1}

@@ -5,15 +5,21 @@ export const scholarUrl = `https://scholar.google.com/citations?user=${scholarUs
 const snapshotUrl =
   "https://raw.githubusercontent.com/JayLau123/JayLau123.github.io/main/app/scholar-publications.json";
 
-type ScholarRecord = {
-  scholarId: string;
+type PublicationSource =
+  | { scholarId: string; openAlexId?: string }
+  | { scholarId?: undefined; openAlexId: string };
+
+type PublicationMetadata = {
   title: string;
   authors: string;
   venue: string;
+};
+
+type PublicationRecord = PublicationSource & PublicationMetadata & {
   year: string;
 };
 
-export type Publication = Omit<ScholarRecord, "year"> & {
+export type Publication = PublicationSource & PublicationMetadata & {
   date: string;
   dateTime: string;
   abstract?: string;
@@ -21,18 +27,28 @@ export type Publication = Omit<ScholarRecord, "year"> & {
   coverUrl?: string;
 };
 
-export function scholarCitationUrl(scholarId: string) {
-  return `${scholarUrl}&view_op=view_citation&citation_for_view=${scholarUser}:${scholarId}`;
+export function publicationId(paper: PublicationSource) {
+  return paper.scholarId ?? paper.openAlexId;
 }
 
-function isScholarRecord(paper: unknown): paper is ScholarRecord {
+export function publicationCitationUrl(paper: PublicationSource) {
+  if (paper.openAlexId) {
+    return `https://openalex.org/works/${paper.openAlexId}`;
+  }
+  return `${scholarUrl}&view_op=view_citation&citation_for_view=${scholarUser}:${paper.scholarId}`;
+}
+
+function isPublicationRecord(paper: unknown): paper is PublicationRecord {
   if (!paper || typeof paper !== "object") {
     return false;
   }
 
+  const scholarId = "scholarId" in paper ? paper.scholarId : undefined;
+  const openAlexId = "openAlexId" in paper ? paper.openAlexId : undefined;
   return (
-    "scholarId" in paper && typeof paper.scholarId === "string" &&
-    /^[\w-]+$/.test(paper.scholarId) &&
+    (scholarId !== undefined || openAlexId !== undefined) &&
+    (scholarId === undefined || typeof scholarId === "string" && /^[\w-]+$/.test(scholarId)) &&
+    (openAlexId === undefined || typeof openAlexId === "string" && /^W\d+$/.test(openAlexId)) &&
     "title" in paper && typeof paper.title === "string" && !!paper.title.trim() &&
     "authors" in paper && typeof paper.authors === "string" &&
     "venue" in paper && typeof paper.venue === "string" &&
@@ -40,14 +56,14 @@ function isScholarRecord(paper: unknown): paper is ScholarRecord {
   );
 }
 
-export async function fetchScholarPublications(signal: AbortSignal) {
+export async function fetchPublicationSnapshot(signal: AbortSignal) {
   const response = await fetch(snapshotUrl, { signal, credentials: "omit" });
   if (!response.ok) {
     return undefined;
   }
 
   const papers: unknown = await response.json();
-  if (Array.isArray(papers) && papers.length && papers.every(isScholarRecord)) {
+  if (Array.isArray(papers) && papers.length && papers.every(isPublicationRecord)) {
     return papers;
   }
 }
@@ -58,27 +74,23 @@ function titleKey(title: string) {
     .replace(/[^\p{L}\p{N}]+/gu, "");
 }
 
-export function mergeScholarPublications(
+export function mergePublicationSnapshot(
   curated: readonly Publication[],
-  records: readonly ScholarRecord[] = snapshot,
+  records: readonly PublicationRecord[] = snapshot,
 ): Publication[] {
-  const byId = new Map(records.map((paper) => [paper.scholarId, paper]));
+  const byId = new Map(records.map((paper) => [publicationId(paper), paper]));
   const synced = curated.map((paper) => {
-    const record = byId.get(paper.scholarId) ??
+    const record = byId.get(publicationId(paper)) ??
       records.find((entry) => entry.title.toLowerCase() === paper.title.toLowerCase());
 
-    if (!record) {
+    if (!record || paper.articleUrl) {
       return paper;
-    }
-    if (paper.articleUrl) {
-      return { ...paper, scholarId: record.scholarId };
     }
 
     const yearChanged = record.year && !paper.dateTime.startsWith(record.year);
     return {
       ...paper,
-      scholarId: record.scholarId,
-      title: record.title,
+      ...record,
       authors: record.authors || paper.authors,
       venue: record.venue || paper.venue,
       date: yearChanged ? record.year : paper.date,
@@ -87,12 +99,13 @@ export function mergeScholarPublications(
   });
 
   const coveredTitles = new Set(synced.map((paper) => titleKey(paper.title)));
-  const coveredIds = new Set(synced.map((paper) => paper.scholarId));
+  const coveredIds = new Set(synced.map(publicationId));
   for (const record of records) {
+    const id = publicationId(record);
     const key = titleKey(record.title);
-    if (!coveredIds.has(record.scholarId) && !coveredTitles.has(key)) {
+    if (!coveredIds.has(id) && !coveredTitles.has(key)) {
       synced.push({ ...record, date: record.year, dateTime: record.year });
-      coveredIds.add(record.scholarId);
+      coveredIds.add(id);
       coveredTitles.add(key);
     }
   }

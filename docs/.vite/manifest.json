@@ -41,7 +41,7 @@
     ]
   },
   "app/components/publication-list.tsx": {
-    "file": "assets/publication-list-BQ_aavnh.js",
+    "file": "assets/publication-list-CyjKEq5I.js",
     "name": "publication-list",
     "src": "app/components/publication-list.tsx",
     "isDynamicEntry": true,
@@ -69,7 +69,7 @@
     ]
   },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-DNSjOvvZ.js",
+    "file": "assets/layout-segment-context-D_Hkfktw.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -80,7 +80,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-Dfi7JCqL.js",
+    "file": "assets/index-BKKIiDEa.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,

@@ -27,8 +27,12 @@ changes, then push to GitHub. GitHub Pages publishes from `main` branch `/docs`.
 
 ## Publications
 
-The **Sync Google Scholar publications** workflow refreshes the public profile
-snapshot daily and can also run from the repository's Actions tab. The page
-loads the latest committed snapshot from GitHub, so metadata updates do not
-require a Pages rebuild. The bundled snapshot provides an offline fallback.
-Curated abstracts, publisher links, and cover designations live in `app/page.tsx`.
+The **Sync Google Scholar publications** workflow runs daily and can also run
+from the repository's Actions tab. If Scholar is unavailable, the workflow
+checks [the verified OpenAlex author record](https://openalex.org/authors/A5122074882)
+for published journal papers. It keeps Scholar-only entries and records a
+warning if both providers are temporarily unavailable.
+
+The page loads the latest committed snapshot from GitHub without a Pages rebuild.
+The bundled snapshot provides an offline fallback. Curated abstracts, publisher
+links, and cover designations live in `app/page.tsx`.
