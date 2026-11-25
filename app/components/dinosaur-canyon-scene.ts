@@ -4,14 +4,17 @@ export const canyonHeight = 288;
 const tileWidth = 146;
 const tileHeight = 112;
 const tilesPerRow = 12;
-const lastPose = 136;
+const posesPerStage = 18;
+const poseTimes = [0, 0.65, 1.59, 2.32, 3.14, 3.93] as const;
+const settleDuration = poseTimes[poseTimes.length - 1];
+const lastPose = posesPerStage * (poseTimes.length - 1);
 const meteorPeriod = 7.4;
 const tau = 2 * Math.PI;
 
 const picturePaths = {
   sunset: "/dinosaur-canyon-sunset-scene.webp",
   night: "/dinosaur-canyon-night-scene.webp",
-  poses: "/dinosaur-canyon-rex-turn.webp",
+  poses: "/dinosaur-canyon-rex-settling.webp",
 } as const;
 
 type CanyonArt = { [key in keyof typeof picturePaths]: HTMLImageElement };
@@ -128,18 +131,29 @@ function drawMeteorPass(ctx: Context, seconds: number, visibility: number) {
   ctx.restore();
 }
 
-function drawRex(ctx: Context, atlas: HTMLImageElement, seconds: number, darkness: number) {
-  const posture = Math.min(1, Math.max(0, (darkness - 0.025) / 0.95));
-  const frame = Math.round(lastPose * posture);
-  const breathing = (0.58 + darkness * 0.23) * Math.sin(seconds * 1.18);
+function rexFrame(settleTime: number) {
+  if (settleTime >= settleDuration) return lastPose;
+  const stage = poseTimes.findIndex((time) => time > settleTime) - 1;
+  const progress = (settleTime - poseTimes[stage]) / (poseTimes[stage + 1] - poseTimes[stage]);
+  // Retain the timing of the weight shift, belly contact, and head tuck from the preview.
+  const phase = 0.79 * progress + 0.21 * smooth(0, 1, progress);
+  const offset = Math.min(posesPerStage - 1, Math.round(posesPerStage * phase));
+  return stage * posesPerStage + offset;
+}
+
+function drawRex(ctx: Context, atlas: HTMLImageElement, seconds: number, settleTime: number, darkness: number) {
+  const frame = rexFrame(settleTime);
+  const breathing = (0.58 * (1 - smooth(0, 0.24, settleTime)) +
+    0.64 * smooth(3.68, settleDuration, settleTime)) * Math.sin(seconds * 1.5);
+  const stretch = smooth(0.1, 2.8, settleTime);
   ctx.save();
-  ctx.fillStyle = darkness > 0.5 ? "#20233157" : "#4b36395b";
+  ctx.fillStyle = "#1f213259";
   ctx.beginPath();
-  ctx.ellipse(560 + 2 * darkness, 231, 32 + 16 * darkness, 3.2, 0, 0, tau);
+  ctx.ellipse(559 + 1.8 * stretch, 231, 30 + 17 * stretch, 3, 0, 0, tau);
   ctx.fill();
-  ctx.filter = `brightness(${1 - 0.12 * darkness}) saturate(${1 - 0.09 * darkness})`;
+  ctx.filter = `brightness(${1 - 0.14 * darkness}) saturate(${1 - 0.09 * darkness})`;
   ctx.drawImage(atlas, (frame % tilesPerRow) * tileWidth, Math.floor(frame / tilesPerRow) * tileHeight,
-    tileWidth, tileHeight, 498, 126 - breathing, tileWidth, tileHeight + breathing);
+    tileWidth, tileHeight, 490, 126 - breathing, tileWidth, tileHeight + breathing);
   ctx.restore();
 }
 
@@ -151,18 +165,19 @@ export function animateCanyon(canvas: HTMLCanvasElement, art: CanyonArt, startAt
 
   const started = performance.now();
   let previousFrame = started;
-  let from = Number(startAtNight);
+  let from: number = startAtNight ? settleDuration : 0;
   let target = from;
   let transitionStart = started;
-  let duration = 0;
   let frameHandle = 0;
 
-  function darknessAt(now: number) {
-    return duration > 0 ? from + (target - from) * smooth(0, duration, now - transitionStart) : target;
+  function settleTimeAt(now: number) {
+    const elapsed = (now - transitionStart) / 1000;
+    return elapsed >= Math.abs(target - from) ? target : from + Math.sign(target - from) * elapsed;
   }
 
   function paint(now: number) {
-    const darkness = darknessAt(now);
+    const settleTime = settleTimeAt(now);
+    const darkness = smooth(0, settleDuration, settleTime);
     const seconds = (now - started) / 1000;
     ctx.drawImage(darkness === 1 ? art.night : art.sunset, 0, 0);
     if (darkness > 0 && darkness < 1) {
@@ -177,11 +192,11 @@ export function animateCanyon(canvas: HTMLCanvasElement, art: CanyonArt, startAt
       drawMeteorPass(ctx, phase + meteorPeriod, meteorLight);
       drawMeteorPass(ctx, phase, meteorLight);
     }
-    drawRex(ctx, art.poses, seconds, darkness);
+    drawRex(ctx, art.poses, seconds, settleTime, darkness);
   }
 
   function tick(now: number) {
-    const transitioning = now < transitionStart + duration;
+    const transitioning = now - transitionStart < 1000 * Math.abs(target - from);
     if (transitioning || now - previousFrame >= 31) {
       paint(now);
       previousFrame = now;
@@ -195,13 +210,12 @@ export function animateCanyon(canvas: HTMLCanvasElement, art: CanyonArt, startAt
 
   return {
     setNight(night: boolean) {
-      const next = Number(night);
+      const next = night ? settleDuration : 0;
       if (next === target) return;
       const now = performance.now();
-      from = darknessAt(now);
+      from = settleTimeAt(now);
       target = next;
       transitionStart = now;
-      duration = Math.max(300, 3400 * Math.abs(target - from));
     },
     stop() {
       cancelAnimationFrame(frameHandle);

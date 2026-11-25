@@ -221,12 +221,12 @@ a:hover {
   margin: 0 auto;
   aspect-ratio: 65 / 24;
   overflow: hidden;
-  background: #526b8d url("/dinosaur-canyon-meteor-loop.webp") 60% 61% / cover;
+  background: #526b8d url("/dinosaur-canyon-sunset-standing.webp") 60% 61% / cover;
 }
 
 html[data-theme="dark"] .homepage-animation {
   background-color: #243f62;
-  background-image: url("/dinosaur-canyon-night-tucked.webp");
+  background-image: url("/dinosaur-canyon-night-resting.webp");
 }
 
 .homepage-animation canvas {

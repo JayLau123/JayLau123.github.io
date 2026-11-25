@@ -1,4 +1,15 @@
 {
+  "../../../Users/jayliu/Desktop/PersonalWebsites/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
+    "file": "assets/layout-segment-context-sN4er5Cf.js",
+    "name": "layout-segment-context",
+    "src": "../../../Users/jayliu/Desktop/PersonalWebsites/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "virtual:vinext-app-browser-entry",
+      "_framework-CXnKph_e.js"
+    ]
+  },
   "_framework-CXnKph_e.js": {
     "file": "assets/framework-CXnKph_e.js",
     "name": "framework",
@@ -11,7 +22,7 @@
     "name": "rolldown-runtime"
   },
   "app/components/ambient-geometry.tsx": {
-    "file": "assets/ambient-geometry-B4NEgMAi.js",
+    "file": "assets/ambient-geometry-BxMBmXXn.js",
     "name": "ambient-geometry",
     "src": "app/components/ambient-geometry.tsx",
     "isDynamicEntry": true,
@@ -21,7 +32,7 @@
     ]
   },
   "app/components/bayesian-optimization-views.tsx": {
-    "file": "assets/bayesian-optimization-views-WV2kPcKn.js",
+    "file": "assets/bayesian-optimization-views-BZw54zJG.js",
     "name": "bayesian-optimization-views",
     "src": "app/components/bayesian-optimization-views.tsx",
     "isDynamicEntry": true,
@@ -31,7 +42,7 @@
     ]
   },
   "app/components/gallery-year-carousel.tsx": {
-    "file": "assets/gallery-year-carousel-BNNwmxDo.js",
+    "file": "assets/gallery-year-carousel-N9Bfh-BK.js",
     "name": "gallery-year-carousel",
     "src": "app/components/gallery-year-carousel.tsx",
     "isDynamicEntry": true,
@@ -41,7 +52,7 @@
     ]
   },
   "app/components/homepage-animation.tsx": {
-    "file": "assets/homepage-animation-CDIVyhg2.js",
+    "file": "assets/homepage-animation-D1Iw_i2_.js",
     "name": "homepage-animation",
     "src": "app/components/homepage-animation.tsx",
     "isDynamicEntry": true,
@@ -51,7 +62,7 @@
     ]
   },
   "app/components/publication-list.tsx": {
-    "file": "assets/publication-list-6QxYxe20.js",
+    "file": "assets/publication-list-Cghshp4D.js",
     "name": "publication-list",
     "src": "app/components/publication-list.tsx",
     "isDynamicEntry": true,
@@ -61,7 +72,7 @@
     ]
   },
   "app/components/smooth-scroll-link.tsx": {
-    "file": "assets/smooth-scroll-link-CEEtAZCs.js",
+    "file": "assets/smooth-scroll-link-CtjM4bFO.js",
     "name": "smooth-scroll-link",
     "src": "app/components/smooth-scroll-link.tsx",
     "isDynamicEntry": true,
@@ -70,7 +81,7 @@
     ]
   },
   "app/components/theme-toggle.tsx": {
-    "file": "assets/theme-toggle-BGQKUB-_.js",
+    "file": "assets/theme-toggle-CX39Clsd.js",
     "name": "theme-toggle",
     "src": "app/components/theme-toggle.tsx",
     "isDynamicEntry": true,
@@ -78,19 +89,8 @@
       "_framework-CXnKph_e.js"
     ]
   },
-  "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-DD-m_UBL.js",
-    "name": "layout-segment-context",
-    "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_rolldown-runtime-S-ySWqyJ.js",
-      "virtual:vinext-app-browser-entry",
-      "_framework-CXnKph_e.js"
-    ]
-  },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-x-PNoUt2.js",
+    "file": "assets/index-2pL6Ff6O.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
@@ -100,12 +100,12 @@
     ],
     "dynamicImports": [
       "app/components/ambient-geometry.tsx",
-      "virtual:vinext-app-browser-entry",
       "app/components/theme-toggle.tsx",
       "app/components/gallery-year-carousel.tsx",
+      "../../../Users/jayliu/Desktop/PersonalWebsites/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
       "app/components/smooth-scroll-link.tsx",
+      "virtual:vinext-app-browser-entry",
       "app/components/publication-list.tsx",
-      "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
       "app/components/homepage-animation.tsx",
       "app/components/bayesian-optimization-views.tsx"
     ]
