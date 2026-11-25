@@ -26,12 +26,12 @@ export function HomepageAnimation() {
   return (
     <figure
       className="homepage-animation"
-      aria-label="Pixel art of two dinosaurs watching a meteor over a canyon at sunset"
+      aria-label="Pixel art of a green T. rex watching a meteor over a canyon at sunset"
     >
       <video
         ref={videoRef}
-        src="/dinosaur-canyon-sunset-hd.mp4"
-        poster="/dinosaur-canyon-sunset-hd.webp"
+        src="/dinosaur-canyon-sunset-rex.mp4"
+        poster="/dinosaur-canyon-sunset-rex.webp"
         width={1560}
         height={576}
         preload="none"
