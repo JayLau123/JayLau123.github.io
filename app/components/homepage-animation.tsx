@@ -1,99 +1,65 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
-const scenes = {
-  sunset: "/dinosaur-canyon-meteor-loop.mp4",
-  night: "/dinosaur-canyon-meteor-loop-night.mp4",
-} as const;
+import { animateCanyon, canyonHeight, canyonWidth, loadCanyonArt } from "./dinosaur-canyon-scene";
 
 export function HomepageAnimation() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
     const root = document.documentElement;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let currentScene: keyof typeof scenes | undefined;
-    let position = 0;
-    let awaitingMetadata = false;
-
-    const restorePosition = () => {
-      if (video.currentSrc !== video.src) return;
-      if (position > 0 && Number.isFinite(video.duration) && video.duration > 0) {
-        video.currentTime = position % video.duration;
-      }
-      awaitingMetadata = false;
-    };
-
-    const reveal = () => {
-      if (
-        !motion.matches && !awaitingMetadata && !video.seeking && !video.paused &&
-        video.currentSrc === video.src && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
-      ) {
-        video.dataset.ready = "";
-      }
-    };
+    let animation: ReturnType<typeof animateCanyon>;
+    let art: Awaited<ReturnType<typeof loadCanyonArt>> | undefined;
+    let loading = false;
+    let disposed = false;
 
     const syncScene = () => {
       if (motion.matches) {
-        video.pause();
-        delete video.dataset.ready;
+        animation?.stop();
+        animation = undefined;
         return;
       }
 
-      const nextScene = root.dataset.theme === "dark" ? "night" : "sunset";
-      if (nextScene !== currentScene) {
-        if (!awaitingMetadata && !video.seeking && video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-          position = video.currentTime;
-        }
-        delete video.dataset.ready;
-        currentScene = nextScene;
-        awaitingMetadata = true;
-        video.dataset.scene = nextScene;
-        video.src = scenes[nextScene];
-        video.load();
+      const night = root.dataset.theme === "dark";
+      if (animation) {
+        animation.setNight(night);
+      } else if (art) {
+        animation = animateCanyon(canvas, art, night);
+      } else if (!loading) {
+        loading = true;
+        void loadCanyonArt().then((loaded) => {
+          if (disposed) return;
+          art = loaded;
+          syncScene();
+        }).catch(() => {
+          // The theme's still image remains available if the artwork cannot load.
+        });
       }
-
-      // Browsers that block autoplay still display the poster for the active theme.
-      void video.play().catch(() => {});
     };
 
-    video.addEventListener("loadedmetadata", restorePosition);
-    video.addEventListener("playing", reveal);
-    video.addEventListener("seeked", reveal);
     const theme = new MutationObserver(syncScene);
     theme.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
     motion.addEventListener("change", syncScene);
     syncScene();
 
     return () => {
+      disposed = true;
       theme.disconnect();
       motion.removeEventListener("change", syncScene);
-      video.removeEventListener("loadedmetadata", restorePosition);
-      video.removeEventListener("playing", reveal);
-      video.removeEventListener("seeked", reveal);
-      video.pause();
+      animation?.stop();
     };
   }, []);
 
   return (
     <figure
       className="homepage-animation"
-      aria-label="Pixel art of a green T. rex watching a meteor over a canyon"
+      aria-label="Pixel art of a green T. rex in a canyon that changes from sunset to a starry night"
     >
-      <video
-        ref={videoRef}
-        width={1560}
-        height={576}
-        preload="none"
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      />
+      <canvas ref={canvasRef} width={canyonWidth} height={canyonHeight} aria-hidden="true" />
     </figure>
   );
 }

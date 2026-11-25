@@ -226,10 +226,10 @@ a:hover {
 
 html[data-theme="dark"] .homepage-animation {
   background-color: #243f62;
-  background-image: url("/dinosaur-canyon-meteor-loop-night.webp");
+  background-image: url("/dinosaur-canyon-night-still.webp");
 }
 
-.homepage-animation video {
+.homepage-animation canvas {
   position: absolute;
   inset: 0;
   display: block;
@@ -241,8 +241,7 @@ html[data-theme="dark"] .homepage-animation {
   opacity: 0;
 }
 
-html:not([data-theme="dark"]) .homepage-animation video[data-scene="sunset"][data-ready],
-html[data-theme="dark"] .homepage-animation video[data-scene="night"][data-ready] {
+.homepage-animation canvas[data-ready] {
   opacity: 1;
 }
 
