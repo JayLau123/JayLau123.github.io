@@ -30,10 +30,10 @@ export function HomepageAnimation() {
     >
       <video
         ref={videoRef}
-        src="/dinosaur-canyon-sunset.mp4"
-        poster="/dinosaur-canyon-sunset.webp"
-        width={1040}
-        height={384}
+        src="/dinosaur-canyon-sunset-hd.mp4"
+        poster="/dinosaur-canyon-sunset-hd.webp"
+        width={1560}
+        height={576}
         preload="none"
         muted
         loop
