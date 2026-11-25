@@ -221,7 +221,12 @@ a:hover {
   margin: 0 auto;
   aspect-ratio: 65 / 24;
   overflow: hidden;
-  background: #526b8d;
+  background: #526b8d url("/dinosaur-canyon-meteor-loop.webp") 60% 61% / cover;
+}
+
+html[data-theme="dark"] .homepage-animation {
+  background-color: #243f62;
+  background-image: url("/dinosaur-canyon-meteor-loop-night.webp");
 }
 
 .homepage-animation video {
@@ -233,6 +238,12 @@ a:hover {
   object-fit: cover;
   object-position: 60% 61%;
   image-rendering: pixelated;
+  opacity: 0;
+}
+
+html:not([data-theme="dark"]) .homepage-animation video[data-scene="sunset"][data-ready],
+html[data-theme="dark"] .homepage-animation video[data-scene="night"][data-ready] {
+  opacity: 1;
 }
 
 .site-header {
