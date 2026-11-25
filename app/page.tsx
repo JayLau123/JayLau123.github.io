@@ -1,6 +1,7 @@
 import { SiteFooter, SiteHeader } from "./components/site-shell";
 import { PublicationList } from "./components/publication-list";
 import { BayesianOptimizationViews } from "./components/bayesian-optimization-views";
+import { HomepageAnimation } from "./components/homepage-animation";
 import { scholarUrl } from "./scholar-publications";
 
 const profileLinks = [
@@ -169,6 +170,15 @@ function ProfileIcon({ icon }: { icon: (typeof profileLinks)[number]["icon"] }) 
 }
 
 export default function Home() {
+  return (
+    <>
+      <HomepageAnimation />
+      <HomeContent />
+    </>
+  );
+}
+
+function HomeContent() {
   return (
     <main>
       <SiteHeader active="about" />

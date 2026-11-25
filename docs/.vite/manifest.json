@@ -40,8 +40,18 @@
       "_framework-CXnKph_e.js"
     ]
   },
+  "app/components/homepage-animation.tsx": {
+    "file": "assets/homepage-animation-Da-x72iS.js",
+    "name": "homepage-animation",
+    "src": "app/components/homepage-animation.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_framework-CXnKph_e.js"
+    ]
+  },
   "app/components/publication-list.tsx": {
-    "file": "assets/publication-list-CyjKEq5I.js",
+    "file": "assets/publication-list-6QxYxe20.js",
     "name": "publication-list",
     "src": "app/components/publication-list.tsx",
     "isDynamicEntry": true,
@@ -51,7 +61,7 @@
     ]
   },
   "app/components/smooth-scroll-link.tsx": {
-    "file": "assets/smooth-scroll-link-dczWB4Lx.js",
+    "file": "assets/smooth-scroll-link-CEEtAZCs.js",
     "name": "smooth-scroll-link",
     "src": "app/components/smooth-scroll-link.tsx",
     "isDynamicEntry": true,
@@ -60,7 +70,7 @@
     ]
   },
   "app/components/theme-toggle.tsx": {
-    "file": "assets/theme-toggle-uNzy21ls.js",
+    "file": "assets/theme-toggle-BemU6qjZ.js",
     "name": "theme-toggle",
     "src": "app/components/theme-toggle.tsx",
     "isDynamicEntry": true,
@@ -69,7 +79,7 @@
     ]
   },
   "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-D_Hkfktw.js",
+    "file": "assets/layout-segment-context-DhuFkCsl.js",
     "name": "layout-segment-context",
     "src": "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -80,7 +90,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-BKKIiDEa.js",
+    "file": "assets/index-C9Tm-s3B.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
@@ -96,6 +106,7 @@
       "app/components/smooth-scroll-link.tsx",
       "app/components/publication-list.tsx",
       "node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
+      "app/components/homepage-animation.tsx",
       "app/components/bayesian-optimization-views.tsx"
     ]
   }
