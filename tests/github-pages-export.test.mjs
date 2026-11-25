@@ -90,7 +90,7 @@ test("exports static GitHub Pages pages", async () => {
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
   assert.doesNotMatch(html, /Built with OpenAI Sites/);
-  assert.match(html, /Hosted on GitHub Pages/);
+  assert.doesNotMatch(`${html}\n${blogHtml}\n${galleryHtml}`, /Hosted on GitHub Pages/);
   assert.match(html, /JACS Au/);
   assert.match(html, /ACS Energy Letters/);
   assert.match(html, /citation_for_view=f2qAmGIAAAAJ:4DMP91E08xMC/);

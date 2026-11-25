@@ -317,65 +317,45 @@ a:hover {
 
 .theme-toggle {
   display: inline-flex;
+  flex: none;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 138px;
+  width: 46px;
   height: 42px;
-  padding: 8px 12px;
+  padding: 0;
   color: var(--foreground);
-  background: var(--control-background);
-  border: 1px solid var(--line);
+  background: transparent;
+  border: 0;
   border-radius: 7px;
-  font: inherit;
-  font-size: 0.93rem;
-  font-weight: 450;
-  line-height: 1;
-  white-space: nowrap;
   cursor: pointer;
-  transition:
-    color 160ms ease,
-    background 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+  transition: color 160ms ease;
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
   color: var(--blue);
-  background: var(--control-background-strong);
-  border-color: rgba(36, 93, 168, 0.45);
-  box-shadow: 0 12px 26px rgba(34, 39, 34, 0.08);
-  transform: translateY(-2px);
 }
 
-.theme-icon {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -3px;
 }
 
-.theme-icon-sun,
-.theme-label-light {
+.theme-toggle .theme-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.theme-icon-sun {
   display: none;
 }
 
-html[data-theme="dark"] .theme-icon-moon,
-html[data-theme="dark"] .theme-label-dark {
+html[data-theme="dark"] .theme-icon-moon {
   display: none;
 }
 
 html[data-theme="dark"] .theme-icon-sun {
   display: block;
-}
-
-html[data-theme="dark"] .theme-label-light {
-  display: inline;
 }
 
 h1,
@@ -1571,11 +1551,6 @@ html[data-theme="dark"] .news-mark img {
   .theme-toggle {
     width: 48px;
     height: 40px;
-    padding: 0;
-  }
-
-  .theme-label {
-    display: none !important;
   }
 
   .research-schematic {

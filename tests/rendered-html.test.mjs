@@ -58,8 +58,8 @@ test("server-renders the academic homepage", async () => {
   assert.doesNotMatch(html, /geometry-origin/);
   assert.doesNotMatch(html, /geometry-parabola/);
   assert.doesNotMatch(html, /geometry-triangle/);
-  assert.match(html, /Dark mode/);
-  assert.match(html, /Light mode/);
+  assert.match(html, /Gallery<\/span><\/a><button class="theme-toggle"[^>]*><svg class="theme-icon theme-icon-moon"[\s\S]*?<\/svg><svg class="theme-icon theme-icon-sun"[\s\S]*?<\/svg><\/button><\/nav>/);
+  assert.doesNotMatch(html, /Dark mode|Light mode/);
   assert.match(
     html,
     /Bayesian Optimization for Scientific Agents[\s\S]*what to measure next[\s\S]*class="bo-demo-canvas"[\s\S]*catalysts for target chemical reactions[\s\S]*sequential replays of archived experimental data[\s\S]*Disordered Modeling[\s\S]*research-schematic-v2\.png/,
@@ -137,7 +137,7 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /href="https:\/\/x\.com\/Chuanyuliu21" aria-label="X \(Twitter\)"/);
   assert.match(html, /2026 Chuanyu Liu/);
   assert.doesNotMatch(html, /Built with OpenAI Sites/);
-  assert.match(html, /Hosted on GitHub Pages/);
+  assert.doesNotMatch(html, /Hosted on GitHub Pages/);
   assert.doesNotMatch(html, /GPT Image/);
   assert.match(
     html,

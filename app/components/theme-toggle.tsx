@@ -38,8 +38,6 @@ export function ThemeToggle() {
         <circle cx="12" cy="12" r="3.7" />
         <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" />
       </svg>
-      <span className="theme-label theme-label-dark">Dark mode</span>
-      <span className="theme-label theme-label-light">Light mode</span>
     </button>
   );
 }
