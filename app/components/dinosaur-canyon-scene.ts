@@ -3,15 +3,15 @@ export const canyonHeight = 288;
 
 const tileWidth = 146;
 const tileHeight = 112;
-const tilesPerRow = 8;
-const lastPose = 60;
+const tilesPerRow = 12;
+const lastPose = 136;
 const meteorPeriod = 7.4;
 const tau = 2 * Math.PI;
 
 const picturePaths = {
   sunset: "/dinosaur-canyon-sunset-scene.webp",
   night: "/dinosaur-canyon-night-scene.webp",
-  poses: "/dinosaur-canyon-rex-poses.webp",
+  poses: "/dinosaur-canyon-rex-turn.webp",
 } as const;
 
 type CanyonArt = { [key in keyof typeof picturePaths]: HTMLImageElement };
@@ -129,7 +129,8 @@ function drawMeteorPass(ctx: Context, seconds: number, visibility: number) {
 }
 
 function drawRex(ctx: Context, atlas: HTMLImageElement, seconds: number, darkness: number) {
-  const frame = Math.round(lastPose * smooth(0.04, 0.95, darkness));
+  const posture = Math.min(1, Math.max(0, (darkness - 0.025) / 0.95));
+  const frame = Math.round(lastPose * posture);
   const breathing = (0.58 + darkness * 0.23) * Math.sin(seconds * 1.18);
   ctx.save();
   ctx.fillStyle = darkness > 0.5 ? "#20233157" : "#4b36395b";
@@ -180,7 +181,8 @@ export function animateCanyon(canvas: HTMLCanvasElement, art: CanyonArt, startAt
   }
 
   function tick(now: number) {
-    if (now - previousFrame >= 31) {
+    const transitioning = now < transitionStart + duration;
+    if (transitioning || now - previousFrame >= 31) {
       paint(now);
       previousFrame = now;
     }
@@ -199,7 +201,7 @@ export function animateCanyon(canvas: HTMLCanvasElement, art: CanyonArt, startAt
       from = darknessAt(now);
       target = next;
       transitionStart = now;
-      duration = Math.max(300, 3000 * Math.abs(target - from));
+      duration = Math.max(300, 3400 * Math.abs(target - from));
     },
     stop() {
       cancelAnimationFrame(frameHandle);
