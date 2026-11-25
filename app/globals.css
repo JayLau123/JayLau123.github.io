@@ -235,30 +235,6 @@ a:hover {
   image-rendering: pixelated;
 }
 
-.homepage-animation-control {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  min-width: 60px;
-  min-height: 44px;
-  padding: 0 12px;
-  color: #fbfaf6;
-  background: rgba(21, 33, 49, 0.9);
-  border: 1px solid rgba(251, 250, 246, 0.45);
-  border-radius: 6px;
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-.homepage-animation-control:hover {
-  background: #152131;
-}
-
-.homepage-animation-control:focus-visible {
-  outline: 2px solid #fbfaf6;
-  outline-offset: 2px;
-}
-
 .site-header {
   position: sticky;
   z-index: 20;
@@ -1561,12 +1537,6 @@ html[data-theme="dark"] .news-mark img {
 }
 
 @media (max-width: 520px) {
-  .homepage-animation-control {
-    top: 8px;
-    right: 8px;
-    bottom: auto;
-  }
-
   .publication-heading h2 {
     font-size: clamp(1.625rem, 8vw, 1.9rem);
   }

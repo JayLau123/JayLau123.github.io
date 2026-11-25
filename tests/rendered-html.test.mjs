@@ -38,8 +38,7 @@ test("server-renders the academic homepage", async () => {
     /Schematic comparing an ordered AI-predicted structure with a disordered experimentally synthesized structure/,
   );
   assert.match(html, /<nav class="site-nav" aria-label="Primary navigation">/);
-  assert.match(html, /class="homepage-animation"[\s\S]*?<video[^>]*src="\/dinosaur-canyon\.mp4"[^>]*poster="\/dinosaur-canyon\.webp"[\s\S]*?<\/figure><main>/);
-  assert.match(html, /aria-label="Play animation"/);
+  assert.match(html, /class="homepage-animation"[^>]*><video[^>]*src="\/dinosaur-canyon-sunset\.mp4"[^>]*poster="\/dinosaur-canyon-sunset\.webp"[^>]*><\/video><\/figure><main>/);
   assert.match(html, /href="\/" aria-current="page"[\s\S]*About/);
   assert.match(html, /href="\/blog\/"[\s\S]*Blog/);
   assert.match(html, /href="\/gallery\/"[\s\S]*Gallery/);
