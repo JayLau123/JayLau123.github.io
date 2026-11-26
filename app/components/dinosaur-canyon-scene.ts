@@ -7,6 +7,9 @@ const tilesPerRow = 16;
 const posesPerSecond = 60;
 const lastPose = 236;
 const settleDuration = lastPose / posesPerSecond;
+const restingPose = 139;
+const headTuckStart = 2.72;
+const headTuckEnd = 3.04;
 const meteorPeriod = 7.4;
 const tau = 2 * Math.PI;
 
@@ -134,9 +137,11 @@ function drawMeteorPass(ctx: Context, seconds: number, visibility: number) {
 }
 
 function drawRex(ctx: Context, atlas: HTMLImageElement, seconds: number, settleTime: number, darkness: number) {
-  const frame = Math.round(settleTime * posesPerSecond);
+  const crouch = Math.min(restingPose, settleTime * posesPerSecond);
+  const tuck = smooth(headTuckStart, headTuckEnd, settleTime);
+  const frame = Math.round(crouch + (lastPose - restingPose) * tuck);
   const breathing = (0.58 * (1 - smooth(0, 0.24, settleTime)) +
-    0.64 * smooth(3.68, settleDuration, settleTime)) * Math.sin(seconds * 1.5);
+    0.64 * smooth(headTuckEnd, headTuckEnd + 0.27, settleTime)) * Math.sin(seconds * 1.5);
   const stretch = smooth(0.1, 2.8, settleTime);
   ctx.save();
   ctx.fillStyle = "#1f213259";
