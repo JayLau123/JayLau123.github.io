@@ -220,9 +220,10 @@ a:hover {
 .homepage-animation {
   position: relative;
   z-index: 1;
-  width: min(1400px, calc(100% - clamp(36px, 12vw, 200px)));
+  width: 100%;
   min-height: 144px;
-  max-height: 430px;
+  /* Keep the meteor and the dinosaur in view on ultrawide screens. */
+  max-height: max(430px, 24vw);
   margin: 0 auto;
   aspect-ratio: 65 / 24;
   overflow: hidden;
