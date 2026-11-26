@@ -119,7 +119,7 @@ main {
 }
 
 .geometry-ring-left {
-  top: -250px;
+  top: -150px;
   left: -300px;
   width: 680px;
   height: 680px;
@@ -132,7 +132,7 @@ main {
 }
 
 .geometry-ring-right {
-  top: 18vh;
+  top: 29vh;
   right: -500px;
   width: 900px;
   height: 900px;
@@ -215,7 +215,7 @@ a:hover {
 .homepage-animation {
   position: relative;
   z-index: 1;
-  width: min(100%, 1760px);
+  width: min(1600px, calc(100% - clamp(24px, 6vw, 112px)));
   min-height: 144px;
   max-height: 430px;
   margin: 0 auto;
@@ -1610,14 +1610,14 @@ html[data-theme="dark"] .news-mark img {
   }
 
   .geometry-ring-left {
-    top: -185px;
+    top: -125px;
     left: -270px;
     width: 440px;
     height: 440px;
   }
 
   .geometry-ring-right {
-    top: 22vh;
+    top: 31vh;
     right: -410px;
     width: 620px;
     height: 620px;
