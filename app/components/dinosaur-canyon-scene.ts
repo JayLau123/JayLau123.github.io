@@ -5,18 +5,16 @@ const tileWidth = 146;
 const tileHeight = 112;
 const tilesPerRow = 16;
 const posesPerSecond = 60;
-const lastPose = 236;
-const settleDuration = lastPose / posesPerSecond;
-const restingPose = 139;
-const headTuckStart = 2.72;
-const headTuckEnd = 3.04;
+const lastPose = 155;
+const sleepingAt = lastPose / posesPerSecond;
+const settleDuration = 3.93;
 const meteorPeriod = 7.4;
 const tau = 2 * Math.PI;
 
 const picturePaths = {
   sunset: "/dinosaur-canyon-sunset-scene.webp",
   night: "/dinosaur-canyon-night-scene.webp",
-  poses: "/dinosaur-canyon-rex-settling-60fps.webp",
+  poses: "/dinosaur-canyon-rex-sleeping-left.webp",
 } as const;
 
 type CanyonArt = { [key in keyof typeof picturePaths]: HTMLImageElement };
@@ -137,11 +135,9 @@ function drawMeteorPass(ctx: Context, seconds: number, visibility: number) {
 }
 
 function drawRex(ctx: Context, atlas: HTMLImageElement, seconds: number, settleTime: number, darkness: number) {
-  const crouch = Math.min(restingPose, settleTime * posesPerSecond);
-  const tuck = smooth(headTuckStart, headTuckEnd, settleTime);
-  const frame = Math.round(crouch + (lastPose - restingPose) * tuck);
+  const frame = Math.min(lastPose, Math.round(settleTime * posesPerSecond));
   const breathing = (0.58 * (1 - smooth(0, 0.24, settleTime)) +
-    0.64 * smooth(headTuckEnd, headTuckEnd + 0.27, settleTime)) * Math.sin(seconds * 1.5);
+    0.64 * smooth(sleepingAt, sleepingAt + 0.27, settleTime)) * Math.sin(seconds * 1.5);
   const stretch = smooth(0.1, 2.8, settleTime);
   ctx.save();
   ctx.fillStyle = "#1f213259";

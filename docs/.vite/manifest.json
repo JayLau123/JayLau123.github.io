@@ -1,6 +1,6 @@
 {
   "../../../Users/jayliu/Desktop/PersonalWebsites/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-CAfeTqNu.js",
+    "file": "assets/layout-segment-context-BdOpfYBV.js",
     "name": "layout-segment-context",
     "src": "../../../Users/jayliu/Desktop/PersonalWebsites/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugin-react@6.0.2_vite@8.0.13_@types+node@22.19.19_esbuild@0.28._f7103f2b93a1422ec460cdf37eedfdbc/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -52,7 +52,7 @@
     ]
   },
   "app/components/homepage-animation.tsx": {
-    "file": "assets/homepage-animation-DsaAAUWo.js",
+    "file": "assets/homepage-animation-BjYd3z7K.js",
     "name": "homepage-animation",
     "src": "app/components/homepage-animation.tsx",
     "isDynamicEntry": true,
@@ -90,7 +90,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-B2DYFEbs.js",
+    "file": "assets/index-Bl8WVi3u.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
