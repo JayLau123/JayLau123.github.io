@@ -3,18 +3,17 @@ export const canyonHeight = 288;
 
 const tileWidth = 146;
 const tileHeight = 112;
-const tilesPerRow = 12;
-const posesPerStage = 18;
-const poseTimes = [0, 0.65, 1.59, 2.32, 3.14, 3.93] as const;
-const settleDuration = poseTimes[poseTimes.length - 1];
-const lastPose = posesPerStage * (poseTimes.length - 1);
+const tilesPerRow = 16;
+const posesPerSecond = 60;
+const lastPose = 236;
+const settleDuration = lastPose / posesPerSecond;
 const meteorPeriod = 7.4;
 const tau = 2 * Math.PI;
 
 const picturePaths = {
   sunset: "/dinosaur-canyon-sunset-scene.webp",
   night: "/dinosaur-canyon-night-scene.webp",
-  poses: "/dinosaur-canyon-rex-settling.webp",
+  poses: "/dinosaur-canyon-rex-settling-60fps.webp",
 } as const;
 
 type CanyonArt = { [key in keyof typeof picturePaths]: HTMLImageElement };
@@ -50,7 +49,10 @@ const stars = [[53, 57], [81, 82], [153, 47], [194, 28], [258, 84], [337, 43],
 
 function drawWaterAndStars(ctx: Context, seconds: number, darkness: number) {
   ctx.save();
-  ctx.fillStyle = darkness > 0.5 ? "#aadbed" : "#ecf5e5";
+  const waterRed = Math.round(236 - 66 * darkness);
+  const waterGreen = Math.round(245 - 26 * darkness);
+  const waterBlue = Math.round(229 + 8 * darkness);
+  ctx.fillStyle = `rgb(${waterRed}, ${waterGreen}, ${waterBlue})`;
   riverLights.forEach(([x, y, length], index) => {
     const wave = Math.max(0, Math.sin(seconds * (1.1 + (index % 3) * 0.4) + index * 2.1));
     ctx.globalAlpha = wave * 0.19;
@@ -63,7 +65,7 @@ function drawWaterAndStars(ctx: Context, seconds: number, darkness: number) {
     ctx.globalAlpha = (0.16 + 0.55 * twinkle ** 2) * starlight;
     ctx.fillRect(x, y, 1, 1);
     if (index % 3 === 2 && twinkle > 0.78) {
-      ctx.globalAlpha *= 0.35;
+      ctx.globalAlpha *= 0.35 * smooth(0.78, 0.94, twinkle);
       ctx.fillRect(x - 1, y, 3, 1);
       ctx.fillRect(x, y - 1, 1, 3);
     }
@@ -131,18 +133,8 @@ function drawMeteorPass(ctx: Context, seconds: number, visibility: number) {
   ctx.restore();
 }
 
-function rexFrame(settleTime: number) {
-  if (settleTime >= settleDuration) return lastPose;
-  const stage = poseTimes.findIndex((time) => time > settleTime) - 1;
-  const progress = (settleTime - poseTimes[stage]) / (poseTimes[stage + 1] - poseTimes[stage]);
-  // Retain the timing of the weight shift, belly contact, and head tuck from the preview.
-  const phase = 0.79 * progress + 0.21 * smooth(0, 1, progress);
-  const offset = Math.min(posesPerStage - 1, Math.round(posesPerStage * phase));
-  return stage * posesPerStage + offset;
-}
-
 function drawRex(ctx: Context, atlas: HTMLImageElement, seconds: number, settleTime: number, darkness: number) {
-  const frame = rexFrame(settleTime);
+  const frame = Math.round(settleTime * posesPerSecond);
   const breathing = (0.58 * (1 - smooth(0, 0.24, settleTime)) +
     0.64 * smooth(3.68, settleDuration, settleTime)) * Math.sin(seconds * 1.5);
   const stretch = smooth(0.1, 2.8, settleTime);
@@ -165,7 +157,7 @@ export function animateCanyon(canvas: HTMLCanvasElement, art: CanyonArt, startAt
 
   const started = performance.now();
   let previousFrame = started;
-  let from: number = startAtNight ? settleDuration : 0;
+  let from = startAtNight ? settleDuration : 0;
   let target = from;
   let transitionStart = started;
   let frameHandle = 0;
