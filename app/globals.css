@@ -808,7 +808,8 @@ html[data-theme="dark"] .news-mark img {
   color: var(--blue);
 }
 
-.news-copy p:not(.news-meta) {
+.news-copy p:not(.news-meta),
+.news-copy ul {
   margin-bottom: 14px;
   color: var(--muted);
   font-size: 1.02rem;
@@ -816,6 +817,15 @@ html[data-theme="dark"] .news-mark img {
   hyphens: auto;
   text-align: justify;
   text-justify: inter-word;
+}
+
+.news-copy ul {
+  padding-inline-start: 1.25em;
+  list-style: disc;
+}
+
+.news-copy li + li {
+  margin-top: 0.4em;
 }
 
 .news-link {

@@ -218,6 +218,88 @@ function HomeContent() {
         </aside>
       </section>
 
+      <section className="section news-section" id="news">
+        <div className="section-heading">
+          <h2>Recent News</h2>
+        </div>
+        <article className="news-item">
+          <div className="news-mark">
+            <img
+              src="/genesis-logo-lockup-black.png"
+              alt="Genesis Mission"
+            />
+            <p className="news-mission-tagline">
+              <em>Decoding origins, designing futures</em>
+            </p>
+          </div>
+          <div className="news-copy">
+            <p className="news-meta">07/2026</p>
+            <h3>
+              <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485926986947858432/">
+                CLEAR-AI selected for Genesis Mission Phase I
+              </a>
+            </h3>
+            <p>
+              Our research group recently joined <strong>CLEAR-AI</strong>{" "}
+              (Closed-Loop, Efficient, Adaptive, and Robust AI for Agentic
+              Chemical Manufacturing), which was selected for Phase I of the
+              U.S. Department of Energy’s Genesis Mission,{" "}
+              <em>Transforming Science and Energy with AI</em>. Prof. Peng
+              serves as a principal investigator in the mission’s inaugural
+              cohort.
+            </p>
+            <p>
+              CLEAR-AI aims to bring AI-guided scientific discovery into
+              chemical manufacturing by accelerating the development of
+              catalysts and processes for producing carbon-based fuels and
+              chemicals with electricity.
+            </p>
+            <p>My work in this project spans two agents:</p>
+            <ul>
+              <li>
+                <strong>Optimization / Decision Agent</strong> — I combine
+                Bayesian optimization with large language models to prioritize
+                candidates for simulation and testing.
+              </li>
+              <li>
+                <strong>Modeling / Simulation Agent</strong> — I develop
+                automated workflows for density functional theory (DFT) and
+                machine-learning interatomic potential (MLIP) simulations.
+              </li>
+            </ul>
+            <p>
+              Collaborators include{" "}
+              <a href="https://scholar.google.com/citations?user=NK94F4kAAAAJ&amp;hl=en">
+                Dr. Thomas Mallouk
+              </a>{" "}
+              (University of Pennsylvania),{" "}
+              <a href="https://scholar.google.com/citations?user=P_iNYbQAAAAJ&amp;hl=en">
+                Dr. Hongliang Xin
+              </a>{" "}
+              (Virginia Tech),{" "}
+              <a href="https://scholar.google.com/citations?user=u6tJUFwAAAAJ&amp;hl=en">
+                Dr. Sen Zhang
+              </a>{" "}
+              (University of Virginia),{" "}
+              <a href="https://scholar.google.com/citations?user=2U-7B-MAAAAJ&amp;hl=en">
+                Dr. Yugang Zhang
+              </a>{" "}
+              (Brookhaven National Laboratory), and{" "}
+              <a href="https://scholar.google.com/citations?hl=en&amp;user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate">
+                Dr. Chang Liu
+              </a>{" "}
+              (Oak Ridge National Laboratory).
+            </p>
+            <a
+              className="news-link"
+              href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission"
+            >
+              Explore the Genesis Mission <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+      </section>
+
       <section
         className="section interest-section"
         id="interests"
@@ -278,75 +360,6 @@ function HomeContent() {
             electrolytes, and energy storage materials, accelerating innovation
             at the AI-energy nexus.
           </p>
-        </article>
-      </section>
-
-      <section className="section news-section" id="news">
-        <div className="section-heading">
-          <h2>Recent News</h2>
-        </div>
-        <article className="news-item">
-          <div className="news-mark">
-            <img
-              src="/genesis-logo-lockup-black.png"
-              alt="Genesis Mission"
-            />
-            <p className="news-mission-tagline">
-              <em>Decoding origins, designing futures</em>
-            </p>
-          </div>
-          <div className="news-copy">
-            <p className="news-meta">07/2026</p>
-            <h3>
-              <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485926986947858432/">
-                CLEAR-AI selected for Genesis Mission Phase I
-              </a>
-            </h3>
-            <p>
-              I am excited to have the opportunity to contribute to CLEAR-AI:
-              Closed-Loop, Efficient, Adaptive, and Robust AI for Agentic
-              Chemical Manufacturing, selected by the U.S. Department of
-              Energy as a Phase I project in the Genesis Mission.
-            </p>
-            <p>
-              CLEAR-AI will develop a closed-loop, agentic AI platform that
-              connects modeling and experiment to accelerate catalyst and
-              process development for the electrosynthesis of carbon-based
-              fuels and chemicals.
-            </p>
-            <p>
-              It&apos;s so glad to learn from and work alongside an outstanding
-              team spanning {" "}
-              <a href="https://scholar.google.com/citations?user=NK94F4kAAAAJ&amp;hl=en">
-                Dr.Thomas Mallouk
-              </a>{" "}
-              at the University of Pennsylvania, {" "}
-              <a href="https://scholar.google.com/citations?user=P_iNYbQAAAAJ&amp;hl=en">
-                Dr.Hongliang Xin
-              </a>{" "}
-              at Virginia Tech, {" "}
-              <a href="https://scholar.google.com/citations?user=u6tJUFwAAAAJ&amp;hl=en">
-                Dr.Sen Zhang
-              </a>{" "}
-              at the University of Virginia, {" "}
-              <a href="https://scholar.google.com/citations?user=2U-7B-MAAAAJ&amp;hl=en">
-                Dr.Yugang Zhang
-              </a>{" "}
-              at Brookhaven National Laboratory, and {" "}
-              <a href="https://scholar.google.com/citations?hl=en&amp;user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate">
-                Dr.Chang Liu
-              </a>{" "}
-              at Oak Ridge National Laboratory. I look forward to helping
-              demonstrate CLEAR-AI and advance agentic AI for broader
-              electrosynthetic and chemical manufacturing applications.
-            </p>
-            <a
-              className="news-link"
-              href="https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission"
-            >
-              Explore the Genesis Mission <span aria-hidden="true">↗</span>
-            </a>
-          </div>
         </article>
       </section>
 

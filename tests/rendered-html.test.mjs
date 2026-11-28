@@ -68,12 +68,14 @@ test("server-renders the academic homepage", async () => {
     html,
     /research-schematic-v1|research-schematic-v3|research-schematic-v4/,
   );
-  assert.match(html, /Recent News/);
+  assert.match(html, /<h2>Recent News<\/h2>[\s\S]*<h2 id="interests-title">Research Interests<\/h2>/);
   assert.match(html, /CLEAR-AI selected for Genesis Mission Phase I/);
   assert.match(
     html,
-    /I am excited to have the opportunity to contribute to CLEAR-AI:[\s\S]*Phase I project in the Genesis Mission\./,
+    /Our research group recently joined <strong>CLEAR-AI<\/strong>[\s\S]*Prof\. Peng serves as a principal investigator in the mission’s inaugural cohort\./,
   );
+  assert.match(html, /for producing carbon-based fuels and chemicals with electricity\./);
+  assert.match(html, /<strong>Optimization \/ Decision Agent<\/strong>[\s\S]*<strong>Modeling \/ Simulation Agent<\/strong>/);
   assert.match(html, /genesis-logo-lockup-black\.png/);
   assert.match(html, /<div class="news-mark"><img/);
   assert.doesNotMatch(html, /<a class="news-mark"/);
@@ -87,11 +89,11 @@ test("server-renders the academic homepage", async () => {
   assert.match(html, /citations\?user=u6tJUFwAAAAJ&amp;hl=en/);
   assert.match(html, /citations\?user=2U-7B-MAAAAJ&amp;hl=en/);
   assert.match(html, /user=C2bjyO8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate/);
-  assert.match(html, /Dr\.Thomas Mallouk/);
-  assert.match(html, /Dr\.Hongliang Xin/);
-  assert.match(html, /Dr\.Sen Zhang/);
-  assert.match(html, /Dr\.Yugang Zhang/);
-  assert.match(html, /Dr\.Chang Liu/);
+  assert.match(html, /Dr\. Thomas Mallouk/);
+  assert.match(html, /Dr\. Hongliang Xin/);
+  assert.match(html, /Dr\. Sen Zhang/);
+  assert.match(html, /Dr\. Yugang Zhang/);
+  assert.match(html, /Dr\. Chang Liu/);
   assert.doesNotMatch(html, /News updates will be added soon\./);
   assert.match(html, /Publications/);
   assert.match(
